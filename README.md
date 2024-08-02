@@ -7,6 +7,7 @@ PostgreSQL e o gerenciamento de anúncio de veículos que são exibidos através
 Back-end:
 - Spring Boot;
 - Spring Data JPA;
+- CORS;
 
 Banco de dados:
 - PostgreSQL
