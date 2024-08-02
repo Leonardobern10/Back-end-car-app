@@ -1,0 +1,114 @@
+.invite {
+    background-color:  rgb(0, 0, 0);
+    width: 100vw;
+    height: 75vh;
+
+    box-shadow: 0px -10px 80px 100px rgb(0, 0, 0);;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+
+.invite h2 {
+    margin: 2rem 3rem;
+    font-weight: 100;
+    font-size: 3rem;
+}
+
+.mainModels {
+    border-radius: 5px;
+    border: 2px solid #ffffff;
+    margin: 2rem;
+
+}
+
+.mainModels button {
+    font-size: 2rem;
+    padding: 1.5rem;
+    font-weight: 200;
+    letter-spacing: 2px;
+    color: #ffffff;
+}
+
+.mainModels button:hover {
+    cursor: pointer;
+}
+.qualificators {
+    position: relative;
+    background-color: #989DAA;
+    height: 65rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding-top: 1rem;    
+}
+
+.qualificators h4 {
+    margin: 2rem 8rem;
+    text-align: center;
+    font-size: 1.7rem;
+}
+
+.containerQualify {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 20vh;
+    width: 80vw;
+
+    margin: 3rem 0;
+
+    color: black;
+    
+    border-radius: 10px;
+    border: 2px solid rgb(255, 255, 255);
+
+    padding: 2rem;
+}
+
+.containerQualify p {
+    font-size: 1.5rem;
+}
+
+.iconCar {
+    font-size: 10rem;
+}
+.iconStar {
+    font-size: 5rem;
+    position: relative;
+    top: 2%;
+}
+
+.containerButtonCars button {
+    margin-top: 2rem;
+    border: 2px solid rgb(255, 255, 255);
+    padding: 1rem 3rem;
+    color: rgb(255, 255, 255);
+    font-size: 1.5rem;
+
+    text-decoration: none;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    color: gray;
+  }
+  
+  .nav-link.active {
+    font-weight: bold;
+    color: blue;
+    border-bottom: 2px solid blue;
+  }
