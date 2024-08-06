@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/cars")
 /**
  * Classe responsável pelo gerenciamento de requisições.
  * */
+@RestController
+@RequestMapping("/cars")
 public class CarsController {
 
     @Autowired

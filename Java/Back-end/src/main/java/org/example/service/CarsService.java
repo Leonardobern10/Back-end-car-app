@@ -10,10 +10,10 @@ import java.util.List;
 @Service
 public class CarsService {
 
-    @Autowired
     /**
      * Injeta uma instância de carsRepository
      * */
+    @Autowired
     private CarsRepository carsRepository;
 
     /**
