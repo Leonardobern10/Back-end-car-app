@@ -2,11 +2,11 @@ package org.example.model;
 
 import jakarta.persistence.*;
 
-@Entity( name = "cars")
-@Table( name = "cars")
 /**
  * Classe representativa dos dados armazenados no banco de dados
  * */
+@Entity( name = "cars")
+@Table( name = "cars")
 public class Cars {
     @Id
     @GeneratedValue ( strategy = GenerationType.SEQUENCE)
