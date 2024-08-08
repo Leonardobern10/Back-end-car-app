@@ -12,13 +12,13 @@ public class CarsService {
 
     /**
      * Injeta uma instância de carsRepository
-     * */
+     */
     @Autowired
     private CarsRepository carsRepository;
 
     /**
      * Função que retorna todos os registros do banco de dados.
-     * */
+     */
     public List<Cars> getAllCars() {
         return carsRepository.findAll();
     }
@@ -27,9 +27,16 @@ public class CarsService {
     /**
      * {param} Recebe o id de um registro do banco de dados.
      * Retorna um registro específico do banco de dados.
-     * */
+     */
     public Cars getById(int id) {
         return carsRepository.findById(id).orElse(null);
     }
 
+    public void saveCar(Cars car) {
+        carsRepository.save(car);
+    }
+
+    public void deleteCar(int id) {
+        carsRepository.deleteById(id);
+    }
 }
