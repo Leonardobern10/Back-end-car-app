@@ -9,7 +9,7 @@ import jakarta.persistence.*;
 @Table( name = "cars")
 public class Cars {
     @Id
-    @GeneratedValue ( strategy = GenerationType.SEQUENCE)
+    @GeneratedValue ( strategy = GenerationType.AUTO)
     private int carId;
     private String model;
     private String url;
