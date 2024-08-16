@@ -32,11 +32,6 @@ public class TestController extends TestRoutine {
 
     @BeforeEach
     void setUp() {
-        // Configurando dados simulados
-        Cars car1 = new Cars("Model X", "http://example.com/modelx", 80000.0);
-        Cars car2 = new Cars("Model Y", "http://example.com/modely", 60000.0);
-        List<Cars> allCars = Arrays.asList(car1, car2);
-        Cars car3 = new Cars("Model W", "http://example.com/modelw", 100000.0);
         // Configurando o mock para o serviço
         Mockito.when(carsService.getAllCars()).thenReturn(allCars);
         Mockito.when(carsService.getById(1)).thenReturn(allCars.getFirst());
@@ -67,12 +62,9 @@ public class TestController extends TestRoutine {
     @Test
     void shouldSaveCars() throws Exception {
 
-        String newCarJson = "{\"model\":\"Model W\"," +
-                "\"url\":\"http://example.com/modelw\",\"carValue\":100000.0}";
-
         mockMvc.perform(post("/cars")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(newCarJson))
+                .content(jsonModelW))
                 .andExpect(status().isCreated())
                 .andExpect(content().json("{\"model\":\"Model W\"," +
                         "\"url\":\"http://example.com/modelw\",\"carValue\":100000.0}"));
