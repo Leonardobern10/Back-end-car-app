@@ -5,11 +5,11 @@ import jakarta.persistence.*;
 /**
  * Classe representativa dos dados armazenados no banco de dados
  * */
-@Entity( name = "cars")
-@Table( name = "cars")
+@Entity( name = "cars" )
+@Table( name = "cars" )
 public class Cars {
     @Id
-    @GeneratedValue ( strategy = GenerationType.AUTO)
+    @GeneratedValue ( strategy = GenerationType.AUTO )
     private int carId;
     private String model;
     private String url;

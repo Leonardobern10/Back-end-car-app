@@ -32,8 +32,8 @@ public class CarsService {
         return carsRepository.findById(id).orElse(null);
     }
 
-    public void saveCar(Cars car) {
-        carsRepository.save(car);
+    public Cars saveCar(Cars car) {
+        return carsRepository.save(car);
     }
 
     public void deleteCar(int id) {

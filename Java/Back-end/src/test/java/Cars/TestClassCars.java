@@ -5,28 +5,8 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestClassCars {
+public class TestClassCars extends TestRoutine {
 
-    private static int counter = 0;
-    private final Cars carsWithoutParams = new Cars();
-    private final Cars carsWithParams = new Cars("nameTest", "urlTest", 1500);
-
-    @BeforeAll
-    static void init() {
-        System.out.println("Iniciando bateria de testes...");
-    }
-
-    @AfterAll
-    static void finalizing() {
-        System.out.println("Encerrando bateria de testes...");
-        System.out.printf("%d testes executados!", counter);
-    }
-
-    @BeforeEach
-    void initTest() {
-        counter++;
-        System.out.println("Iniciando um novo teste... " + counter);
-    }
 
     @Test
     @DisplayName("Verificando a instanciação da classe com e sem parâmetros...")
@@ -86,11 +66,6 @@ public class TestClassCars {
             assertInstanceOf(Double.class, carsWithoutParams.getCarValue());
             assertEquals(0, carsWithoutParams.getCarValue());
         });
-    }
-
-    @AfterEach
-    void finalizingTest() {
-        System.out.println("Finalizando teste..." + counter);
     }
 
 }

@@ -23,7 +23,7 @@ public class CarsController {
      * Método que quando feita a requisição GET retorna os
      * dados de todos os registros do banco de dados.
      * */
-    @CrossOrigin( origins = "http://localhost:5173")
+    @CrossOrigin( origins = "http://localhost:5173" )
     @GetMapping
     public List<Cars> getAllCars() {
         return carsService.getAllCars();
@@ -33,7 +33,7 @@ public class CarsController {
      * {Param} Recebe o id de um registro.
      * Retorna o dado de um registro especifico do banco de dados.
      * */
-    @CrossOrigin( origins = "http://localhost:5173")
+    @CrossOrigin( origins = "http://localhost:5173" )
     @GetMapping("/{id}")
     public ResponseEntity<Cars> getById(@PathVariable int id) {
         Cars temp = carsService.getById(id);
@@ -43,19 +43,19 @@ public class CarsController {
     /**
      * Permite a criação de um registro especifico no banco de dados.
      * */
-    @CrossOrigin( origins = "http://localhost:5173")
+    @CrossOrigin( origins = "http://localhost:5173" )
     @PostMapping()
     public ResponseEntity<Cars> createCar(@RequestBody Cars car) {
         Cars newCar = new Cars(car.getModel(), car.getUrl(), car.getCarValue());
-        carsService.saveCar(newCar);
-        return new ResponseEntity<>(newCar, HttpStatus.CREATED);
+        Cars insertedCar = carsService.saveCar(newCar);
+        return new ResponseEntity<>(insertedCar, HttpStatus.CREATED);
     }
 
     /**
      * {Params: id do elemento a ser atualizado; corpo contendo as propriedades do novo registro.}
      * Permite a atualização dos dados de um registro recuperado por seu id.
      * */
-    @CrossOrigin( origins = "http://localhost:5173")
+    @CrossOrigin( origins = "http://localhost:5173" )
     @PutMapping("/{id}")
     public ResponseEntity<Cars> updatedCar(@PathVariable int id, @RequestBody Cars cars) {
         Cars oldCar = carsService.getById(id);
