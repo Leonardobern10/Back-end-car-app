@@ -1,10 +1,10 @@
-# Projeto de Aplicação de Carros com Frontend e Backend
+# Projeto de Aplicação de Carros com Front-end e Back-end
 
-Este projeto consiste em uma aplicação completa para gestão de carros, composta por um backend desenvolvido em Spring Boot com JPA e um frontend construído com React. A aplicação permite a criação, leitura, atualização e exclusão de informações sobre carros, e é ideal para entender a integração entre um backend e um frontend.
+Este projeto consiste em uma aplicação completa para gestão de carros, composta por um back-end desenvolvido em Spring Boot com JPA e um front-end construído com React. A aplicação permite a criação, leitura, atualização e exclusão de informações sobre carros, e é ideal para entender a integração entre um backend e um frontend.
 
 ## Funcionalidades
 
-### Backend
+### Back-end
 
 - **CRUD de Carros**: Operações básicas para gerenciar carros no banco de dados.
 - **Persistência**: Utiliza PostgreSQL para armazenamento de dados.
@@ -15,7 +15,7 @@ Este projeto consiste em uma aplicação completa para gestão de carros, compos
   - **PUT /cars/{id}**: Atualiza um carro existente.
   - **DELETE /cars/{id}**: Remove um carro pelo ID.
 
-### Frontend
+### Front-end
 
 - **Interface de Usuário**: Aplicação React que consome a API do backend.
 - **Funcionalidades**:
@@ -26,7 +26,7 @@ Este projeto consiste em uma aplicação completa para gestão de carros, compos
 
 ## Tecnologias Utilizadas
 
-### Backend
+### Back-end
 
 - **Java**: Linguagem de programação principal.
 - **Spring Boot**: Framework para desenvolvimento de aplicações Java.
@@ -35,7 +35,7 @@ Este projeto consiste em uma aplicação completa para gestão de carros, compos
 - **Spring Security**: Para autenticação e autorização (opcional).
 - **JUnit**: Framework para testes unitários e de integração.
 
-### Frontend
+### Front-end
 
 - **JavaScript (ES6+)**: Linguagem de programação principal.
 - **React**: Biblioteca para construção de interfaces de usuário.
@@ -45,7 +45,7 @@ Este projeto consiste em uma aplicação completa para gestão de carros, compos
 
 ## Configuração do Projeto
 
-### Backend
+### Back-end
 
 #### Requisitos
 
@@ -77,14 +77,14 @@ Este projeto consiste em uma aplicação completa para gestão de carros, compos
 
    A aplicação será iniciada na porta padrão `8080`.
 
-### Frontend
+### Front-end
 
 #### Requisitos
 
 - **Node.js**: Inclui npm (ou yarn) para gerenciamento de pacotes.
 - **npm ou yarn**: Gerenciador de pacotes.
 
-#### Configuração do Frontend
+#### Configuração do Front-end
 
 1. **Navegue até o diretório do frontend**:
 
@@ -118,7 +118,7 @@ Este projeto consiste em uma aplicação completa para gestão de carros, compos
 
 ## Estrutura do Projeto
 
-### Backend
+### Back-end
 
 - **src/main/java/com/seuprojeto/controller**: Controladores da API.
 - **src/main/java/com/seuprojeto/model**: Entidades JPA.
@@ -126,7 +126,7 @@ Este projeto consiste em uma aplicação completa para gestão de carros, compos
 - **src/main/java/com/seuprojeto/service**: Serviços da aplicação.
 - **src/main/java/com/seuprojeto/config**: Configurações do Spring Boot.
 
-### Frontend
+### Front-end
 
 - **src/components**: Componentes React.
 - **src/pages**: Páginas principais da aplicação.
@@ -135,7 +135,7 @@ Este projeto consiste em uma aplicação completa para gestão de carros, compos
 
 ## Executando os Testes
 
-### Backend
+### Back-end
 
 Para executar os testes unitários e de integração:
 
@@ -143,7 +143,7 @@ Para executar os testes unitários e de integração:
 mvn test
 ```
 
-### Frontend
+### Front-end
 
 Para executar os testes:
 
