@@ -1,4 +1,5 @@
 # Back-end Car App
+Back-end Car App é uma aplicação backend desenvolvida com Spring Boot para gerenciar informações de veículos. Este projeto fornece uma API RESTful robusta que permite aos usuários adicionar, visualizar, atualizar e excluir veículos. O sistema implementa autenticação e autorização com diferentes roles, garantindo que apenas usuários autorizados possam realizar operações específicas. Utilizando boas práticas de programação e segurança, o projeto é ideal para quem deseja entender e aplicar conceitos de desenvolvimento backend em um contexto prático e eficiente.
 
 ## Funcionalidades
 
