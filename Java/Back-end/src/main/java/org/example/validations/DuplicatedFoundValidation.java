@@ -5,7 +5,6 @@ import org.example.exceptions.DuplicatedFoundException;
 import org.example.model.Cars;
 import org.example.repository.CarsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 
 public class DuplicatedFoundValidation {
 

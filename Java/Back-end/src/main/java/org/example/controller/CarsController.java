@@ -1,8 +1,5 @@
 package org.example.controller;
 
-import org.example.exceptions.FieldDoubleInvalid;
-import org.example.exceptions.FieldIntegerInvalid;
-import org.example.exceptions.FieldStringInvalid;
 import org.example.model.Cars;
 import org.example.service.CarsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +23,6 @@ public class CarsController {
      * Método que quando feita a requisição GET retorna os
      * dados de todos os registros do banco de dados.
      * */
-    @CrossOrigin( origins = "http://localhost:5173" )
     @GetMapping
     public List<Cars> getAllCars() {
         return carsService.getAllCars();
@@ -36,7 +32,6 @@ public class CarsController {
      * {Param} Recebe o id de um registro.
      * Retorna o dado de um registro especifico do banco de dados.
      * */
-    @CrossOrigin( origins = "http://localhost:5173" )
     @GetMapping("/{id}")
     public ResponseEntity<Cars> getById(@PathVariable int id) throws RuntimeException {
         Cars car = carsService.getById(id);
@@ -46,7 +41,6 @@ public class CarsController {
     /**
      * Permite a criação de um registro especifico no banco de dados.
      * */
-    @CrossOrigin( origins = "http://localhost:5173" )
     @PostMapping
     public ResponseEntity<Cars> createCar(@RequestBody Cars car) {
         Cars savedCar = carsService.saveCar(car);
@@ -57,7 +51,6 @@ public class CarsController {
      * {Params: id do elemento a ser atualizado; corpo contendo as propriedades do novo registro.}
      * Permite a atualização dos dados de um registro recuperado por seu id.
      * */
-    @CrossOrigin( origins = "http://localhost:5173" )
     @PutMapping("/{id}")
     public ResponseEntity<Cars> updatedCar(@PathVariable int id, @RequestBody Cars cars) {
         Cars oldCar = carsService.getById(id);
@@ -73,7 +66,6 @@ public class CarsController {
      * {Param} Numero inteiro representando o id de um registro.
      * Permite a remoção de um registro especifico no banco de dados.
      * */
-    @CrossOrigin( origins = "http://localhost:5173")
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteCar(@PathVariable int id) {
         carsService.deleteCar(id);

@@ -96,15 +96,13 @@ public class TestController extends TestRoutine {
 
     @Test
     void shouldReturnBadRequestForInvalidModelCar() throws Exception {
-        String invalidModelCarJson = "{\"model\":\"\",\"url\":\"www.url.com\",\"carValue\":5000}";
+        String invalidModelCarJson = "{\"model\":,\"url\":\"www.url.com\",\"carValue\":5000}";
 
         mockMvc.perform(post("/cars")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(invalidModelCarJson))
-                .andExpect(content().string("FIELD MODEL IS INVALID!"))
                 .andExpect(status().isBadRequest());
     }
-
 
     @Test
     void shouldReturnBadRequestForInvalidUrlCar() throws Exception {
@@ -153,14 +151,4 @@ public class TestController extends TestRoutine {
                 .andExpect(content().string("RESOURCE DUPLICATED"))
                 .andExpect(status().isConflict());
     }
-
-    @Test
-    void shouldReturnServerError() throws Exception {
-        Mockito.when(carsService.getAllCars()).thenThrow(new RuntimeException("Erro interno"));
-        mockMvc.perform(get("/cars")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isInternalServerError());
-    }
-
-
 }

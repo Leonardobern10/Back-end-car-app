@@ -34,7 +34,6 @@ public class TestRoutine {
 
     @BeforeEach
     void initTest() {
-
         counter++;
         System.out.println("Iniciando um novo teste... " + counter);
     }

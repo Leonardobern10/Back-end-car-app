@@ -1,12 +1,10 @@
 package Cars;
 
-import org.example.model.Cars;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestClassCars extends TestRoutine {
-
 
     @Test
     @DisplayName("Verificando a instanciação da classe com e sem parâmetros...")
