@@ -1,95 +1,113 @@
-# Back-end Car App
-Back-end Car App é uma aplicação backend desenvolvida com Spring Boot para gerenciar informações de veículos. Este projeto fornece uma API RESTful robusta que permite aos usuários adicionar, visualizar, atualizar e excluir veículos. O sistema implementa autenticação e autorização com diferentes roles, garantindo que apenas usuários autorizados possam realizar operações específicas. Utilizando boas práticas de programação e segurança, o projeto é ideal para quem deseja entender e aplicar conceitos de desenvolvimento backend em um contexto prático e eficiente.
+# Car Management API
+
+Este projeto é uma API para gerenciamento de carros, desenvolvida utilizando Spring Boot com Java. A aplicação permite criar, ler, atualizar e excluir informações sobre carros, com validações de entrada e tratamento de exceções. É uma solução ideal para demonstrar habilidades em desenvolvimento back-end e gerenciamento de dados.
 
 ## Funcionalidades
 
-- **Gerenciamento de Veículos:** Adicione, visualize, atualize e exclua veículos.
-- **Autenticação e Autorização:** Proteja endpoints com roles `USER` e `ADMIN`.
-- **Consultas Avançadas:** Filtre e busque veículos com base em critérios específicos.
-- **Validação:** Valide dados de entrada para garantir a integridade.
+- **GET /cars**: Retorna todos os carros cadastrados.
+- **GET /cars/{id}**: Retorna um carro específico com base no ID.
+- **POST /cars**: Cria um novo carro.
+- **PUT /cars/{id}**: Atualiza as informações de um carro existente com base no ID.
+- **DELETE /cars/{id}**: Remove um carro com base no ID.
 
-## Habilidades Abordadas
+## Tecnologias Utilizadas
 
-- **Desenvolvimento com Spring Boot:** Criação de APIs RESTful.
-- **Segurança com Spring Security:** Implementação de autenticação e autorização.
-- **Gerenciamento de Banco de Dados:** Utilização de JPA/Hibernate para persistência de dados.
-- **Boas Práticas de Programação:** Organização de código, refatoração e testes.
+- Java 17
+- Spring Boot
+- JPA (Hibernate)
+- H2 Database (para testes)
+- Mockito (para testes)
+- JUnit 5 (para testes)
 
 ## Instalação
 
-1. **Clone o Repositório:**
-    ```bash
-    git clone https://github.com/Leonardobern10/Back-end-car-app.git
-    ```
+Para rodar este projeto localmente, siga os passos abaixo:
 
-2. **Navegue até o Diretório do Projeto:**
-    ```bash
-    cd Back-end-car-app
-    ```
+1. **Clone o repositório**
 
-3. **Configure o Banco de Dados:**
-   - Crie um banco de dados conforme especificado em `src/main/resources/application.properties`.
-   - Ajuste as credenciais e URL de conexão conforme necessário.
+   ```bash
+   git clone https://github.com/seu-usuario/seu-repositorio.git
+   ```
 
-4. **Instale as Dependências:**
-    ```bash
-    ./mvnw install
-    ```
+2. **Navegue até o diretório do projeto**
 
-5. **Execute o Projeto:**
-    ```bash
-    ./mvnw spring-boot:run
-    ```
+   ```bash
+   cd seu-repositorio
+   ```
 
-6. **Acesse a API:**
-   - A API estará disponível em `http://localhost:8080`.
+3. **Compile e execute o projeto**
+
+   Com o Maven:
+
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+
+   Com o Gradle:
+
+   ```bash
+   ./gradlew bootRun
+   ```
+
+4. **Acesse a API**
+
+   A API estará disponível em [http://localhost:8080/cars](http://localhost:8080/cars).
 
 ## Uso
 
-- **Endpoints:**
-    - **GET /vehicles** - Retorna a lista de todos os veículos.
-    - **POST /vehicles** - Adiciona um novo veículo.
-    - **PUT /vehicles/{id}** - Atualiza um veículo existente.
-    - **DELETE /vehicles/{id}** - Exclui um veículo.
+Você pode testar a API utilizando ferramentas como Postman ou curl. Abaixo estão exemplos de requisições:
 
-- **Autenticação:**
-    - **Usuário:** `user` / Senha: `password`
-    - **Administrador:** `admin` / Senha: `admin`
+- **GET todos os carros**
+
+   ```bash
+   curl -X GET http://localhost:8080/cars
+   ```
+
+- **GET um carro por ID**
+
+   ```bash
+   curl -X GET http://localhost:8080/cars/1
+   ```
+
+- **POST criar um novo carro**
+
+   ```bash
+   curl -X POST http://localhost:8080/cars -H "Content-Type: application/json" -d '{"model": "Model S", "url": "http://example.com/model-s", "carValue": 75000.0}'
+   ```
+
+- **PUT atualizar um carro existente**
+
+   ```bash
+   curl -X PUT http://localhost:8080/cars/1 -H "Content-Type: application/json" -d '{"model": "Model S", "url": "http://example.com/model-s", "carValue": 80000.0}'
+   ```
+
+- **DELETE um carro**
+
+   ```bash
+   curl -X DELETE http://localhost:8080/cars/1
+   ```
 
 ## Estrutura do Projeto
 
-- **`src/main/java/com/example/carapp`** - Código fonte da aplicação.
-  - **`controller`** - Contém os controladores REST.
-  - **`service`** - Contém a lógica de negócios.
-  - **`repository`** - Contém as interfaces de repositório.
-  - **`model`** - Contém as entidades JPA.
-- **`src/main/resources`** - Arquivos de configuração e recursos.
-  - **`application.properties`** - Configurações do Spring Boot.
-- **`src/test/java/com/example/carapp`** - Testes da aplicação.
+- **config**: Configurações da aplicação, como CORS.
+- **controller**: Controladores REST para gerenciar as requisições HTTP.
+- **exceptions**: Classes para tratamento de exceções personalizadas.
+- **model**: Entidades do banco de dados.
+- **repository**: Repositórios JPA para operações de banco de dados.
+- **service**: Serviços de lógica de negócio e validação.
+- **validations**: Validações de dados para as entidades.
+- **Handler**: Classe para tratamento global de exceções.
+- **Main**: Classe principal para inicialização da aplicação.
 
 ## Contribuição
 
-1. **Faça um Fork do Repositório.**
-2. **Crie uma Branch para sua Feature:**
-    ```bash
-    git checkout -b minha-feature
-    ```
-3. **Commit suas Mudanças:**
-    ```bash
-    git commit -am 'Adiciona nova feature'
-    ```
-4. **Push para a Branch:**
-    ```bash
-    git push origin minha-feature
-    ```
-5. **Abra um Pull Request.**
+Sinta-se à vontade para contribuir com este projeto. Se você encontrar algum bug ou tiver sugestões de melhorias, por favor, abra uma issue ou um pull request.
 
 ## Licença
 
-Distribuído sob a Licença MIT. Veja `LICENSE` para mais informações.
+Este projeto está licenciado sob a [Licença MIT](LICENSE).
 
 ## Contato
 
-- **Autor:** Leonardo Bernardo
-- **E-mail:** [leonardo.bernardo2658@gmail.com](mailto:leonardo.bernardo2658@gmail.com)
-- **GitHub:** [Leonardobern10](https://github.com/Leonardobern10)
+Para mais informações, entre em contato com [leonardo.bernardo2658@gmail.com](mailto:leonardo.bernardo2658@gmail.com).
+Também estou disponível no LinkedIn: [LinkedIn](https://www.linkedin.com/in/leonardo-bern/).
