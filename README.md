@@ -1,174 +1,95 @@
-# Projeto de Aplicação de Carros com Front-end e Back-end
-
-Este projeto consiste em uma aplicação completa para gestão de carros, composta por um back-end desenvolvido em Spring Boot com JPA e um front-end construído com React. A aplicação permite a criação, leitura, atualização e exclusão de informações sobre carros, e é ideal para entender a integração entre um backend e um frontend.
+# Back-end Car App
+Back-end Car App é uma aplicação backend desenvolvida com Spring Boot para gerenciar informações de veículos. Este projeto fornece uma API RESTful robusta que permite aos usuários adicionar, visualizar, atualizar e excluir veículos. O sistema implementa autenticação e autorização com diferentes roles, garantindo que apenas usuários autorizados possam realizar operações específicas. Utilizando boas práticas de programação e segurança, o projeto é ideal para quem deseja entender e aplicar conceitos de desenvolvimento backend em um contexto prático e eficiente.
 
 ## Funcionalidades
 
-### Back-end
+- **Gerenciamento de Veículos:** Adicione, visualize, atualize e exclua veículos.
+- **Autenticação e Autorização:** Proteja endpoints com roles `USER` e `ADMIN`.
+- **Consultas Avançadas:** Filtre e busque veículos com base em critérios específicos.
+- **Validação:** Valide dados de entrada para garantir a integridade.
 
-- **CRUD de Carros**: Operações básicas para gerenciar carros no banco de dados.
-- **Persistência**: Utiliza PostgreSQL para armazenamento de dados.
-- **Endpoints**:
-  - **GET /cars**: Lista todos os carros.
-  - **GET /cars/{id}**: Recupera um carro específico pelo ID.
-  - **POST /cars**: Adiciona um novo carro.
-  - **PUT /cars/{id}**: Atualiza um carro existente.
-  - **DELETE /cars/{id}**: Remove um carro pelo ID.
+## Habilidades Abordadas
 
-### Front-end
+- **Desenvolvimento com Spring Boot:** Criação de APIs RESTful.
+- **Segurança com Spring Security:** Implementação de autenticação e autorização.
+- **Gerenciamento de Banco de Dados:** Utilização de JPA/Hibernate para persistência de dados.
+- **Boas Práticas de Programação:** Organização de código, refatoração e testes.
 
-- **Interface de Usuário**: Aplicação React que consome a API do backend.
-- **Funcionalidades**:
-  - **Listagem de Carros**: Exibe todos os carros em uma tabela.
-  - **Detalhes do Carro**: Visualiza informações detalhadas de um carro.
-  - **Formulário de Adição/Atualização**: Permite adicionar ou atualizar carros.
-  - **Exclusão de Carro**: Remove um carro da lista.
+## Instalação
 
-## Tecnologias Utilizadas
+1. **Clone o Repositório:**
+    ```bash
+    git clone https://github.com/Leonardobern10/Back-end-car-app.git
+    ```
 
-### Back-end
+2. **Navegue até o Diretório do Projeto:**
+    ```bash
+    cd Back-end-car-app
+    ```
 
-- **Java**: Linguagem de programação principal.
-- **Spring Boot**: Framework para desenvolvimento de aplicações Java.
-- **JPA (Jakarta Persistence API)**: Para gerenciamento de dados.
-- **PostgreSQL**: Banco de dados relacional.
-- **Spring Security**: Para autenticação e autorização (opcional).
-- **JUnit**: Framework para testes unitários e de integração.
+3. **Configure o Banco de Dados:**
+   - Crie um banco de dados conforme especificado em `src/main/resources/application.properties`.
+   - Ajuste as credenciais e URL de conexão conforme necessário.
 
-### Front-end
+4. **Instale as Dependências:**
+    ```bash
+    ./mvnw install
+    ```
 
-- **JavaScript (ES6+)**: Linguagem de programação principal.
-- **React**: Biblioteca para construção de interfaces de usuário.
-- **React Router**: Gerenciamento de navegação e rotas.
-- **Axios**: Biblioteca para realizar requisições HTTP.
-- **Bootstrap**: Framework para estilização e design responsivo.
+5. **Execute o Projeto:**
+    ```bash
+    ./mvnw spring-boot:run
+    ```
 
-## Configuração do Projeto
+6. **Acesse a API:**
+   - A API estará disponível em `http://localhost:8080`.
 
-### Back-end
+## Uso
 
-#### Requisitos
+- **Endpoints:**
+    - **GET /vehicles** - Retorna a lista de todos os veículos.
+    - **POST /vehicles** - Adiciona um novo veículo.
+    - **PUT /vehicles/{id}** - Atualiza um veículo existente.
+    - **DELETE /vehicles/{id}** - Exclui um veículo.
 
-- **Java JDK 17 ou superior**
-- **Maven 3.8 ou superior**
-- **PostgreSQL**
-
-#### Configuração do Banco de Dados
-
-1. **Crie um banco de dados PostgreSQL**:
-
-   ```sql
-   CREATE DATABASE nome_do_banco;
-   ```
-
-2. **Configure as credenciais do banco de dados no arquivo `src/main/resources/application.properties`**:
-
-   ```properties
-   spring.datasource.url=jdbc:postgresql://localhost:5432/nome_do_banco
-   spring.datasource.username=seu_usuario
-   spring.datasource.password=sua_senha
-   ```
-
-3. **Execute a aplicação**:
-
-   ```bash
-   mvn spring-boot:run
-   ```
-
-   A aplicação será iniciada na porta padrão `8080`.
-
-### Front-end
-
-#### Requisitos
-
-- **Node.js**: Inclui npm (ou yarn) para gerenciamento de pacotes.
-- **npm ou yarn**: Gerenciador de pacotes.
-
-#### Configuração do Front-end
-
-1. **Navegue até o diretório do frontend**:
-
-   ```bash
-   cd frontend
-   ```
-
-2. **Instale as dependências**:
-
-   ```bash
-   npm install
-   # ou
-   yarn install
-   ```
-
-3. **Configure o endpoint da API** no arquivo `src/api/Api.js`:
-
-   ```javascript
-   const API_BASE_URL = 'http://localhost:8080';
-   ```
-
-4. **Execute a aplicação**:
-
-   ```bash
-   npm start
-   # ou
-   yarn start
-   ```
-
-   A aplicação será iniciada na porta padrão `3000`.
+- **Autenticação:**
+    - **Usuário:** `user` / Senha: `password`
+    - **Administrador:** `admin` / Senha: `admin`
 
 ## Estrutura do Projeto
 
-### Back-end
+- **`src/main/java/com/example/carapp`** - Código fonte da aplicação.
+  - **`controller`** - Contém os controladores REST.
+  - **`service`** - Contém a lógica de negócios.
+  - **`repository`** - Contém as interfaces de repositório.
+  - **`model`** - Contém as entidades JPA.
+- **`src/main/resources`** - Arquivos de configuração e recursos.
+  - **`application.properties`** - Configurações do Spring Boot.
+- **`src/test/java/com/example/carapp`** - Testes da aplicação.
 
-- **src/main/java/com/seuprojeto/controller**: Controladores da API.
-- **src/main/java/com/seuprojeto/model**: Entidades JPA.
-- **src/main/java/com/seuprojeto/repository**: Repositórios JPA.
-- **src/main/java/com/seuprojeto/service**: Serviços da aplicação.
-- **src/main/java/com/seuprojeto/config**: Configurações do Spring Boot.
+## Contribuição
 
-### Front-end
-
-- **src/components**: Componentes React.
-- **src/pages**: Páginas principais da aplicação.
-- **src/api**: Funções para interação com a API backend.
-- **src/styles**: Arquivos de estilo.
-
-## Executando os Testes
-
-### Back-end
-
-Para executar os testes unitários e de integração:
-
-```bash
-mvn test
-```
-
-### Front-end
-
-Para executar os testes:
-
-```bash
-npm test
-# ou
-yarn test
-```
-
-## Contribuindo
-
-Se desejar contribuir para o projeto, por favor, siga estas etapas:
-
-1. Faça um fork do repositório.
-2. Crie uma branch para a sua feature (`git checkout -b minha-feature`).
-3. Faça commit das suas alterações (`git commit -am 'Adiciona nova feature'`).
-4. Envie a branch para o repositório remoto (`git push origin minha-feature`).
-5. Abra um Pull Request.
+1. **Faça um Fork do Repositório.**
+2. **Crie uma Branch para sua Feature:**
+    ```bash
+    git checkout -b minha-feature
+    ```
+3. **Commit suas Mudanças:**
+    ```bash
+    git commit -am 'Adiciona nova feature'
+    ```
+4. **Push para a Branch:**
+    ```bash
+    git push origin minha-feature
+    ```
+5. **Abra um Pull Request.**
 
 ## Licença
 
-Este projeto está licenciado sob a [MIT License](LICENSE).
+Distribuído sob a Licença MIT. Veja `LICENSE` para mais informações.
 
 ## Contato
 
-Para mais informações, entre em contato com [leonardo.bernardo2658@gmail.com](mailto:leonardo.bernardo2658@gmail.com).
-<br />
-Pode me encontrar também no [LinkedIn](https://www.linkedin.com/in/leonardo-bern/).
+- **Autor:** Leonardo Bernardo
+- **E-mail:** [leonardo.bernardo2658@gmail.com](mailto:leonardo.bernardo2658@gmail.com)
+- **GitHub:** [Leonardobern10](https://github.com/Leonardobern10)
