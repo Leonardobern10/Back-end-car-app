@@ -1,10 +1,12 @@
 package org.example.model;
 
 import jakarta.persistence.*;
+import org.springframework.stereotype.Component;
 
 /**
  * Classe representativa dos dados armazenados no banco de dados
  * */
+@Component
 @Entity( name = "cars" )
 @Table( name = "cars" )
 public class Cars {

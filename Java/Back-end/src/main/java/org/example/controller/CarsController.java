@@ -1,5 +1,8 @@
 package org.example.controller;
 
+import org.example.exceptions.FieldDoubleInvalid;
+import org.example.exceptions.FieldIntegerInvalid;
+import org.example.exceptions.FieldStringInvalid;
 import org.example.model.Cars;
 import org.example.service.CarsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,20 +38,19 @@ public class CarsController {
      * */
     @CrossOrigin( origins = "http://localhost:5173" )
     @GetMapping("/{id}")
-    public ResponseEntity<Cars> getById(@PathVariable int id) {
-        Cars temp = carsService.getById(id);
-        return new ResponseEntity<>(temp, HttpStatus.OK);
+    public ResponseEntity<Cars> getById(@PathVariable int id) throws RuntimeException {
+        Cars car = carsService.getById(id);
+        return new ResponseEntity<>(car, HttpStatus.OK);
     }
 
     /**
      * Permite a criação de um registro especifico no banco de dados.
      * */
     @CrossOrigin( origins = "http://localhost:5173" )
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Cars> createCar(@RequestBody Cars car) {
-        Cars newCar = new Cars(car.getModel(), car.getUrl(), car.getCarValue());
-        Cars insertedCar = carsService.saveCar(newCar);
-        return new ResponseEntity<>(insertedCar, HttpStatus.CREATED);
+        Cars savedCar = carsService.saveCar(car);
+        return new ResponseEntity<>(savedCar, HttpStatus.CREATED);
     }
 
     /**

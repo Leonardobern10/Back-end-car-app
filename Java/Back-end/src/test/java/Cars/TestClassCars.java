@@ -57,14 +57,14 @@ public class TestClassCars extends TestRoutine {
     @Test
     @DisplayName("Verificando a adição de valores para preços...")
     void checkValue() {
-        carsWithParams.setCarValue(0);
-        carsWithoutParams.setCarValue(0);
+        carsWithParams.setCarValue(0.0);
+        carsWithoutParams.setCarValue(0.0);
         assertAll(() -> {
             assertInstanceOf(Double.class, carsWithParams.getCarValue());
-            assertEquals(0, carsWithParams.getCarValue());
+            assertEquals(0.0, carsWithParams.getCarValue());
         }, () -> {
             assertInstanceOf(Double.class, carsWithoutParams.getCarValue());
-            assertEquals(0, carsWithoutParams.getCarValue());
+            assertEquals(0.0, carsWithoutParams.getCarValue());
         });
     }
 

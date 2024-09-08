@@ -5,10 +5,15 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class TestRoutine {
     static int counter = 0;
+
+    @Autowired
     final Cars carsWithoutParams = new Cars();
+
+    @Autowired
     final Cars carsWithParams = new Cars("nameTest", "urlTest", 1500);
 
     @BeforeAll
@@ -29,6 +34,7 @@ public class TestRoutine {
 
     @BeforeEach
     void initTest() {
+
         counter++;
         System.out.println("Iniciando um novo teste... " + counter);
     }
