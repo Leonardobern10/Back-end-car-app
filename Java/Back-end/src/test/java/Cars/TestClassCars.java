@@ -1,68 +1,90 @@
 package Cars;
 
 import org.junit.jupiter.api.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Classe de testes para verificar a funcionalidade da classe {@link Cars}.
+ *
+ * <p>Esta classe contém testes unitários que verificam a criação de instâncias da classe {@link Cars},
+ * a geração de IDs, a definição de propriedades como modelo, URL e valor do carro.</p>
+ */
 public class TestClassCars extends TestRoutine {
 
+    /**
+     * Testa a criação de instâncias da classe {@link Cars} com e sem parâmetros.
+     * Verifica se as instâncias são criadas corretamente.
+     */
     @Test
     @DisplayName("Verificando a instanciação da classe com e sem parâmetros...")
     void checkInstance() {
-        assertAll(
-                () -> assertNotNull(carsWithoutParams),
-                () -> assertNotNull(carsWithParams)
-        );
+        assertNotNull(carsWithoutParams, "A instância sem parâmetros deve ser criada");
+        assertNotNull(carsWithParams, "A instância com parâmetros deve ser criada");
     }
 
+    /**
+     * Testa a geração de IDs aleatórios para as instâncias da classe {@link Cars}.
+     * Verifica se os IDs são do tipo {@link Integer} e se são maiores ou iguais a zero.
+     */
     @Test
     @DisplayName("Verificando a geração aleatória de IDs...")
     void checkIdGeneration() {
-        assertAll(
-                () -> {
-                assertInstanceOf(Integer.class, carsWithoutParams.getCarId());
-                assertTrue(carsWithoutParams.getCarId() >= 0,
-                    "ID deve ser sempre maior ou igual a zero.");
-        }, () -> {
-                assertInstanceOf(Integer.class, carsWithParams.getCarId());
-                assertTrue(carsWithParams.getCarId() >= 0,
-                    "ID deve ser sempre maior ou igual a zero.");
-        });
+        assertAll("IDs devem ser válidos",
+                () -> assertInstanceOf(Integer.class, carsWithoutParams.getCarId()),
+                () -> assertTrue(carsWithoutParams.getCarId() >= 0,"ID deve ser sempre maior ou igual a zero."),
+                () -> assertInstanceOf(Integer.class, carsWithParams.getCarId()),
+                () -> assertTrue(carsWithParams.getCarId() >= 0,"ID deve ser sempre maior ou igual a zero.")
+        );
     }
 
+    /**
+     * Testa a definição do modelo do carro nas instâncias da classe {@link Cars}.
+     * Verifica se o modelo é definido e recuperado corretamente.
+     */
     @Test
     @DisplayName("Verificando a definição de modelos de carros...")
     void checkSetterModel() {
-        carsWithParams.setModel("String inserida para test...");
-        carsWithoutParams.setModel("String inserida para test...");
-        assertAll(
+        String testModel = "String inserida para test...";
+        carsWithParams.setModel(testModel);
+        carsWithoutParams.setModel(testModel);
+        assertAll("Modelos devem ser definidos corretamente",
                 () -> assertEquals("String inserida para test...", carsWithParams.getModel()),
                 () ->assertEquals("String inserida para test...", carsWithoutParams.getModel())
         );
     }
 
+
+    /**
+     * Testa a definição da URL do carro nas instâncias da classe {@link Cars}.
+     * Verifica se a URL é definida e recuperada corretamente.
+     */
     @Test
     @DisplayName("Verificando a definição de URL...")
     void checkUrlDefinition() {
-        carsWithParams.setUrl("URL para test...");
-        carsWithoutParams.setUrl("URL para test...");
-        assertAll(
+        String testUrl = "URL para test...";
+        carsWithParams.setUrl(testUrl);
+        carsWithoutParams.setUrl(testUrl);
+        assertAll("URLs devem ser definidas corretamente",
                 () -> assertEquals("URL para test...", carsWithParams.getUrl()),
                 () -> assertEquals("URL para test...", carsWithoutParams.getUrl())
         );
     }
 
+    /**
+     * Testa a definição do valor do carro nas instâncias da classe {@link Cars}.
+     * Verifica se o valor é definido como {@link Double} e se é igual ao valor esperado.
+     */
     @Test
     @DisplayName("Verificando a adição de valores para preços...")
     void checkValue() {
-        carsWithParams.setCarValue(0.0);
-        carsWithoutParams.setCarValue(0.0);
-        assertAll(() -> {
-            assertInstanceOf(Double.class, carsWithParams.getCarValue());
-            assertEquals(0.0, carsWithParams.getCarValue());
-        }, () -> {
-            assertInstanceOf(Double.class, carsWithoutParams.getCarValue());
-            assertEquals(0.0, carsWithoutParams.getCarValue());
-        });
+        double testValues = 0.0;
+        carsWithParams.setCarValue(testValues);
+        carsWithoutParams.setCarValue(testValues);
+        assertAll(
+                () -> assertInstanceOf(Double.class, carsWithParams.getCarValue()),
+                () -> assertEquals(0.0, carsWithParams.getCarValue()),
+                () -> assertInstanceOf(Double.class, carsWithoutParams.getCarValue()),
+                () -> assertEquals(0.0, carsWithoutParams.getCarValue())
+        );
     }
 }

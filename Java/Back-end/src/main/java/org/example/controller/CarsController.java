@@ -73,6 +73,10 @@ public class CarsController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Cars> updatedCar(@PathVariable int id, @RequestBody Cars cars) {
+        if (cars == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         Cars oldCar = carsService.getById(id);
 
         // Atualiza os dados do carro usando o método buildUpdatedCar
