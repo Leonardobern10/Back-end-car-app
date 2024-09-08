@@ -109,5 +109,5 @@ Este projeto está licenciado sob a [Licença MIT](LICENSE).
 
 ## Contato
 
-Para mais informações, entre em contato com [seu-email@example.com](mailto:seu-email@example.com).
+Para mais informações, entre em contato com [leonardo.bernardo2658@gmail.com](mailto:leonardo.bernardo2658@gmail.com).
 Também estou disponível no LinkedIn: [LinkedIn](https://www.linkedin.com/in/leonardo-bern/).
