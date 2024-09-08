@@ -29,10 +29,6 @@ public class Cars {
         return carId;
     }
 
-    public void setCar_id(int carId) {
-        this.carId = carId;
-    }
-
     public String getModel() {
         return model;
     }
@@ -56,4 +52,6 @@ public class Cars {
     public void setCarValue(double carValue) {
         this.carValue = carValue;
     }
+
+
 }

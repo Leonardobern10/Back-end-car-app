@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.exceptions.*;
 import org.example.model.Cars;
 import org.example.service.CarsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Classe responsável pelo gerenciamento de requisições.
- * */
+ * Classe responsável pelo gerenciamento de requisições relacionadas a carros.
+ */
 @RestController
 @RequestMapping("/cars")
 public class CarsController {
@@ -20,18 +21,22 @@ public class CarsController {
     private CarsService carsService;
 
     /**
-     * Método que quando feita a requisição GET retorna os
-     * dados de todos os registros do banco de dados.
-     * */
+     * Recupera todos os carros armazenados no banco de dados.
+     *
+     * @return uma lista contendo todos os carros registrados no banco de dados.
+     */
     @GetMapping
     public List<Cars> getAllCars() {
         return carsService.getAllCars();
     }
 
     /**
-     * {Param} Recebe o id de um registro.
-     * Retorna o dado de um registro especifico do banco de dados.
-     * */
+     * Recupera um carro específico com base no ID fornecido.
+     *
+     * @param id o ID do carro a ser recuperado
+     * @return ResponseEntity contendo o carro encontrado e o status HTTP 200 (OK)
+     * @throws ResourceNotFoundException se o carro com o ID fornecido não for encontrado
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Cars> getById(@PathVariable int id) throws RuntimeException {
         Cars car = carsService.getById(id);
@@ -39,8 +44,15 @@ public class CarsController {
     }
 
     /**
-     * Permite a criação de um registro especifico no banco de dados.
-     * */
+     * Cria um novo carro no banco de dados.
+     *
+     * @param car o objeto Cars passado no corpo da requisição
+     * @return ResponseEntity contendo o carro salvo e o status HTTP 201 (Created)
+     * @throws FieldIntegerInvalidException se o campo ID for inválido
+     * @throws FieldStringInvalidException se algum campo de string for inválido
+     * @throws FieldDoubleInvalidException se o valor do carro for inválido
+     * @throws DuplicatedFoundException se um carro duplicado for encontrado
+     */
     @PostMapping
     public ResponseEntity<Cars> createCar(@RequestBody Cars car) {
         Cars savedCar = carsService.saveCar(car);
@@ -48,24 +60,38 @@ public class CarsController {
     }
 
     /**
-     * {Params: id do elemento a ser atualizado; corpo contendo as propriedades do novo registro.}
-     * Permite a atualização dos dados de um registro recuperado por seu id.
-     * */
+     * Atualiza os dados de um carro existente com base no ID fornecido.
+     *
+     * @param id o ID do carro a ser atualizado
+     * @param cars o objeto Cars contendo os novos dados a serem aplicados
+     * @return ResponseEntity contendo o carro atualizado e o status HTTP 200 (OK)
+     * @throws ResourceNotFoundException se o carro com o ID fornecido não for encontrado
+     * @throws FieldIntegerInvalidException se o campo ID for inválido
+     * @throws FieldStringInvalidException se algum campo de string for inválido
+     * @throws FieldDoubleInvalidException se o valor do carro for inválido
+     * @throws DuplicatedFoundException se um carro duplicado for encontrado
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Cars> updatedCar(@PathVariable int id, @RequestBody Cars cars) {
         Cars oldCar = carsService.getById(id);
-        oldCar.setCar_id(id);
-        oldCar.setModel(cars.getModel());
-        oldCar.setUrl(cars.getUrl());
-        oldCar.setCarValue(cars.getCarValue());
+
+        // Atualiza os dados do carro usando o método buildUpdatedCar
+        oldCar = carsService.buildUpdatedCar(oldCar, cars.getModel(), cars.getUrl(), cars.getCarValue());
+
+        // Salva as atualizações no banco de dados
         carsService.saveCar(oldCar);
+
+        // Retorna a resposta com o carro atualizado.
         return new ResponseEntity<>(oldCar, HttpStatus.OK);
     }
 
     /**
-     * {Param} Numero inteiro representando o id de um registro.
-     * Permite a remoção de um registro especifico no banco de dados.
-     * */
+     * Remove um carro específico do banco de dados com base no ID fornecido.
+     *
+     * @param id o ID do carro a ser removido
+     * @return ResponseEntity com o status HTTP 200 (OK) após a remoção bem-sucedida
+     * @throws ResourceNotFoundException se o carro com o ID fornecido não for encontrado
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteCar(@PathVariable int id) {
         carsService.deleteCar(id);
