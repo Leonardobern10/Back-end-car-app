@@ -65,5 +65,4 @@ public class TestClassCars extends TestRoutine {
             assertEquals(0.0, carsWithoutParams.getCarValue());
         });
     }
-
 }
