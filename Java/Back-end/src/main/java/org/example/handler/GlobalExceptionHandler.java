@@ -1,4 +1,4 @@
-package org.example.Handler;
+package org.example.handler;
 
 import org.example.exceptions.*;
 import org.springframework.http.HttpStatus;
