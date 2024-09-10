@@ -5,15 +5,17 @@ import org.example.exceptions.DuplicatedFoundException;
 import org.example.model.Cars;
 import org.example.repository.CarsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Classe responsável pela validação de duplicidade de carros.
  * Fornece um método estático para verificar se um carro já existe no repositório.
  */
+@Component
 public class DuplicatedFoundValidation {
 
     @Autowired
-    private static CarsRepository carsRepository;
+    private CarsRepository carsRepository;
 
     @Autowired
     private final Cars car = new Cars();
@@ -26,9 +28,9 @@ public class DuplicatedFoundValidation {
      * @param car o carro a ser validado
      * @throws DuplicatedFoundException se um carro com o mesmo ID já existir no repositório
      */
-    public static void validate (Cars car) {
+    public void validate (Cars car) {
         if (carsRepository.existsById(car.getCarId())){
-            throw new DuplicatedFoundException("IT'S NOT POSSIBLE TO SAVE THAT DATA");
+            throw new DuplicatedFoundException("IT'S NOT POSSIBLE TO SAVE THAT ID" + car.getCarId());
         }
     }
 }

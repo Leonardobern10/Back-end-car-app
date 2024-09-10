@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CarsService {
@@ -17,6 +18,24 @@ public class CarsService {
      */
     @Autowired
     private CarsRepository carsRepository;
+
+    /**
+     * Injeta uma instância de carStringValidation
+     */
+    @Autowired
+    private CarStringValidation carStringValidation;
+
+    /**
+     * Injeta uma instância de carValidations
+     */
+    @Autowired
+    private CarValidations carValidations;
+
+    /**
+     * Injeta uma instância de carBuilder
+     */
+    @Autowired
+    private CarBuilder carBuilder;
 
     /**
      * Recupera todos os registros de carros armazenados no banco de dados.
@@ -34,10 +53,13 @@ public class CarsService {
      * @return o objeto Cars correspondente ao ID fornecido.
      * @throws ResourceNotFoundException se o carro com o ID fornecido não for encontrado.
      */
-    public Cars getById(int id) {
-        return carsRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("ID INVALIDO")
-        );
+    public Optional<Cars> getById(int id) {
+        try {
+            carValidations.validateCarExistence(id);
+            return carsRepository.findById(id);
+        } catch (ResourceNotFoundException e) {
+            throw e;
+        }
     }
 
     /**
@@ -52,11 +74,7 @@ public class CarsService {
      */
     public Cars saveCar(Cars car) {
         try {
-            CarIdValidation.validate(car.getCarId());
-            CarModelValidation.validate(car.getModel());
-            CarUrlValidation.validate(car.getUrl());
-            CarValueValidation.validate(car.getCarValue());
-            DuplicatedFoundValidation.validate(car);
+            carValidations.validateSaveCar(car, car.getModel(), car.getUrl(), car.getCarValue()); ;
             return carsRepository.save(car);
         } catch (FieldIntegerInvalidException | FieldStringInvalidException | FieldDoubleInvalidException | DuplicatedFoundException e) {
             throw e;  // Propaga a exceção para ser tratada pelo GlobalExceptionHandler
@@ -67,33 +85,39 @@ public class CarsService {
      * Remove um carro do banco de dados com base no ID fornecido.
      *
      * @param id o ID do carro a ser removido.
+     * @throws ResourceNotFoundException se o carro com o ID fornecido não for encontrado.
      */
     public void deleteCar(int id) {
-        carsRepository.deleteById(id);
+        try {
+            carValidations.validateCarExistence(id);
+            carsRepository.deleteById(id);
+        } catch (ResourceNotFoundException e) {
+            throw e;
+        }
     }
 
     /**
-     * Atualiza os dados de um carro existente com os novos valores fornecidos.
+     * Atualiza um carro existente no banco de dados com base no ID fornecido.
      *
-     * @param car o objeto Cars já existente a ser atualizado
-     * @param model o novo modelo do carro
-     * @param url a nova URL da imagem do carro
-     * @param carValue o novo valor do carro
-     * @return o objeto Cars atualizado.
-     * @throws FieldStringInvalidException se o modelo ou a URL forem inválidos.
+     * @param id o ID do carro a ser atualizado.
+     * @param car o objeto Cars contendo as informações atualizadas.
+     * @return o objeto Cars atualizado que foi salvo no banco de dados.
+     * @throws ResourceNotFoundException se o carro com o ID fornecido não for encontrado.
+     * @throws FieldStringInvalidException se o campo model ou url for inválido.
      * @throws FieldDoubleInvalidException se o valor do carro for inválido.
+     * @throws FieldIntegerInvalidException se o campo ID for inválido.
      */
-    public Cars buildUpdatedCar(Cars car, String model, String url, double carValue) {
+    public Cars updateCar(int id, Cars car) {
         try {
-            CarModelValidation.validate(model);
-            CarUrlValidation.validate(url);
-            CarValueValidation.validate(carValue);
-            car.setModel(model);
-            car.setUrl(url);
-            car.setCarValue(carValue);
-            return car;
-        } catch (FieldIntegerInvalidException | FieldStringInvalidException | FieldDoubleInvalidException | DuplicatedFoundException e) {
-            throw e;  // Propaga a exceção para ser tratada pelo GlobalExceptionHandler
+            carValidations.validateCarExistence(id);
+            Cars oldCar = carsRepository.findById(id).orElseThrow();
+            carValidations.validateUpdatedInformations(car.getModel(), car.getUrl(), car.getCarValue());
+            Cars updatedCar = carBuilder.builder(oldCar, car.getModel(), car.getUrl(), car.getCarValue());
+            return carsRepository.save(updatedCar);  // Salva o carro atualizado no banco de dados
+        }catch (ResourceNotFoundException | FieldStringInvalidException | FieldDoubleInvalidException | FieldIntegerInvalidException e) {
+            throw e;
         }
     }
+
+
 }

@@ -18,6 +18,6 @@ public class CarIdValidation {
      */
     public static void validate(int id) {
         if (id < 0)
-            throw new FieldIntegerInvalidException("ID INVÁLIDO!");
+            throw new FieldIntegerInvalidException("FIELD ID IS INVALID");
     }
 }

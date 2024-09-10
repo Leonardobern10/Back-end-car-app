@@ -39,7 +39,7 @@ public class CarsController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Cars> getById(@PathVariable int id) throws RuntimeException {
-        Cars car = carsService.getById(id);
+        Cars car = carsService.getById(id).orElseThrow();
         return new ResponseEntity<>(car, HttpStatus.OK);
     }
 
@@ -73,20 +73,8 @@ public class CarsController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Cars> updatedCar(@PathVariable int id, @RequestBody Cars cars) {
-        if (cars == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        Cars oldCar = carsService.getById(id);
-
-        // Atualiza os dados do carro usando o método buildUpdatedCar
-        oldCar = carsService.buildUpdatedCar(oldCar, cars.getModel(), cars.getUrl(), cars.getCarValue());
-
-        // Salva as atualizações no banco de dados
-        carsService.saveCar(oldCar);
-
-        // Retorna a resposta com o carro atualizado.
-        return new ResponseEntity<>(oldCar, HttpStatus.OK);
+        Cars updatedCar = carsService.updateCar(id, cars);
+        return new ResponseEntity<>(updatedCar, HttpStatus.OK);
     }
 
     /**

@@ -21,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Testes para o controlador de carros.
@@ -51,18 +52,8 @@ public class TestController extends TestRoutine {
 
         // Configurando o mock para o serviço
         Mockito.when(carsService.getAllCars()).thenReturn(allCars);
-        Mockito.when(carsService.getById(1)).thenReturn(allCars.get(0));
+        Mockito.when(carsService.getById(1)).thenReturn(Optional.ofNullable(allCars.get(0)));
         Mockito.when(carsService.saveCar(Mockito.any(Cars.class))).thenReturn(car3);
-
-        // Simular o comportamento esperado quando atualizar um registro de carro
-        Mockito.when(carsService.buildUpdatedCar(Mockito.any(Cars.class), Mockito.anyString(), Mockito.anyString(), Mockito.anyDouble()))
-                        .thenAnswer(invocation -> {
-                            Cars car = invocation.getArgument(0);
-                            car.setModel(invocation.getArgument(1));
-                            car.setUrl(invocation.getArgument(2));
-                            car.setCarValue(invocation.getArgument(3));
-                            return car;
-                        });
 
         // Simulando exceção de duplicação
         Mockito.doThrow(new DuplicatedFoundException("RESOURCE DUPLICATED"))
@@ -193,13 +184,21 @@ public class TestController extends TestRoutine {
      */
     @Test
     void shouldUpdateCar() throws Exception {
-        String updatedCarJson = "{\"model\": \"Model Z\", \"url\": \"http://example.com/modelz\", \"carValue\": 90000.0}";
+        // Define o JSON que será enviado na requisição PUT
+        String updatedCarJson = "{\"model\":\"Model Z\", \"url\":\"http://example.com/modelz\", \"carValue\":90000.0}";
 
+        // Cria o carro atualizado esperado
+        Cars updatedCar = new Cars("Model Z", "http://example.com/modelz", 90000.0);
+
+        // Configura o mock do serviço para retornar o carro atualizado
+        Mockito.when(carsService.updateCar(Mockito.eq(1), Mockito.any(Cars.class))).thenReturn(updatedCar);
+
+        // Realiza a requisição PUT para atualizar o carro
         mockMvc.perform(put("/cars/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(updatedCarJson))
-                .andExpect(status().isOk())
-                .andExpect(content().json("{\"model\":\"Model Z\",\"url\":\"http://example.com/modelz\",\"carValue\":90000.0}"));
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(updatedCarJson))
+                .andExpect(status().isOk())  // Verifica se o status da resposta é 200 OK
+                .andExpect(content().json(updatedCarJson));  // Verifica se o conteúdo da resposta corresponde ao JSON atualizado
     }
 
     /**
