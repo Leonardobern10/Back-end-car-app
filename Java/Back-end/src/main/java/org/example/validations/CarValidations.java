@@ -11,8 +11,10 @@ import java.util.List;
 
 /**
  * Classe responsável pela validação de informações relacionadas a carros.
+ * <p>
  * Fornece métodos para validar informações antes de salvar ou atualizar um carro,
  * bem como verificar a existência de um carro.
+ * </p>
  */
 @Component
 public class CarValidations {
@@ -25,11 +27,21 @@ public class CarValidations {
 
     /**
      * Valida as informações a serem atualizadas para um carro.
-     * Verifica se os campos de modelo e URL são válidos e se o valor do carro é aceitável.
+     * <p>
+     * Este método realiza validações nos campos do carro que estão sendo atualizados,
+     * incluindo o modelo, ano de produção, fabricante, URL da imagem, valor do carro,
+     * especificações, recursos e dimensões. Se qualquer uma dessas informações for inválida,
+     * uma exceção é lançada.
+     * </p>
      *
-     * @param model    o modelo do carro
-     * @param imageUrl a URL associada ao carro
-     * @param carValue o valor do carro
+     * @param model             o modelo do carro
+     * @param yearProduction    o ano de produção do carro
+     * @param producedBy        o fabricante do carro
+     * @param imageUrl          a URL associada ao carro
+     * @param carValue          o valor do carro
+     * @param specificationsCar as especificações do carro
+     * @param feature           uma lista de recursos do carro
+     * @param dimensionsCar     as dimensões do carro
      * @throws RuntimeException se algum dos parâmetros for inválido
      */
     public void validateUpdatedInformations ( String model, Integer yearProduction, String producedBy, String imageUrl,
@@ -47,13 +59,23 @@ public class CarValidations {
 
     /**
      * Valida as informações para salvar um carro.
-     * Verifica se o ID do carro é válido, se não há duplicatas, e valida os campos de modelo,
-     * URL e valor do carro.
+     * <p>
+     * Este método realiza validações nos campos do carro que está sendo salvo,
+     * incluindo o ID, modelo, ano de produção, fabricante, URL da imagem, valor do carro,
+     * especificações, recursos e dimensões. Além disso, verifica se o carro já existe
+     * para evitar duplicatas. Se qualquer uma dessas informações for inválida ou se o carro
+     * já existir, uma exceção é lançada.
+     * </p>
      *
-     * @param car      o objeto Cars a ser validado
-     * @param model    o modelo do carro
-     * @param imageUrl a URL associada ao carro
-     * @param carValue o valor do carro
+     * @param car               o objeto Cars a ser validado
+     * @param model             o modelo do carro
+     * @param yearProduction    o ano de produção do carro
+     * @param producedBy        o fabricante do carro
+     * @param imageUrl          a URL associada ao carro
+     * @param carValue          o valor do carro
+     * @param specificationsCar as especificações do carro
+     * @param feature           uma lista de recursos do carro
+     * @param dimensionsCar     as dimensões do carro
      * @throws RuntimeException se o ID for inválido, houver duplicatas, ou qualquer outro campo for inválido
      */
     public void validateSaveCar ( Cars car, String model, Integer yearProduction, String producedBy, String imageUrl,
@@ -73,7 +95,10 @@ public class CarValidations {
 
     /**
      * Valida a existência de um carro com base no ID fornecido.
-     * Verifica se um carro com o ID especificado existe.
+     * <p>
+     * Este método verifica se um carro com o ID especificado existe no repositório. Se o carro
+     * não for encontrado, uma exceção {@link ResourceNotFoundException} é lançada.
+     * </p>
      *
      * @param id o ID do carro a ser validado
      * @throws ResourceNotFoundException se o carro com o ID fornecido não for encontrado
