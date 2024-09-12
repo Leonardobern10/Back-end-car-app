@@ -22,9 +22,9 @@ public class IfCarsExistsValidation {
      * @param id o ID do carro a ser validado
      * @throws ResourceNotFoundException se o carro com o ID fornecido não for encontrado
      */
-    public void validate(int id) {
-        if (!carsRepository.existsById(id)) {
-            throw new ResourceNotFoundException("RESOURCE NOT FOUND FOR ID" + id);
+    public void validate ( String id ) {
+        if ( ! carsRepository.existsById( id ) ) {
+            throw new ResourceNotFoundException( "RESOURCE NOT FOUND FOR ID" + id );
         }
     }
 }

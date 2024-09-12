@@ -1,123 +1,128 @@
 package org.example.service;
 
-import org.example.exceptions.*;
 import org.example.model.Cars;
 import org.example.repository.CarsRepository;
 import org.example.validations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CarsService {
 
-    /**
-     * Injeta uma instância de carsRepository
-     */
     @Autowired
     private CarsRepository carsRepository;
 
-    /**
-     * Injeta uma instância de carStringValidation
-     */
     @Autowired
     private CarStringValidation carStringValidation;
 
-    /**
-     * Injeta uma instância de carValidations
-     */
     @Autowired
     private CarValidations carValidations;
 
-    /**
-     * Injeta uma instância de carBuilder
-     */
     @Autowired
     private CarBuilder carBuilder;
 
-    /**
-     * Recupera todos os registros de carros armazenados no banco de dados.
-     *
-     * @return uma lista contendo todos os objetos Cars armazenados.
-     */
-    public List<Cars> getAllCars() {
+    public List<Cars> getAllCars () {
         return carsRepository.findAll();
     }
 
-    /**
-     * Recupera um registro de carro específico com base no ID fornecido.
-     *
-     * @param id o ID do carro a ser recuperado
-     * @return o objeto Cars correspondente ao ID fornecido.
-     * @throws ResourceNotFoundException se o carro com o ID fornecido não for encontrado.
-     */
-    public Optional<Cars> getById(int id) {
-        try {
-            carValidations.validateCarExistence(id);
-            return carsRepository.findById(id);
-        } catch (ResourceNotFoundException e) {
-            throw e;
-        }
+    @Cacheable( value = "carsByModel", key = "#model" )
+    public Cars getByModel ( String model ) {
+        return carsRepository.findByModel( model );
     }
 
-    /**
-     * Salva um novo carro no banco de dados após realizar validações.
-     *
-     * @param car o objeto Cars a ser salvo no banco de dados
-     * @return o objeto Cars que foi salvo no banco de dados.
-     * @throws FieldIntegerInvalidException se o campo ID for inválido.
-     * @throws FieldStringInvalidException se o campo model ou url for inválido.
-     * @throws FieldDoubleInvalidException se o valor do carro for inválido.
-     * @throws DuplicatedFoundException se um carro duplicado for encontrado.
-     */
-    public Cars saveCar(Cars car) {
-        try {
-            carValidations.validateSaveCar(car, car.getModel(), car.getUrl(), car.getCarValue()); ;
-            return carsRepository.save(car);
-        } catch (FieldIntegerInvalidException | FieldStringInvalidException | FieldDoubleInvalidException | DuplicatedFoundException e) {
-            throw e;  // Propaga a exceção para ser tratada pelo GlobalExceptionHandler
-        }
+    @Cacheable( value = "cars", key = "#id" )
+    public Cars getById ( String id ) {
+        String str = FormatInfo.check( id );
+        carValidations.validateCarExistence( str );
+        return carsRepository.findById( str ).orElseThrow();
     }
 
-    /**
-     * Remove um carro do banco de dados com base no ID fornecido.
-     *
-     * @param id o ID do carro a ser removido.
-     * @throws ResourceNotFoundException se o carro com o ID fornecido não for encontrado.
-     */
-    public void deleteCar(int id) {
-        try {
-            carValidations.validateCarExistence(id);
-            carsRepository.deleteById(id);
-        } catch (ResourceNotFoundException e) {
-            throw e;
-        }
+    @Cacheable( value = "carByValue", key = "#value" )
+    public List<Cars> getByValue ( Double value ) {
+        CarValueValidation.validate( value );
+        return carsRepository.findByValue( value );
     }
 
-    /**
-     * Atualiza um carro existente no banco de dados com base no ID fornecido.
-     *
-     * @param id o ID do carro a ser atualizado.
-     * @param car o objeto Cars contendo as informações atualizadas.
-     * @return o objeto Cars atualizado que foi salvo no banco de dados.
-     * @throws ResourceNotFoundException se o carro com o ID fornecido não for encontrado.
-     * @throws FieldStringInvalidException se o campo model ou url for inválido.
-     * @throws FieldDoubleInvalidException se o valor do carro for inválido.
-     * @throws FieldIntegerInvalidException se o campo ID for inválido.
-     */
-    public Cars updateCar(int id, Cars car) {
-        try {
-            carValidations.validateCarExistence(id);
-            Cars oldCar = carsRepository.findById(id).orElseThrow();
-            carValidations.validateUpdatedInformations(car.getModel(), car.getUrl(), car.getCarValue());
-            Cars updatedCar = carBuilder.builder(oldCar, car.getModel(), car.getUrl(), car.getCarValue());
-            return carsRepository.save(updatedCar);  // Salva o carro atualizado no banco de dados
-        }catch (ResourceNotFoundException | FieldStringInvalidException | FieldDoubleInvalidException | FieldIntegerInvalidException e) {
-            throw e;
-        }
+    @Cacheable( value = "carsByLessThanValue", key = "#lessValue" )
+    public List<Cars> getByLessThanValue ( Double value ) {
+        CarValueValidation.validate( value );
+        return carsRepository.findByLessThanValue( value );
     }
 
+    @Cacheable( value = "carByBiggerThanValue", key = "#biggerValue" )
+    public List<Cars> getBiggerThanValue ( Double value ) {
+        CarValueValidation.validate( value );
+        return carsRepository.findBiggerThanValue( value );
+    }
 
+    @Cacheable( value = "getByYear", key = "#year" )
+    public List<Cars> getByYear ( Integer year ) {
+        CarIntegerValidation.validate( year );
+        return carsRepository.findByYear( year );
+    }
+
+    @Cacheable( value = "carNewerYear", key = "#carNewerYear" )
+    public List<Cars> getNewerThanYear ( Integer year ) {
+        CarIntegerValidation.validate( year );
+        return carsRepository.findNewerThanYear( year );
+    }
+
+    @Cacheable( value = "carOlderYear", key = "#carOlderYear" )
+    public List<Cars> getOlderThanYear ( Integer year ) {
+        CarIntegerValidation.validate( year );
+        return carsRepository.findOlderThanYear( year );
+    }
+
+    @Cacheable( value = "carProducedBy", key = "#carProducedBy" )
+    public List<Cars> getProducedBy ( String producedBy ) {
+        String str = FormatInfo.check( producedBy );
+        return carsRepository.findProducedBy( str );
+    }
+
+    @Cacheable( value = "carEngineType", key = "#carEngineType" )
+    public List<Cars> getByEngineType ( String engineType ) {
+        String str = FormatInfo.check( engineType );
+        return carsRepository.findByEngineType( str );
+    }
+
+    @Cacheable( value = "carTopSpeed", key = "#carTopSpeed" )
+    public List<Cars> getByTopSpeed ( Integer topSpeed ) {
+        CarIntegerValidation.validate( topSpeed );
+        String searchFormat = topSpeed.toString() + " mph";
+        return carsRepository.findByTopSpeed( searchFormat );
+    }
+
+    @Cacheable( value = "carByFeature", key = "#carByFeature" )
+    public List<Cars> getByFeature ( String feature ) {
+        String str = FormatInfo.check( feature );
+        return carsRepository.findByFeature( str );
+    }
+
+    public Cars saveCar ( Cars car ) {
+        carValidations.validateSaveCar( car, car.getModel(), car.getYearProduction(), car.getProducedBy(),
+                car.getImageUrl(), car.getCarValue(), car.getSpecifications(), car.getFeatures(), car.getDimensions() );
+        return carsRepository.save( car );
+    }
+
+    @CacheEvict( value = "cars", key = "#id" )
+    public void deleteCar ( String id ) {
+        String str = FormatInfo.check( id );
+        carValidations.validateCarExistence( str );
+        carsRepository.deleteById( str );
+    }
+
+    @CachePut( value = "cars", key = "#car.id" )
+    public Cars updateCar ( String id, Cars car ) {
+        Cars oldCar = carsRepository.findById( id ).orElseThrow();
+        carValidations.validateUpdatedInformations( car.getModel(), car.getYearProduction(), car.getProducedBy(),
+                car.getImageUrl(), car.getCarValue(), car.getSpecifications(), car.getFeatures(), car.getDimensions() );
+        Cars updatedCar = carBuilder.builder( oldCar, car.getModel(), car.getYearProduction(), car.getProducedBy(),
+                car.getImageUrl(), car.getCarValue(), car.getSpecifications(), car.getFeatures(), car.getDimensions() );
+        return carsRepository.save( updatedCar );
+    }
 }

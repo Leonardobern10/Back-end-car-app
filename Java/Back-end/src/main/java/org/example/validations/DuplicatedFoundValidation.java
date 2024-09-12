@@ -17,7 +17,6 @@ public class DuplicatedFoundValidation {
     @Autowired
     private CarsRepository carsRepository;
 
-    @Autowired
     private final Cars car = new Cars();
 
     /**
@@ -28,9 +27,9 @@ public class DuplicatedFoundValidation {
      * @param car o carro a ser validado
      * @throws DuplicatedFoundException se um carro com o mesmo ID já existir no repositório
      */
-    public void validate (Cars car) {
-        if (carsRepository.existsById(car.getCarId())){
-            throw new DuplicatedFoundException("IT'S NOT POSSIBLE TO SAVE THAT ID" + car.getCarId());
+    public void validate ( Cars car ) {
+        if ( carsRepository.existsById( car.getId() ) ) {
+            throw new DuplicatedFoundException( "IT'S NOT POSSIBLE TO SAVE THAT ID" + car.getId() );
         }
     }
 }
