@@ -18,6 +18,7 @@ Este projeto é uma API para gerenciamento de carros, desenvolvida utilizando Sp
 - H2 Database (para testes)
 - Mockito (para testes)
 - JUnit 5 (para testes)
+- MongoDB
 
 ## Instalação
 
