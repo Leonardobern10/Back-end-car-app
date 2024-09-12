@@ -1,114 +1,328 @@
 # Car Management API
 
-Este projeto é uma API para gerenciamento de carros, desenvolvida utilizando Spring Boot com Java. A aplicação permite criar, ler, atualizar e excluir informações sobre carros, com validações de entrada e tratamento de exceções. É uma solução ideal para demonstrar habilidades em desenvolvimento back-end e gerenciamento de dados.
+O projeto **Car Management API** é uma aplicação desenvolvida com Spring Boot que fornece uma API RESTful para gerenciamento de carros. A API permite realizar operações CRUD em registros de carros, além de suportar pesquisa e filtragem por diferentes atributos. O projeto possui sistema de autenticação e é configurado para usar MongoDB e PostgreSQL para armazenamento de dados.
 
 ## Funcionalidades
 
-- **GET /cars**: Retorna todos os carros cadastrados.
-- **GET /cars/{id}**: Retorna um carro específico com base no ID.
-- **POST /cars**: Cria um novo carro.
-- **PUT /cars/{id}**: Atualiza as informações de um carro existente com base no ID.
-- **DELETE /cars/{id}**: Remove um carro com base no ID.
+- **CRUD de Carros:** Criação, leitura, atualização e exclusão de registros de carros.
+- **Pesquisa e Filtragem:** Encontre carros por modelo, valor, ano, fabricante, tipo de motor, velocidade máxima e características.
+- **Autenticação e Autorização:** Protege os endpoints da API usando JWT, com roles ADMIN e USER.
 
 ## Tecnologias Utilizadas
 
-- Java 17
-- Spring Boot
-- JPA (Hibernate)
-- H2 Database (para testes)
-- Mockito (para testes)
-- JUnit 5 (para testes)
+- **Java 21**: Linguagem de programação utilizada para o desenvolvimento da aplicação.
+- **Spring Boot 3.3.3**: Framework utilizado para criar e gerenciar a aplicação, facilitando o desenvolvimento de aplicações Java baseadas em Spring.
+- **Spring Security**: Framework para fornecer autenticação e autorização, utilizando JWT (JSON Web Tokens) para gerenciar a segurança da API.
+- **PostgreSQL**: Banco de dados relacional utilizado para armazenar informações de usuários.
+- **MongoDB**: Banco de dados NoSQL utilizado para armazenar informações de carros e imagens.
+- **Maven**: Ferramenta de gerenciamento e construção de projetos Java.
+- **JUnit e Mockito**: Frameworks utilizados para criar e executar testes unitários e mocks, garantindo a qualidade e integridade do código.
+- **GitHub**: Plataforma utilizada para controle de versão e hospedagem do código fonte.
+
+## Requisitos
+
+- JDK 17 ou superior
+- Maven
 - MongoDB
+- PostgreSQL
 
 ## Instalação
 
-Para rodar este projeto localmente, siga os passos abaixo:
-
-1. **Clone o repositório**
+1. **Clone o Repositório:**
 
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
+   git clone https://github.com/Leonardobern10/Car-management-api.git
    ```
 
-2. **Navegue até o diretório do projeto**
+2. **Navegue até o Diretório do Projeto:**
 
    ```bash
-   cd seu-repositorio
+   cd Car-management-api
    ```
 
-3. **Compile e execute o projeto**
+3. **Configure o Banco de Dados:**
 
-   Com o Maven:
+   - Edite o arquivo `src/main/resources/application.properties` para configurar as conexões com MongoDB e PostgreSQL.
+     ```properties
+     # MongoDB configuration
+     spring.data.mongodb.uri=mongodb://localhost:27017/car_db
+
+     # PostgreSQL configuration
+     spring.datasource.url=jdbc:postgresql://localhost:5432/user_db
+     spring.datasource.username=your_username
+     spring.datasource.password=your_password
+     ```
+
+4. **Instale as Dependências:**
+
+   ```bash
+   ./mvnw install
+   ```
+
+5. **Execute o Projeto:**
 
    ```bash
    ./mvnw spring-boot:run
    ```
 
-   Com o Gradle:
-
-   ```bash
-   ./gradlew bootRun
-   ```
-
-4. **Acesse a API**
-
-   A API estará disponível em [http://localhost:8080/cars](http://localhost:8080/cars).
+   O servidor será iniciado na porta padrão `8080`.
 
 ## Uso
 
-Você pode testar a API utilizando ferramentas como Postman ou curl. Abaixo estão exemplos de requisições:
+### **Endpoints da API**
 
-- **GET todos os carros**
+#### **Carros**
 
-   ```bash
-   curl -X GET http://localhost:8080/cars
-   ```
+- **POST /cars**
+  
+  Cria um novo carro.
+  
+  **Exemplo de Requisição:**
+  ```http
+  POST /cars
+  Content-Type: application/json
 
-- **GET um carro por ID**
+  {
+    "model": "Civic",
+    "yearProduction": 2022,
+    "producedBy": "Honda",
+    "imageUrl": "http://example.com/image.jpg",
+    "carValue": 20000.00,
+    "specifications": {
+      "engineType": "V6",
+      "engineCapacity": "3.0L",
+      "range": "400 miles",
+      "acceleration": "6.5s",
+      "topSpeed": "150 mph"
+    },
+    "features": ["Leather seats", "Bluetooth"],
+    "dimensions": {
+      "length": "4.5m",
+      "width": "1.8m",
+      "height": "1.4m",
+      "wheelBase": "2.7m"
+    }
+  }
+  ```
 
-   ```bash
-   curl -X GET http://localhost:8080/cars/1
-   ```
+  **Resposta:**
+  ```json
+  {
+    "id": "abc123",
+    "model": "Civic",
+    "yearProduction": 2022,
+    "producedBy": "Honda",
+    "imageUrl": "http://example.com/image.jpg",
+    "carValue": 20000.00,
+    "specifications": {
+      "engineType": "V6",
+      "engineCapacity": "3.0L",
+      "range": "400 miles",
+      "acceleration": "6.5s",
+      "topSpeed": "150 mph"
+    },
+    "features": ["Leather seats", "Bluetooth"],
+    "dimensions": {
+      "length": "4.5m",
+      "width": "1.8m",
+      "height": "1.4m",
+      "wheelBase": "2.7m"
+    }
+  }
+  ```
 
-- **POST criar um novo carro**
+- **GET /cars**
+  
+  Obtém todos os carros.
 
-   ```bash
-   curl -X POST http://localhost:8080/cars -H "Content-Type: application/json" -d '{"model": "Model S", "url": "http://example.com/model-s", "carValue": 75000.0}'
-   ```
+  **Resposta:**
+  ```json
+  [
+    {
+      "id": "abc123",
+      "model": "Civic",
+      "yearProduction": 2022,
+      "producedBy": "Honda",
+      "imageUrl": "http://example.com/image.jpg",
+      "carValue": 20000.00,
+      "specifications": {
+        "engineType": "V6",
+        "engineCapacity": "3.0L",
+        "range": "400 miles",
+        "acceleration": "6.5s",
+        "topSpeed": "150 mph"
+      },
+      "features": ["Leather seats", "Bluetooth"],
+      "dimensions": {
+        "length": "4.5m",
+        "width": "1.8m",
+        "height": "1.4m",
+        "wheelBase": "2.7m"
+      }
+    }
+  ]
+  ```
 
-- **PUT atualizar um carro existente**
+- **GET /cars/{id}**
+  
+  Obtém um carro pelo ID.
+  
+  **Exemplo de Requisição:**
+  ```http
+  GET /cars/abc123
+  ```
 
-   ```bash
-   curl -X PUT http://localhost:8080/cars/1 -H "Content-Type: application/json" -d '{"model": "Model S", "url": "http://example.com/model-s", "carValue": 80000.0}'
-   ```
+  **Resposta:**
+  ```json
+  {
+    "id": "abc123",
+    "model": "Civic",
+    "yearProduction": 2022,
+    "producedBy": "Honda",
+    "imageUrl": "http://example.com/image.jpg",
+    "carValue": 20000.00,
+    "specifications": {
+      "engineType": "V6",
+      "engineCapacity": "3.0L",
+      "range": "400 miles",
+      "acceleration": "6.5s",
+      "topSpeed": "150 mph"
+    },
+    "features": ["Leather seats", "Bluetooth"],
+    "dimensions": {
+      "length": "4.5m",
+      "width": "1.8m",
+      "height": "1.4m",
+      "wheelBase": "2.7m"
+    }
+  }
+  ```
 
-- **DELETE um carro**
+- **PUT /cars/{id}**
+  
+  Atualiza um carro existente.
+  
+  **Exemplo de Requisição:**
+  ```http
+  PUT /cars/abc123
+  Content-Type: application/json
 
-   ```bash
-   curl -X DELETE http://localhost:8080/cars/1
-   ```
+  {
+    "model": "Civic",
+    "yearProduction": 2023,
+    "producedBy": "Honda",
+    "imageUrl": "http://example.com/image_updated.jpg",
+    "carValue": 21000.00,
+    "specifications": {
+      "engineType": "V6",
+      "engineCapacity": "3.0L",
+      "range": "420 miles",
+      "acceleration": "6.3s",
+      "topSpeed": "155 mph"
+    },
+    "features": ["Leather seats", "Bluetooth", "Sunroof"],
+    "dimensions": {
+      "length": "4.6m",
+      "width": "1.8m",
+      "height": "1.4m",
+      "wheelBase": "2.8m"
+    }
+  }
+  ```
 
-## Estrutura do Projeto
+  **Resposta:**
+  ```json
+  {
+    "id": "abc123",
+    "model": "Civic",
+    "yearProduction": 2023,
+    "producedBy": "Honda",
+    "imageUrl": "http://example.com/image_updated.jpg",
+    "carValue": 21000.00,
+    "specifications": {
+      "engineType": "V6",
+      "engineCapacity": "3.0L",
+      "range": "420 miles",
+      "acceleration": "6.3s",
+      "topSpeed": "155 mph"
+    },
+    "features": ["Leather seats", "Bluetooth", "Sunroof"],
+    "dimensions": {
+      "length": "4.6m",
+      "width": "1.8m",
+      "height": "1.4m",
+      "wheelBase": "2.8m"
+    }
+  }
+  ```
 
-- **config**: Configurações da aplicação, como CORS.
-- **controller**: Controladores REST para gerenciar as requisições HTTP.
-- **exceptions**: Classes para tratamento de exceções personalizadas.
-- **model**: Entidades do banco de dados.
-- **repository**: Repositórios JPA para operações de banco de dados.
-- **service**: Serviços de lógica de negócio e validação.
-- **validations**: Validações de dados para as entidades.
-- **Handler**: Classe para tratamento global de exceções.
-- **Main**: Classe principal para inicialização da aplicação.
+- **DELETE /cars/{id}**
+  
+  Remove um carro pelo ID.
+  
+  **Exemplo de Requisição:**
+  ```http
+  DELETE /cars/abc123
+  ```
+
+  **Resposta:**
+  ```http
+  Status: 204 No Content
+  ```
+
+#### **Usuários**
+
+- **POST /users/create**
+
+  Cria um novo usuário com autenticação e autorização.
+  
+  **Exemplo de Requisição:**
+  ```http
+  POST /users/create
+  Content-Type: application/json
+
+  {
+    "username": "john_doe",
+    "password": "securepassword",
+    "role": "USER"
+  }
+  ```
+
+  **Resposta:**
+  ```json
+  {
+    "message": "USER CREATED SUCCESSFULLY"
+  }
+  ```
+
+## Segurança
+
+A API utiliza autenticação JWT. Para acessar os endpoints protegidos, você precisa incluir um token JWT válido no cabeçalho da requisição:
+
+```http
+Authorization: Bearer <your-jwt-token>
+```
+
+## Testes
+
+Os testes podem ser executados usando Maven:
+
+```bash
+./mvnw test
+```
 
 ## Contribuição
 
-Sinta-se à vontade para contribuir com este projeto. Se você encontrar algum bug ou tiver sugestões de melhorias, por favor, abra uma issue ou um pull request.
+Contribuições são bem-vindas! Se você encontrar um problema ou tiver uma sugestão para melhorias, sinta-se à vontade para abrir uma issue ou enviar um pull request. Siga as diretrizes de contribuição para garantir que seu código esteja alinhado com os padrões do projeto.
 
 ## Licença
 
-Este projeto está licenciado sob a [Licença MIT](LICENSE).
+Este projeto é licenciado sob a [Licença MIT](LICENSE).
 
 ## Contato
 
-Para mais informações, entre em contato com [leonardo.bernardo2658@gmail.com](mailto:leonardo.bernardo2658@gmail.com).
-Também estou disponível no LinkedIn: [LinkedIn](https://www.linkedin.com/in/leonardo-bern/).
+Para perguntas ou mais informações, entre em contato com:
+
+- **Autor:** Leonardo Bernardo
+- **Email:** [leonardo.bernardo2658@gmail.com](mailto:leonardo.bernardo2658@gmail.com)
+- **LinkedIn:** [Leonardobern](https://www.linkedin.com/in/leonardo-bern/)
