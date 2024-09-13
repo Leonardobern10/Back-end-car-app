@@ -1,5 +1,6 @@
 package org.example.config;
 
+import org.example.model.UserRole;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -47,11 +48,23 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain ( HttpSecurity http ) throws Exception {
         http
                 .csrf( csrf -> csrf
-                        .ignoringRequestMatchers( "/users/create" ) // Desativa CSRF para o endpoint específico
+                        .ignoringRequestMatchers( "/users/create" )// Desativa CSRF para o endpoint específico
                 )
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers( HttpMethod.POST, "/users/create" ).permitAll()
+                                .requestMatchers( HttpMethod.POST, "/admin/create" )
+                                .hasRole( UserRole.ADMIN_ROLE.getRole() )
+                                .requestMatchers( HttpMethod.GET, "/cars" )
+                                .hasAnyRole( UserRole.USER_ROLE.getRole(), UserRole.ADMIN_ROLE.getRole() )
+                                .requestMatchers( HttpMethod.GET, "/cars/**" )
+                                .hasAnyRole( UserRole.USER_ROLE.getRole(), UserRole.ADMIN_ROLE.getRole() )
+                                .requestMatchers( HttpMethod.POST, "/cars" )
+                                .hasRole( UserRole.ADMIN_ROLE.getRole() )
+                                .requestMatchers( HttpMethod.PUT, "/cars/**" )
+                                .hasRole( UserRole.ADMIN_ROLE.getRole() )
+                                .requestMatchers( HttpMethod.DELETE, "/cars/**" )
+                                .hasRole( UserRole.ADMIN_ROLE.getRole() )
                                 .anyRequest().authenticated()
                 )
                 .httpBasic( Customizer.withDefaults() );

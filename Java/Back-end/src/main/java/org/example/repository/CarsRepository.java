@@ -132,15 +132,5 @@ public interface CarsRepository extends MongoRepository<Cars, String> {
      */
     @Query( "{'features': {$eq: ?0}}" )
     List<Cars> findByFeature ( String features );
-
-    /**
-     * Retorna uma lista de carros que possuem as features fornecidas.
-     *
-     * @param features A lista de features a serem verificadas.
-     * @return Uma lista de carros que possuem as features fornecidas.
-     * @throws ResourceNotFoundException   Se nenhuma feature correspondente for encontrada.
-     * @throws FieldStringInvalidException Se as features fornecidas forem inválidas.
-     */
-    //List<Cars> findByFeatures ( List<String> features );
 };
 

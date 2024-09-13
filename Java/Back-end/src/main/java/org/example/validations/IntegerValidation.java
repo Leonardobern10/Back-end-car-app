@@ -9,7 +9,7 @@ import org.example.exceptions.FieldDoubleInvalidException;
  * garantindo que esses valores atendam a requisitos específicos, como não serem negativos.
  * </p>
  */
-public class CarIntegerValidation {
+public class IntegerValidation {
 
     /**
      * Valida um valor inteiro para garantir que seja não negativo.

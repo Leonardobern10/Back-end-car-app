@@ -1,5 +1,6 @@
 package org.example.validations;
 
+import org.example.model.Cars;
 import org.example.model.DimensionsCar;
 
 /**
@@ -19,29 +20,13 @@ public class DimensionsValidate {
      * um desses campos não for válido, uma exceção será lançada.
      * </p>
      *
-     * @param dimensionsCar o objeto DimensionsCar contendo as dimensões a serem validadas
+     * @param dimensionsCar o objeto {@link Cars} contendo as dimensões a serem validadas
      * @throws RuntimeException se algum dos campos de dimensões não for válido
      */
     public static void validate ( DimensionsCar dimensionsCar ) {
-        isValid( dimensionsCar.getLength() );
-        isValid( dimensionsCar.getWidth() );
-        isValid( dimensionsCar.getHeight() );
-        isValid( dimensionsCar.getWheelBase() );
-    }
-
-    // D   R   Y
-
-    /**
-     * Verifica se uma dimensão fornecida é válida.
-     * <p>
-     * Este método realiza a validação de uma dimensão, que deve ser uma string válida.
-     * Se a dimensão não for válida, uma exceção será lançada.
-     * </p>
-     *
-     * @param string a dimensão a ser verificada
-     * @throws RuntimeException se a dimensão fornecida não for válida
-     */
-    private static void isValid ( String string ) {
-        CarStringValidation.validate( string, "FIELD IS NOT VALID: " + string );
+        StringValidation.validate( dimensionsCar.getLength(), "FIELD IS NOT VALID" + dimensionsCar.getLength() );
+        StringValidation.validate( dimensionsCar.getWidth(), "FIELD IS NOT VALID" + dimensionsCar.getWidth() );
+        StringValidation.validate( dimensionsCar.getWheelBase(), "FIELD IS NOT VALID" + dimensionsCar.getWheelBase() );
+        StringValidation.validate( dimensionsCar.getHeight(), "FIELD IS NOT VALID" + dimensionsCar.getHeight() );
     }
 }

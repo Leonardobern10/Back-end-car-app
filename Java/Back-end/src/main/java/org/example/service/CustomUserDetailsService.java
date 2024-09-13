@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.model.User;
+import org.example.model.UserRole;
 import org.example.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,18 +21,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final PasswordEncoder passwordEncoder;
-
     private final UserRepository userRepository;
 
     /**
      * Construtor para injeção de dependências.
      *
-     * @param userRepository  o repositório para interagir com a entidade {@link User}
-     * @param passwordEncoder o codificador de senha para criptografar senhas de usuários
+     * @param userRepository o repositório para interagir com a entidade {@link User}o codificador de senha para criptografar senhas de usuários
      */
-    public CustomUserDetailsService ( UserRepository userRepository, PasswordEncoder passwordEncoder ) {
-        this.passwordEncoder = passwordEncoder;
+    public CustomUserDetailsService ( UserRepository userRepository ) {
         this.userRepository = userRepository;
     }
 
@@ -61,15 +58,14 @@ public class CustomUserDetailsService implements UserDetailsService {
      *
      * @param username o nome de usuário do novo usuário
      * @param password a senha do novo usuário
-     * @param role     a role (papel) do novo usuário
      * @return o objeto {@link User} criado e salvo no banco de dados
      */
-    public User createUser ( String username, String password, String role ) {
-        User user = new User();
-        user.setUsername( username );
-        user.setPassword( passwordEncoder.encode( password ) );
-        user.setRole( role );
-
-        return userRepository.save( user );
+    public User createForUser ( String username, String password ) {
+        return userRepository.save( ClientBuilder.builder( username, password, UserRole.USER_ROLE ) );
     }
+
+    public User createForAdmin ( String username, String password, UserRole role ) {
+        return userRepository.save( ClientBuilder.builder( username, password, role ) );
+    }
+
 }

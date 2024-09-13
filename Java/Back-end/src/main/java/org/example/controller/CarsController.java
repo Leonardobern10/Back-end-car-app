@@ -34,7 +34,7 @@ public class CarsController {
      */
     @GetMapping
     public List<Cars> getAllCars () {
-        return new ResponseEntity<>( carsService.getAllCars(), HttpStatus.OK ).getBody();
+        return ResponseEntity.ok( carsService.getAllCars() ).getBody();
     }
 
     /**

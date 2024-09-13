@@ -24,26 +24,10 @@ public class SpecificationsValidate {
      * @throws RuntimeException se algum dos campos de especificações não for válido
      */
     public static void validate ( SpecificationsCar specificationsCar ) {
-        isValid( specificationsCar.getEngineType() );
-        isValid( specificationsCar.getEngineCapacity() );
-        isValid( specificationsCar.getRange() );
-        isValid( specificationsCar.getAcceleration() );
-        isValid( specificationsCar.getTopSpeed() );
-    }
-
-    // D   R   Y
-
-    /**
-     * Verifica se uma especificação fornecida é válida.
-     * <p>
-     * Este método realiza a validação de uma especificação, que deve ser uma string válida.
-     * Se a especificação não for válida, uma exceção será lançada.
-     * </p>
-     *
-     * @param string a especificação a ser verificada
-     * @throws RuntimeException se a especificação fornecida não for válida
-     */
-    private static void isValid ( String string ) {
-        CarStringValidation.validate( string, "FIELD IS NOT VALID: " + string );
+        StringValidation.validate( specificationsCar.getEngineType(), "FIELD IS NOT VALID" );
+        StringValidation.validate( specificationsCar.getTopSpeed(), "FIELD IS NOT VALID" );
+        StringValidation.validate( specificationsCar.getAcceleration(), "FIELD IS NOT VALID" );
+        StringValidation.validate( specificationsCar.getRange(), "FIELD IS NOT VALID" );
+        StringValidation.validate( specificationsCar.getEngineCapacity(), "FIELD IS NOT VALID" );
     }
 }

@@ -4,7 +4,6 @@ import org.example.model.Cars;
 import org.example.model.DimensionsCar;
 import org.example.model.SpecificationsCar;
 import org.example.validations.CarValidations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,9 +17,6 @@ import java.util.List;
  */
 @Component
 public class CarBuilder {
-
-    @Autowired
-    private CarValidations carValidations;
 
     /**
      * Constrói ou atualiza um objeto {@link Cars} com base nas informações fornecidas.

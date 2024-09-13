@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.validations.CarStringValidation;
+import org.example.validations.StringValidation;
 
 /**
  * Classe utilitária para operações de formatação e validação de strings.
@@ -15,7 +15,7 @@ public class FormatInfo {
     /**
      * Valida e formata a string fornecida.
      * <p>
-     * O método verifica se a string atende aos critérios de validação definidos em {@link CarStringValidation}.
+     * O método verifica se a string atende aos critérios de validação definidos em {@link StringValidation}.
      * Se a validação falhar, uma exceção será lançada com a mensagem fornecida. Após a validação, a string é
      * removida de espaços em branco nas extremidades e retornada.
      * </p>
@@ -25,7 +25,7 @@ public class FormatInfo {
      * @throws IllegalArgumentException se a string não passar na validação
      */
     public static String check ( String id ) {
-        CarStringValidation.validate( id, "FIELD IS NOT VALID" + id );
+        StringValidation.validate( id, "FIELD IS NOT VALID" + id );
         return id.trim();
     }
 }

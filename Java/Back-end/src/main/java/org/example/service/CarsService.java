@@ -4,9 +4,6 @@ import org.example.model.Cars;
 import org.example.repository.CarsRepository;
 import org.example.validations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +13,7 @@ import java.util.List;
  * <p>
  * Esta classe fornece métodos para realizar operações CRUD (Criar, Ler, Atualizar, Excluir) e consultas específicas
  * relacionadas aos carros. Utiliza o repositório {@link CarsRepository} para interagir com o banco de dados e aplica
- * validações através das classes {@link CarValidations} e {@link CarStringValidation}.
+ * validações através das classes {@link CarValidations} e {@link StringValidation}.
  * </p>
  */
 @Service
@@ -24,9 +21,6 @@ public class CarsService {
 
     @Autowired
     private CarsRepository carsRepository;
-
-    @Autowired
-    private CarStringValidation carStringValidation;
 
     @Autowired
     private CarValidations carValidations;
@@ -110,7 +104,7 @@ public class CarsService {
      * @throws IllegalArgumentException se o ano fornecido for inválido
      */
     public List<Cars> getByYear ( Integer year ) {
-        CarIntegerValidation.validate( year );
+        IntegerValidation.validate( year );
         return carsRepository.findByYear( year );
     }
 
@@ -122,7 +116,7 @@ public class CarsService {
      * @throws IllegalArgumentException se o ano fornecido for inválido
      */
     public List<Cars> getNewerThanYear ( Integer year ) {
-        CarIntegerValidation.validate( year );
+        IntegerValidation.validate( year );
         return carsRepository.findNewerThanYear( year );
     }
 
@@ -134,7 +128,7 @@ public class CarsService {
      * @throws IllegalArgumentException se o ano fornecido for inválido
      */
     public List<Cars> getOlderThanYear ( Integer year ) {
-        CarIntegerValidation.validate( year );
+        IntegerValidation.validate( year );
         return carsRepository.findOlderThanYear( year );
     }
 
@@ -168,7 +162,7 @@ public class CarsService {
      * @throws IllegalArgumentException se a velocidade fornecida for inválida
      */
     public List<Cars> getByTopSpeed ( Integer topSpeed ) {
-        CarIntegerValidation.validate( topSpeed );
+        IntegerValidation.validate( topSpeed );
         String searchFormat = topSpeed.toString() + " mph";
         return carsRepository.findByTopSpeed( searchFormat );
     }

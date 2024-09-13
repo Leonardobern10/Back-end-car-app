@@ -7,26 +7,27 @@ import jakarta.persistence.*;
 @Table( name = "clients" )
 public class User {
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
-    private Long id;
+    @GeneratedValue( strategy = GenerationType.UUID )
+    private String id;
     private String username;
     private String password;
-    private String role;
+    @Enumerated( EnumType.STRING )
+    private UserRole role;
 
     public User () {
     }
 
-    public User ( String username, String password, String role ) {
+    public User ( String username, String password, UserRole role ) {
         this.username = username;
         this.password = password;
         this.role = role;
     }
 
-    public Long getId () {
+    public String getId () {
         return id;
     }
 
-    public void setId ( Long id ) {
+    public void setId ( String id ) {
         this.id = id;
     }
 
@@ -47,10 +48,10 @@ public class User {
     }
 
     public String getRole () {
-        return role;
+        return role.getRole();
     }
 
-    public void setRole ( String role ) {
+    public void setRole ( UserRole role ) {
         this.role = role;
     }
 }

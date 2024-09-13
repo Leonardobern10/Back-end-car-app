@@ -47,10 +47,10 @@ public class CarValidations {
     public void validateUpdatedInformations ( String model, Integer yearProduction, String producedBy, String imageUrl,
                                               Double carValue, SpecificationsCar specificationsCar, List<String> feature,
                                               DimensionsCar dimensionsCar ) throws RuntimeException {
-        CarStringValidation.validate( model, "FIELD MODEL IS INVALID" );
-        CarIntegerValidation.validate( yearProduction );
-        CarStringValidation.validate( producedBy, "FIELD IS NOT VALID" + producedBy );
-        CarStringValidation.validate( imageUrl, "FIELD URL IS INVALID" );
+        StringValidation.validate( model, "FIELD MODEL IS INVALID" );
+        IntegerValidation.validate( yearProduction );
+        StringValidation.validate( producedBy, "FIELD IS NOT VALID" + producedBy );
+        StringValidation.validate( imageUrl, "FIELD URL IS INVALID" );
         CarValueValidation.validate( carValue );
         SpecificationsValidate.validate( specificationsCar );
         IsEmptyValidation.validate( feature );
@@ -81,12 +81,12 @@ public class CarValidations {
     public void validateSaveCar ( Cars car, String model, Integer yearProduction, String producedBy, String imageUrl,
                                   Double carValue, SpecificationsCar specificationsCar, List<String> feature,
                                   DimensionsCar dimensionsCar ) throws RuntimeException {
-        CarStringValidation.validate( car.getId(), "FIELD ID IS INVALID" );
+        StringValidation.validate( car.getId(), "FIELD ID IS INVALID" );
         duplicatedFoundValidation.validate( car );
-        CarStringValidation.validate( model, "FIELD MODEL IS INVALID" );
-        CarIntegerValidation.validate( yearProduction );
-        CarStringValidation.validate( producedBy, "FIELD IS NOT VALID" + producedBy );
-        CarStringValidation.validate( imageUrl, "FIELD URL IS INVALID" );
+        StringValidation.validate( model, "FIELD MODEL IS INVALID" );
+        IntegerValidation.validate( yearProduction );
+        StringValidation.validate( producedBy, "FIELD IS NOT VALID" + producedBy );
+        StringValidation.validate( imageUrl, "FIELD URL IS INVALID" );
         CarValueValidation.validate( carValue );
         SpecificationsValidate.validate( specificationsCar );
         IsEmptyValidation.validate( feature );
