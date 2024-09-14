@@ -30,7 +30,7 @@ public class CarsController {
      * Este endpoint retorna uma lista contendo todos os carros registrados no banco de dados.
      * </p>
      *
-     * @return uma lista de {@link Cars} contendo todos os carros registrados, envolta em um {@link ResponseEntity} com status HTTP 200 (OK)
+     * @return uma lista de {@link Cars} contendo todos os carros registrados
      */
     @GetMapping
     public List<Cars> getAllCars () {
@@ -113,7 +113,7 @@ public class CarsController {
      * </p>
      *
      * @param model o modelo do carro a ser recuperado
-     * @return um {@link ResponseEntity} contendo o carro encontrado e o status HTTP 200 (OK)
+     * @return o carro encontrado
      */
     @GetMapping( "/model" )
     public Cars getModels ( @RequestParam String model ) {
@@ -127,7 +127,7 @@ public class CarsController {
      * </p>
      *
      * @param year o ano dos carros a serem recuperados
-     * @return um {@link ResponseEntity} contendo a lista de carros encontrados e o status HTTP 200 (OK)
+     * @return uma lista de carros encontrados
      */
     @GetMapping( "/year" )
     public List<Cars> getByYear ( @RequestParam Integer year ) {
@@ -142,7 +142,7 @@ public class CarsController {
      * </p>
      *
      * @param year o ano a partir do qual os carros devem ser recuperados
-     * @return um {@link ResponseEntity} contendo a lista de carros encontrados e o status HTTP 200 (OK)
+     * @return uma lista de carros encontrados
      */
     @GetMapping( "/year/newer_than" )
     public List<Cars> getNewerCars ( @RequestParam Integer year ) {
@@ -156,7 +156,7 @@ public class CarsController {
      * </p>
      *
      * @param year o ano a partir do qual os carros devem ser recuperados
-     * @return um {@link ResponseEntity} contendo a lista de carros encontrados e o status HTTP 200 (OK)
+     * @return uma lista de carros encontrados
      */
     @GetMapping( "/year/older_than" )
     public List<Cars> getOlderCars ( @RequestParam Integer year ) {
@@ -170,7 +170,7 @@ public class CarsController {
      * </p>
      *
      * @param producedBy a marca que produziu os carros
-     * @return um {@link ResponseEntity} contendo a lista de carros encontrados e o status HTTP 200 (OK)
+     * @return uma lista de carros encontrados
      */
     @GetMapping( "/produced_by" )
     public List<Cars> getProducedBy ( @RequestParam String producedBy ) {
@@ -184,7 +184,7 @@ public class CarsController {
      * </p>
      *
      * @param value o valor dos carros a serem recuperados
-     * @return um {@link ResponseEntity} contendo a lista de carros encontrados e o status HTTP 200 (OK)
+     * @return uma lista de carros encontrados
      */
     @GetMapping( "/value" )
     public List<Cars> getValue ( @RequestParam Double value ) {
@@ -198,7 +198,7 @@ public class CarsController {
      * </p>
      *
      * @param value o valor mínimo dos carros a serem recuperados
-     * @return um {@link ResponseEntity} contendo a lista de carros encontrados e o status HTTP 200 (OK)
+     * @return uma lista de carros encontrados
      */
     @GetMapping( "/value/bigger_than" )
     public List<Cars> getValueBiggerThan ( @RequestParam Double value ) {
@@ -212,7 +212,7 @@ public class CarsController {
      * </p>
      *
      * @param value o valor máximo dos carros a serem recuperados
-     * @return um {@link ResponseEntity} contendo a lista de carros encontrados e o status HTTP 200 (OK)
+     * @return uma lista de carros encontrados
      */
     @GetMapping( "/value/less_than" )
     public List<Cars> getValueLessThan ( @RequestParam Double value ) {
@@ -226,7 +226,7 @@ public class CarsController {
      * </p>
      *
      * @param engineType o tipo de motor dos carros a serem recuperados
-     * @return um {@link ResponseEntity} contendo a lista de carros encontrados e o status HTTP 200 (OK)
+     * @return uma lista de carros encontrados
      */
     @GetMapping( "/engine_type" )
     public List<Cars> getEngineType ( @RequestParam String engineType ) {
@@ -240,7 +240,7 @@ public class CarsController {
      * </p>
      *
      * @param topSpeed a velocidade máxima dos carros a serem recuperados
-     * @return um {@link ResponseEntity} contendo a lista de carros encontrados e o status HTTP 200 (OK)
+     * @return uma lista de carros encontrados
      */
     @GetMapping( "/top_speed" )
     public List<Cars> getTopSpeed ( @RequestParam Integer topSpeed ) {
@@ -254,7 +254,7 @@ public class CarsController {
      * </p>
      *
      * @param feature a característica dos carros a serem recuperados
-     * @return um {@link ResponseEntity} contendo a lista de carros encontrados e o status HTTP 200 (OK)
+     * @return uma lista de carros encontrados
      */
     @GetMapping( "/feature" )
     public List<Cars> getFeature ( @RequestParam String feature ) {

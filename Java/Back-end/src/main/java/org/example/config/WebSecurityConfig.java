@@ -12,15 +12,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
- * Classe de configuração responsável pela configuração de segurança do aplicativo.
- * Esta classe define as regras de segurança HTTP para o aplicativo usando Spring Security.
+ * Configura a segurança do aplicativo, controlando quem pode acessar quais endpoints.
  * <p>
- * A configuração inclui a configuração de CSRF (Cross-Site Request Forgery), autorização de requisições HTTP e
- * a configuração de autenticação básica HTTP. Além disso, fornece um {@link PasswordEncoder} para a codificação de senhas.
+ * Essa configuração inclui regras para autorização de requisições HTTP, desativação de CSRF para certos endpoints
+ * e a habilitação de autenticação básica.
  * </p>
  * <p>
- * A anotação {@link EnableMethodSecurity} é utilizada para habilitar a segurança baseada em métodos, o que permite
- * a proteção de métodos de serviço com anotações como {@code @PreAuthorize} e {@code @Secured}.
+ * A anotação {@link EnableMethodSecurity} permite o uso de anotações de segurança em métodos, como {@code @PreAuthorize}.
  * </p>
  */
 @Configuration
@@ -28,21 +26,15 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
     /**
-     * Configura a segurança HTTP para o aplicativo.
+     * Configura as regras de segurança HTTP do aplicativo.
      * <p>
-     * Esta configuração:
-     * <ul>
-     *   <li>Desativa a proteção CSRF para o endpoint específico {@code /users/create}, permitindo que ele seja acessado sem
-     *   um token CSRF.</li>
-     *   <li>Permite que o endpoint {@code /users/create} seja acessado sem autenticação para requisições POST.</li>
-     *   <li>Exige autenticação para todas as outras requisições.</li>
-     *   <li>Configura a autenticação básica HTTP.</li>
-     * </ul>
+     * Permite que usuários acessem o endpoint {@code /users/create} sem autenticação e desativa a proteção CSRF para ele.
+     * Requer autenticação para outros endpoints, com permissões específicas para operações de administração e acesso a dados.
      * </p>
      *
-     * @param http o objeto {@link HttpSecurity} usado para configurar a segurança HTTP
-     * @return um {@link SecurityFilterChain} configurado com as regras de segurança definidas
-     * @throws Exception se ocorrer um erro durante a configuração da segurança HTTP
+     * @param http o objeto {@link HttpSecurity} que define as configurações de segurança HTTP.
+     * @return um {@link SecurityFilterChain} configurado com as regras de segurança.
+     * @throws Exception se ocorrer um erro durante a configuração da segurança.
      */
     @Bean
     public SecurityFilterChain securityFilterChain ( HttpSecurity http ) throws Exception {
@@ -72,13 +64,12 @@ public class WebSecurityConfig {
     }
 
     /**
-     * Define um {@link PasswordEncoder} para a codificação de senhas.
+     * Define como as senhas serão codificadas.
      * <p>
-     * Este {@link PasswordEncoder} usa o algoritmo BCrypt para codificar senhas, proporcionando uma forma segura de armazenar
-     * senhas criptografadas.
+     * Utiliza o algoritmo BCrypt para garantir a segurança das senhas armazenadas.
      * </p>
      *
-     * @return um {@link PasswordEncoder} configurado para usar BCrypt
+     * @return um {@link PasswordEncoder} que usa o algoritmo BCrypt.
      */
     @Bean
     public PasswordEncoder passwordEncoder () {

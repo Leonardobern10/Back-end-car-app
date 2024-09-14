@@ -10,6 +10,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+/**
+ * Controlador responsável por operações administrativas relacionadas a usuários.
+ * <p>
+ * Permite a criação de novos usuários com privilégios de administrador.
+ * </p>
+ */
 @RestController
 @RequestMapping( "/admin" )
 public class AdminController {
@@ -17,26 +24,26 @@ public class AdminController {
     private final CustomUserDetailsService customUserDetailsService;
 
     /**
-     * Construtor da classe {@link org.example.controller.UserController}.
+     * Construtor da classe {@code AdminController}.
      * <p>
-     * O construtor é utilizado para injetar a dependência do serviço {@link CustomUserDetailsService}.
+     * Injeta o serviço {@link CustomUserDetailsService} para lidar com a lógica de criação e gerenciamento de usuários.
      * </p>
      *
-     * @param customUserDetailsService o serviço responsável pela criação e gestão de usuários
+     * @param customUserDetailsService serviço responsável por criar e gerenciar usuários
      */
     public AdminController ( CustomUserDetailsService customUserDetailsService ) {
         this.customUserDetailsService = customUserDetailsService;
     }
 
+
     /**
-     * Cria um novo usuário no sistema.
+     * Endpoint para criar um novo usuário com privilégios administrativos.
      * <p>
-     * Este endpoint permite a criação de um novo usuário no sistema. Os detalhes do usuário são fornecidos
-     * no corpo da requisição no formato JSON e são convertidos para um objeto {@link User}. O serviço
-     * {@link CustomUserDetailsService} é utilizado para processar a criação do usuário.
+     * Recebe os dados do novo usuário em formato JSON, os valida e utiliza o serviço {@link CustomUserDetailsService}
+     * para processar a criação do usuário.
      * </p>
      *
-     * @param userData o objeto {@link User} contendo os detalhes do novo usuário a ser criado
+     * @param userData objeto {@link RegisterForAdminDTO} contendo os detalhes do novo usuário
      * @return uma {@link ResponseEntity} com uma mensagem de sucesso e status HTTP 200 (OK)
      */
     @PostMapping( "/create" )
