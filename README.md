@@ -4,9 +4,18 @@ O projeto **Car Management API** é uma aplicação desenvolvida com Spring Boot
 
 ## Funcionalidades
 
-- **CRUD de Carros:** Criação, leitura, atualização e exclusão de registros de carros.
-- **Pesquisa e Filtragem:** Encontre carros por modelo, valor, ano, fabricante, tipo de motor, velocidade máxima e características.
-- **Autenticação e Autorização:** Protege os endpoints da API usando JWT, com roles ADMIN e USER.
+**Gerenciamento de Carros**:
+- Recupera todos os carros
+- Recupera carros por modelo, ID, valor, ano de produção, fabricante, tipo de motor, velocidade máxima e características
+- Cria, atualiza e exclui carros
+
+**Gerenciamento de Usuários**:
+- Cria usuários com diferentes roles (ADMIN, USER)
+- Recupera usuários por nome de usuário
+- Autentica usuários com base em credenciais
+
+**Segurança**:
+- Controle de acesso baseado em roles
 
 ## Tecnologias Utilizadas
 
@@ -14,9 +23,11 @@ O projeto **Car Management API** é uma aplicação desenvolvida com Spring Boot
 - **Spring Boot 3.3.3**: Framework utilizado para criar e gerenciar a aplicação, facilitando o desenvolvimento de aplicações Java baseadas em Spring.
 - **Spring Security**: Framework para fornecer autenticação e autorização, utilizando JWT (JSON Web Tokens) para gerenciar a segurança da API.
 - **PostgreSQL**: Banco de dados relacional utilizado para armazenar informações de usuários.
+- **Spring Data** JPA: Para interação com o banco de dados.
 - **MongoDB**: Banco de dados NoSQL utilizado para armazenar informações de carros e imagens.
 - **Maven**: Ferramenta de gerenciamento e construção de projetos Java.
 - **JUnit e Mockito**: Frameworks utilizados para criar e executar testes unitários e mocks, garantindo a qualidade e integridade do código.
+- **ApplicationEventPublisher**: Para publicação de eventos de aplicação.
 - **GitHub**: Plataforma utilizada para controle de versão e hospedagem do código fonte.
 
 ## Requisitos
@@ -294,14 +305,6 @@ O projeto **Car Management API** é uma aplicação desenvolvida com Spring Boot
     "message": "USER CREATED SUCCESSFULLY"
   }
   ```
-
-## Segurança
-
-A API utiliza autenticação JWT. Para acessar os endpoints protegidos, você precisa incluir um token JWT válido no cabeçalho da requisição:
-
-```http
-Authorization: Bearer <your-jwt-token>
-```
 
 ## Testes
 

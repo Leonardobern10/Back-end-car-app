@@ -34,7 +34,8 @@ public class UserRegistrationListener {
         String userEmail = event.getUser().getUsername();
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo( "leonardo.bernardo2658@gmail.com" );
+        // Inserir email para recebimento
+        message.setTo( "emai@gmail.com" );
         message.setSubject( "Novo usuário cadastrado" );
         message.setText( "Um novo usuário foi cadastrado com o username: " + userEmail );
 
