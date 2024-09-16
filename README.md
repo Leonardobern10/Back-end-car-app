@@ -8,6 +8,7 @@ O projeto **Car Management API** é uma aplicação desenvolvida com Spring Boot
 - Recupera todos os carros
 - Recupera carros por modelo, ID, valor, ano de produção, fabricante, tipo de motor, velocidade máxima e características
 - Cria, atualiza e exclui carros
+- Sempre que há um cadastro de um novo cliente a empresa é notificada através do email
 
 **Gerenciamento de Usuários**:
 - Cria usuários com diferentes roles (ADMIN, USER)
