@@ -129,8 +129,8 @@ public class CarsController {
      * @param year o ano dos carros a serem recuperados
      * @return uma lista de carros encontrados
      */
-    @GetMapping( "/year" )
-    public List<Cars> getByYear ( @RequestParam Integer year ) {
+    @GetMapping( "/year/{year}" )
+    public List<Cars> getByYear ( @PathVariable Integer year ) {
         return new ResponseEntity<>( carsService.getByYear( year ), HttpStatus.OK ).getBody();
     }
 
@@ -144,8 +144,8 @@ public class CarsController {
      * @param year o ano a partir do qual os carros devem ser recuperados
      * @return uma lista de carros encontrados
      */
-    @GetMapping( "/year/newer_than" )
-    public List<Cars> getNewerCars ( @RequestParam Integer year ) {
+    @GetMapping( "/year/newer_than/{year}" )
+    public List<Cars> getNewerCars ( @PathVariable Integer year ) {
         return new ResponseEntity<>( carsService.getNewerThanYear( year ), HttpStatus.OK ).getBody();
     }
 
@@ -158,8 +158,8 @@ public class CarsController {
      * @param year o ano a partir do qual os carros devem ser recuperados
      * @return uma lista de carros encontrados
      */
-    @GetMapping( "/year/older_than" )
-    public List<Cars> getOlderCars ( @RequestParam Integer year ) {
+    @GetMapping( "/year/older_than/{year}" )
+    public List<Cars> getOlderCars ( @PathVariable Integer year ) {
         return new ResponseEntity<>( carsService.getOlderThanYear( year ), HttpStatus.OK ).getBody();
     }
 
@@ -186,8 +186,8 @@ public class CarsController {
      * @param value o valor dos carros a serem recuperados
      * @return uma lista de carros encontrados
      */
-    @GetMapping( "/value" )
-    public List<Cars> getValue ( @RequestParam Double value ) {
+    @GetMapping( "/value/{value}" )
+    public List<Cars> getValue ( @PathVariable Double value ) {
         return new ResponseEntity<>( carsService.getByValue( value ), HttpStatus.OK ).getBody();
     }
 
@@ -200,8 +200,8 @@ public class CarsController {
      * @param value o valor mínimo dos carros a serem recuperados
      * @return uma lista de carros encontrados
      */
-    @GetMapping( "/value/bigger_than" )
-    public List<Cars> getValueBiggerThan ( @RequestParam Double value ) {
+    @GetMapping( "/value/bigger_than/{value}" )
+    public List<Cars> getValueBiggerThan ( @PathVariable Double value ) {
         return new ResponseEntity<>( carsService.getBiggerThanValue( value ), HttpStatus.OK ).getBody();
     }
 
@@ -214,8 +214,8 @@ public class CarsController {
      * @param value o valor máximo dos carros a serem recuperados
      * @return uma lista de carros encontrados
      */
-    @GetMapping( "/value/less_than" )
-    public List<Cars> getValueLessThan ( @RequestParam Double value ) {
+    @GetMapping( "/value/less_than/{value}" )
+    public List<Cars> getValueLessThan ( @PathVariable Double value ) {
         return new ResponseEntity<>( carsService.getByLessThanValue( value ), HttpStatus.OK ).getBody();
     }
 
@@ -242,8 +242,8 @@ public class CarsController {
      * @param topSpeed a velocidade máxima dos carros a serem recuperados
      * @return uma lista de carros encontrados
      */
-    @GetMapping( "/top_speed" )
-    public List<Cars> getTopSpeed ( @RequestParam Integer topSpeed ) {
+    @GetMapping( "/top_speed/{topSpeed}" )
+    public List<Cars> getTopSpeed ( @PathVariable Integer topSpeed ) {
         return new ResponseEntity<>( carsService.getByTopSpeed( topSpeed ), HttpStatus.OK ).getBody();
     }
 

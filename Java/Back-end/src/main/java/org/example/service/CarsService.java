@@ -2,8 +2,8 @@ package org.example.service;
 
 import org.example.model.Cars;
 import org.example.repository.CarsRepository;
-import org.example.service.BuildCar.ConcreteBuilderCar;
-import org.example.service.BuildCar.DirectorCar;
+import org.example.build.BuildCar.ConcreteBuilderCar;
+import org.example.build.BuildCar.DirectorCar;
 import org.example.validations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +39,9 @@ public class CarsService {
      * @return uma lista contendo todos os carros registrados no banco de dados.
      */
     public List<Cars> getAllCars () {
-        return carsRepository.findAll();
+        List<Cars> cars = carsRepository.findAll();
+        System.out.println( "Total de registros:" + cars.size() );
+        return cars;
     }
 
     /**
@@ -229,7 +231,6 @@ public class CarsService {
                 .orElseThrow( () -> new RuntimeException( "Car with ID " + id + " not found" ) );
 
         ConcreteBuilderCar builderCar = new ConcreteBuilderCar();
-
         Cars updatedCar = directorCar.construct( builderCar, car.getModel(), car.getYearProduction(), car.getProducedBy(),
                 car.getImageUrl(), car.getCarValue(), car.getSpecifications(),
                 car.getFeatures(), car.getDimensions() );

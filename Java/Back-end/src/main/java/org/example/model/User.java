@@ -1,7 +1,7 @@
 package org.example.model;
 
 import jakarta.persistence.*;
-
+import org.example.role.UserRole;
 
 @Entity
 @Table( name = "clients" )
@@ -10,6 +10,7 @@ public class User {
     @GeneratedValue( strategy = GenerationType.UUID )
     private String id;
     private String username;
+    private String email;
     private String password;
     @Enumerated( EnumType.STRING )
     private UserRole role;
@@ -17,8 +18,9 @@ public class User {
     public User () {
     }
 
-    public User ( String username, String password, UserRole role ) {
+    public User ( String username, String email, String password, UserRole role ) {
         this.username = username;
+        this.email = email;
         this.password = password;
         this.role = role;
     }
@@ -53,5 +55,13 @@ public class User {
 
     public void setRole ( UserRole role ) {
         this.role = role;
+    }
+
+    public String getEmail () {
+        return email;
+    }
+
+    public void setEmail ( String email ) {
+        this.email = email;
     }
 }

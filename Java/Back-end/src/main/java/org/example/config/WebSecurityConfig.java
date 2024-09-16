@@ -1,6 +1,6 @@
 package org.example.config;
 
-import org.example.model.UserRole;
+import org.example.role.UserRole;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

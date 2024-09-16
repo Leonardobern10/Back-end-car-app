@@ -1,8 +1,7 @@
 package org.example.controller;
 
 import jakarta.validation.Valid;
-import org.example.model.RegisterForUserDTO;
-import org.example.model.User;
+import org.example.dto.RegisterForUserDTO;
 import org.example.service.CustomUserDetailsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +44,7 @@ public class UserController {
      */
     @PostMapping( "/create" )
     public ResponseEntity<String> createUser ( @RequestBody @Valid RegisterForUserDTO userData ) {
-        customUserDetailsService.createForUser( userData.username(), userData.password() );
+        customUserDetailsService.createForUser( userData.username(), userData.email(), userData.password() );
         return ResponseEntity.ok( "USER CREATED SUCCESSFULLY" );
     }
 }

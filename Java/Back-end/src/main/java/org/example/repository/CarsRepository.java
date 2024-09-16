@@ -31,7 +31,7 @@ public interface CarsRepository extends MongoRepository<Cars, String> {
      * @return Uma lista de carros com valor menor que o valor fornecido.
      * @throws ResourceNotFoundException Se nenhum carro for encontrado.
      */
-    @Query( "{ 'value': { $gt: ?0 } }" )
+    @Query( "{ 'carValue': { $gt: ?0 } }" )
     List<Cars> findByLessThanValue ( Double value ); // Concluido
 
     /**
@@ -42,7 +42,7 @@ public interface CarsRepository extends MongoRepository<Cars, String> {
      * @throws ResourceNotFoundException   Se nenhum carro for encontrado.
      * @throws FieldDoubleInvalidException Se o valor fornecido for inválido.
      */
-    @Query( "{ 'value': { $eq: ?0} }" )
+    @Query( "{ 'carValue': { $eq: ?0} }" )
     List<Cars> findByValue ( Double value ); // Concluido
 
     /**
@@ -53,7 +53,7 @@ public interface CarsRepository extends MongoRepository<Cars, String> {
      * @throws ResourceNotFoundException   Se nenhum carro for encontrado.
      * @throws FieldDoubleInvalidException Se o valor fornecido for inválido.
      */
-    @Query( "{ 'value': { $gt: ?0} }" )
+    @Query( "{ 'carValue': { $gt: ?0} }" )
     List<Cars> findBiggerThanValue ( Double value ); // Concluido
 
     /**
@@ -64,7 +64,7 @@ public interface CarsRepository extends MongoRepository<Cars, String> {
      * @throws ResourceNotFoundException    Se nenhum carro for encontrado.
      * @throws FieldIntegerInvalidException Se o ano fornecido for inválido.
      */
-    @Query( " { 'year': { $eq: ?0 } }" )
+    @Query( " { 'yearProduction': { $eq: ?0 } }" )
     List<Cars> findByYear ( Integer year ); // Concluido
 
     /**
@@ -75,7 +75,7 @@ public interface CarsRepository extends MongoRepository<Cars, String> {
      * @throws ResourceNotFoundException    Se nenhum carro for encontrado.
      * @throws FieldIntegerInvalidException Se o ano fornecido for inválido.
      */
-    @Query( " { 'year': { $lt: ?0 } }" )
+    @Query( " { 'yearProduction': { $lt: ?0 } }" )
     List<Cars> findNewerThanYear ( Integer year ); // Concluido
 
     /**
@@ -86,7 +86,7 @@ public interface CarsRepository extends MongoRepository<Cars, String> {
      * @throws ResourceNotFoundException    Se nenhum carro for encontrado.
      * @throws FieldIntegerInvalidException Se o ano fornecido for inválido.
      */
-    @Query( " { 'year': { $gt: ?0 } }" )
+    @Query( " { 'yearProduction': { $gt: ?0 } }" )
     List<Cars> findOlderThanYear ( Integer year ); // Concluido
 
     /**

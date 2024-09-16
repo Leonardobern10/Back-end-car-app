@@ -1,8 +1,7 @@
 package org.example.controller;
 
 import jakarta.validation.Valid;
-import org.example.model.RegisterForAdminDTO;
-import org.example.model.User;
+import org.example.dto.RegisterForAdminDTO;
 import org.example.service.CustomUserDetailsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,7 +47,7 @@ public class AdminController {
      */
     @PostMapping( "/create" )
     public ResponseEntity<String> createAdmin ( @RequestBody @Valid RegisterForAdminDTO userData ) {
-        customUserDetailsService.createForAdmin( userData.username(), userData.password(), userData.role() );
+        customUserDetailsService.createForAdmin( userData.username(), userData.email(), userData.password(), userData.role() );
         return ResponseEntity.ok( "USER CREATED SUCCESSFULLY" );
     }
 }

@@ -1,8 +1,9 @@
 package org.example.service;
 
 import org.example.events.UserRegisteredEvent;
+import org.example.handler.HandleClient;
 import org.example.model.User;
-import org.example.model.UserRole;
+import org.example.role.UserRole;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -22,22 +23,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
+    private final HandleClient handleClient;
+    private final UserRepository userRepository;
     @Autowired
     private ApplicationEventPublisher eventPublisher;
-
-    private final ClientBuilder clientBuilder;
-    private final UserRepository userRepository;
 
     /**
      * Construtor para a classe {@link CustomUserDetailsService}.
      *
      * @param userRepository o repositório de usuários {@link UserRepository} utilizado para recuperar e salvar usuários.
-     * @param clientBuilder  o construtor de usuários {@link ClientBuilder} utilizado para criar novas instâncias de {@link User}.
+     * @param handleClient   o construtor de usuários {@link HandleClient} utilizado para criar novas instâncias de {@link User}.
      */
     @Autowired
-    public CustomUserDetailsService ( UserRepository userRepository, ClientBuilder clientBuilder ) {
+    public CustomUserDetailsService ( UserRepository userRepository, HandleClient handleClient ) {
         this.userRepository = userRepository;
-        this.clientBuilder = clientBuilder;
+        this.handleClient = handleClient;
     }
 
     /**
@@ -67,7 +67,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     /**
      * Cria um novo usuário com a role padrão de {@link UserRole#USER_ROLE}.
      * <p>
-     * Este método utiliza o {@link ClientBuilder} para criar uma nova instância de {@link User} e salva no
+     * Este método utiliza o {@link HandleClient} para criar uma nova instância de {@link User} e salva no
      * repositório. Após a criação do usuário, um evento {@link UserRegisteredEvent} é publicado.
      * </p>
      *
@@ -75,8 +75,8 @@ public class CustomUserDetailsService implements UserDetailsService {
      * @param password a senha do novo usuário.
      * @return o usuário criado e salvo no banco de dados.
      */
-    public User createForUser ( String username, String password ) {
-        User user = clientBuilder.builder( username, password, UserRole.USER_ROLE );
+    public User createForUser ( String username, String email, String password ) {
+        User user = handleClient.toCallBuilder( username, email, password, UserRole.USER_ROLE );
         user = userRepository.save( user );
         eventPublisher.publishEvent( new UserRegisteredEvent( user ) );
         return user;
@@ -85,7 +85,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     /**
      * Cria um novo usuário com uma role específica.
      * <p>
-     * Este método utiliza o {@link ClientBuilder} para criar uma nova instância de {@link User} com o papel fornecido
+     * Este método utiliza o {@link HandleClient} para criar uma nova instância de {@link User} com o papel fornecido
      * e salva no repositório.
      * </p>
      *
@@ -94,8 +94,8 @@ public class CustomUserDetailsService implements UserDetailsService {
      * @param role     a role a ser atribuída ao novo usuário.
      * @return o usuário criado e salvo no banco de dados.
      */
-    public User createForAdmin ( String username, String password, UserRole role ) {
-        User user = clientBuilder.builder( username, password, role );
+    public User createForAdmin ( String username, String email, String password, UserRole role ) {
+        User user = handleClient.toCallBuilder( username, email, password, role );
         return userRepository.save( user );
     }
 }
