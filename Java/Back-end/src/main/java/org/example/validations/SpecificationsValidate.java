@@ -24,10 +24,10 @@ public class SpecificationsValidate {
      * @throws RuntimeException se algum dos campos de especificações não for válido
      */
     public static void validate ( SpecificationsCar specificationsCar ) {
-        StringValidation.validate( specificationsCar.getEngineType(), "FIELD IS NOT VALID" );
-        StringValidation.validate( specificationsCar.getTopSpeed(), "FIELD IS NOT VALID" );
-        StringValidation.validate( specificationsCar.getAcceleration(), "FIELD IS NOT VALID" );
-        StringValidation.validate( specificationsCar.getRange(), "FIELD IS NOT VALID" );
-        StringValidation.validate( specificationsCar.getEngineCapacity(), "FIELD IS NOT VALID" );
+        StringValidation.validate( specificationsCar.getEngineType(), "FIELD enginetype IS NOT VALID" );
+        StringValidation.validate( specificationsCar.getTopSpeed(), "FIELD topSpeed IS NOT VALID" );
+        StringValidation.validate( specificationsCar.getAcceleration(), "FIELD acceleration IS NOT VALID" );
+        StringValidation.validate( specificationsCar.getRange(), "FIELD range IS NOT VALID" );
+        StringValidation.validate( specificationsCar.getEngineCapacity(), "FIELD enginecapacity IS NOT VALID" );
     }
 }

@@ -11,7 +11,7 @@ public class IsEmptyValidation {
 
     public static void validate ( List<String> list ) {
         if ( list.isEmpty() ) {
-            throw new ResourceNotFoundException( "FIELD IS NOT VALID" );
+            throw new ResourceNotFoundException( "FIELD features IS NOT VALID" );
         }
     }
 }

@@ -24,9 +24,9 @@ public class DimensionsValidate {
      * @throws RuntimeException se algum dos campos de dimensões não for válido
      */
     public static void validate ( DimensionsCar dimensionsCar ) {
-        StringValidation.validate( dimensionsCar.getLength(), "FIELD IS NOT VALID" + dimensionsCar.getLength() );
-        StringValidation.validate( dimensionsCar.getWidth(), "FIELD IS NOT VALID" + dimensionsCar.getWidth() );
-        StringValidation.validate( dimensionsCar.getWheelBase(), "FIELD IS NOT VALID" + dimensionsCar.getWheelBase() );
-        StringValidation.validate( dimensionsCar.getHeight(), "FIELD IS NOT VALID" + dimensionsCar.getHeight() );
+        StringValidation.validate( dimensionsCar.getLength(), "FIELD length IS NOT VALID" + dimensionsCar.getLength() );
+        StringValidation.validate( dimensionsCar.getWidth(), "FIELD width IS NOT VALID" + dimensionsCar.getWidth() );
+        StringValidation.validate( dimensionsCar.getWheelBase(), "FIELD wheelBase IS NOT VALID" + dimensionsCar.getWheelBase() );
+        StringValidation.validate( dimensionsCar.getHeight(), "FIELD height IS NOT VALID" + dimensionsCar.getHeight() );
     }
 }

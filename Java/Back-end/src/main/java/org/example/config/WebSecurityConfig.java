@@ -39,14 +39,13 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain ( HttpSecurity http ) throws Exception {
         http
-                .csrf( csrf -> csrf
-                        .ignoringRequestMatchers( "/users/create" )// Desativa CSRF para o endpoint específico
+                .csrf( csrf -> csrf.disable()// Desativa CSRF para o endpoint específico
                 )
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers( HttpMethod.POST, "/users/create" ).permitAll()
                                 .requestMatchers( HttpMethod.POST, "/admin/create" )
-                                .hasRole( UserRole.ADMIN_ROLE.getRole() )
+                                .permitAll()
                                 .requestMatchers( HttpMethod.GET, "/cars" )
                                 .hasAnyRole( UserRole.USER_ROLE.getRole(), UserRole.ADMIN_ROLE.getRole() )
                                 .requestMatchers( HttpMethod.GET, "/cars/**" )

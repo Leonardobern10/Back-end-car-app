@@ -41,7 +41,7 @@ public class StringValidation {
      * @throws FieldStringInvalidException se a String for nula ou vazia
      */
     public static void validate ( String string, String messageError ) throws FieldStringInvalidException {
-        if ( string.isBlank() || string == null ) {
+        if ( string == null || string.isBlank() ) {
             throw new FieldStringInvalidException( messageError );
         }
     }

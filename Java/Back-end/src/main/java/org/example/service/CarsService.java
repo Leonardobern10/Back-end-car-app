@@ -2,6 +2,8 @@ package org.example.service;
 
 import org.example.model.Cars;
 import org.example.repository.CarsRepository;
+import org.example.service.BuildCar.ConcreteBuilderCar;
+import org.example.service.BuildCar.DirectorCar;
 import org.example.validations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,14 +21,17 @@ import java.util.List;
 @Service
 public class CarsService {
 
-    @Autowired
-    private CarsRepository carsRepository;
+    private final CarsRepository carsRepository;
+    private final CarValidations carValidations;
+    private final DirectorCar directorCar;
+
 
     @Autowired
-    private CarValidations carValidations;
-
-    @Autowired
-    private CarBuilder carBuilder;
+    public CarsService ( CarsRepository carsRepository, CarValidations carValidations, DirectorCar directorCar ) {
+        this.carsRepository = carsRepository;
+        this.carValidations = carValidations;
+        this.directorCar = directorCar;
+    }
 
     /**
      * Recupera todos os carros armazenados no banco de dados.
@@ -186,9 +191,17 @@ public class CarsService {
      * @throws RuntimeException se houver problemas ao validar ou salvar o carro
      */
     public Cars saveCar ( Cars car ) {
-        carValidations.validateSaveCar( car, car.getModel(), car.getYearProduction(), car.getProducedBy(),
-                car.getImageUrl(), car.getCarValue(), car.getSpecifications(), car.getFeatures(), car.getDimensions() );
-        return carsRepository.save( car );
+        ConcreteBuilderCar builderCar = new ConcreteBuilderCar();
+        Cars newCar = directorCar.construct( builderCar, car.getModel(), car.getYearProduction(), car.getProducedBy(),
+                car.getImageUrl(), car.getCarValue(), car.getSpecifications(),
+                car.getFeatures(), car.getDimensions() );
+
+        carValidations.validateUpdatedInformations( newCar.getModel(), newCar.getYearProduction(),
+                newCar.getProducedBy(), newCar.getImageUrl(),
+                newCar.getCarValue(), newCar.getSpecifications(),
+                newCar.getFeatures(), newCar.getDimensions() );
+
+        return carsRepository.save( newCar );
     }
 
     /**
@@ -212,11 +225,22 @@ public class CarsService {
      * @throws RuntimeException se o carro com o ID fornecido não for encontrado ou se houver problemas ao validar os dados
      */
     public Cars updateCar ( String id, Cars car ) {
-        Cars oldCar = carsRepository.findById( id ).orElseThrow();
-        carValidations.validateUpdatedInformations( car.getModel(), car.getYearProduction(), car.getProducedBy(),
-                car.getImageUrl(), car.getCarValue(), car.getSpecifications(), car.getFeatures(), car.getDimensions() );
-        Cars updatedCar = carBuilder.builder( oldCar, car.getModel(), car.getYearProduction(), car.getProducedBy(),
-                car.getImageUrl(), car.getCarValue(), car.getSpecifications(), car.getFeatures(), car.getDimensions() );
+        Cars oldCar = carsRepository.findById( id )
+                .orElseThrow( () -> new RuntimeException( "Car with ID " + id + " not found" ) );
+
+        ConcreteBuilderCar builderCar = new ConcreteBuilderCar();
+
+        Cars updatedCar = directorCar.construct( builderCar, car.getModel(), car.getYearProduction(), car.getProducedBy(),
+                car.getImageUrl(), car.getCarValue(), car.getSpecifications(),
+                car.getFeatures(), car.getDimensions() );
+
+        // Validação após a construção do carro atualizado
+        carValidations.validateUpdatedInformations( updatedCar.getModel(), updatedCar.getYearProduction(),
+                updatedCar.getProducedBy(), updatedCar.getImageUrl(),
+                updatedCar.getCarValue(), updatedCar.getSpecifications(),
+                updatedCar.getFeatures(), updatedCar.getDimensions() );
+
         return carsRepository.save( updatedCar );
     }
+
 }

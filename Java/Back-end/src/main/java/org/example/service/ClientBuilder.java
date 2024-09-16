@@ -59,6 +59,6 @@ public class ClientBuilder {
 
         StringValidation.validate( role.getRole(), "THIS ROLE IS INVALID: " + role.getRole() );
 
-        return userBuilder.builder( username, password, UserRole.USER_ROLE );
+        return userBuilder.builder( username, password, role );
     }
 }
