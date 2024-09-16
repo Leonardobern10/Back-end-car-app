@@ -132,5 +132,5 @@ public interface CarsRepository extends MongoRepository<Cars, String> {
      */
     @Query( "{'features': {$eq: ?0}}" )
     List<Cars> findByFeature ( String features );
-};
+}
 

@@ -67,7 +67,7 @@ public class CarValidations {
      * já existir, uma exceção é lançada.
      * </p>
      *
-     * @param car               o objeto Cars a ser validado
+     * @param car               o objeto {@link Cars} a ser validado
      * @param model             o modelo do carro
      * @param yearProduction    o ano de produção do carro
      * @param producedBy        o fabricante do carro

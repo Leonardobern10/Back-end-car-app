@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Classe responsável pelo gerenciamento de requisições relacionadas a carros.
+ * Controlador responsável pelo gerenciamento de requisições relacionadas a carros.
  * <p>
  * Este controlador expõe endpoints para realizar operações CRUD em carros e para buscar carros com base em diferentes
- * critérios como modelo, ano, valor, tipo de motor, velocidade máxima e características.
+ * critérios, como modelo, ano, valor, tipo de motor, velocidade máxima e características.
  * </p>
  */
 @RestController
@@ -30,7 +30,7 @@ public class CarsController {
      * Este endpoint retorna uma lista contendo todos os carros registrados no banco de dados.
      * </p>
      *
-     * @return uma lista de {@link Cars} contendo todos os carros registrados
+     * @return uma lista de {@link Cars} contendo todos os carros registrados.
      */
     @GetMapping
     public List<Cars> getAllCars () {
@@ -43,9 +43,9 @@ public class CarsController {
      * Este endpoint retorna o carro associado ao ID fornecido.
      * </p>
      *
-     * @param id o ID do carro a ser recuperado
-     * @return um {@link ResponseEntity} contendo o carro encontrado e o status HTTP 200 (OK)
-     * @throws ResourceNotFoundException se o carro com o ID fornecido não for encontrado
+     * @param id o ID do carro a ser recuperado.
+     * @return um {@link ResponseEntity} contendo o carro encontrado e o status HTTP 200 (OK).
+     * @throws ResourceNotFoundException se o carro com o ID fornecido não for encontrado.
      */
     @GetMapping( "/{id}" )
     public ResponseEntity<Cars> getById ( @PathVariable String id ) throws RuntimeException {
@@ -58,12 +58,12 @@ public class CarsController {
      * Este endpoint adiciona um novo carro ao banco de dados com base no objeto {@link Cars} passado no corpo da requisição.
      * </p>
      *
-     * @param car o objeto {@link Cars} passado no corpo da requisição
-     * @return um {@link ResponseEntity} contendo o carro salvo e o status HTTP 201 (Created)
-     * @throws FieldIntegerInvalidException se o campo ID for inválido
-     * @throws FieldStringInvalidException  se algum campo de string for inválido
-     * @throws FieldDoubleInvalidException  se o valor do carro for inválido
-     * @throws DuplicatedFoundException     se um carro duplicado for encontrado
+     * @param car o objeto {@link Cars} passado no corpo da requisição.
+     * @return um {@link ResponseEntity} contendo o carro salvo e o status HTTP 201 (Created).
+     * @throws FieldIntegerInvalidException se o campo ID for inválido.
+     * @throws FieldStringInvalidException  se algum campo de string for inválido.
+     * @throws FieldDoubleInvalidException  se o valor do carro for inválido.
+     * @throws DuplicatedFoundException     se um carro duplicado for encontrado.
      */
     @PostMapping
     public ResponseEntity<Cars> createCar ( @RequestBody Cars car ) {
@@ -76,14 +76,14 @@ public class CarsController {
      * Este endpoint atualiza o carro com o ID fornecido com base nas novas informações passadas no objeto {@link Cars}.
      * </p>
      *
-     * @param id   o ID do carro a ser atualizado
-     * @param cars o objeto {@link Cars} contendo os novos dados a serem aplicados
-     * @return um {@link ResponseEntity} contendo o carro atualizado e o status HTTP 200 (OK)
-     * @throws ResourceNotFoundException    se o carro com o ID fornecido não for encontrado
-     * @throws FieldIntegerInvalidException se o campo ID for inválido
-     * @throws FieldStringInvalidException  se algum campo de string for inválido
-     * @throws FieldDoubleInvalidException  se o valor do carro for inválido
-     * @throws DuplicatedFoundException     se um carro duplicado for encontrado
+     * @param id   o ID do carro a ser atualizado.
+     * @param cars o objeto {@link Cars} contendo os novos dados a serem aplicados.
+     * @return um {@link ResponseEntity} contendo o carro atualizado e o status HTTP 200 (OK).
+     * @throws ResourceNotFoundException    se o carro com o ID fornecido não for encontrado.
+     * @throws FieldIntegerInvalidException se o campo ID for inválido.
+     * @throws FieldStringInvalidException  se algum campo de string for inválido.
+     * @throws FieldDoubleInvalidException  se o valor do carro for inválido.
+     * @throws DuplicatedFoundException     se um carro duplicado for encontrado.
      */
     @PutMapping( "/{id}" )
     public ResponseEntity<Cars> updatedCar ( @PathVariable String id, @RequestBody Cars cars ) {
@@ -96,9 +96,9 @@ public class CarsController {
      * Este endpoint remove o carro associado ao ID fornecido.
      * </p>
      *
-     * @param id o ID do carro a ser removido
-     * @return um {@link ResponseEntity} com o status HTTP 200 (OK) após a remoção bem-sucedida
-     * @throws ResourceNotFoundException se o carro com o ID fornecido não for encontrado
+     * @param id o ID do carro a ser removido.
+     * @return um {@link ResponseEntity} com o status HTTP 200 (OK) após a remoção bem-sucedida.
+     * @throws ResourceNotFoundException se o carro com o ID fornecido não for encontrado.
      */
     @DeleteMapping( "/{id}" )
     public ResponseEntity<HttpStatus> deleteCar ( @PathVariable String id ) {
@@ -112,13 +112,14 @@ public class CarsController {
      * Este endpoint retorna o carro associado ao modelo fornecido.
      * </p>
      *
-     * @param model o modelo do carro a ser recuperado
-     * @return o carro encontrado
+     * @param model o modelo do carro a ser recuperado.
+     * @return um {@link ResponseEntity} contendo o carro encontrado e o status HTTP 200 (OK).
      */
     @GetMapping( "/model" )
     public Cars getModels ( @RequestParam String model ) {
         return new ResponseEntity<>( carsService.getByModel( model ), HttpStatus.OK ).getBody();
     }
+
 
     /**
      * Recupera carros com base no ano fornecido.
@@ -126,8 +127,8 @@ public class CarsController {
      * Este endpoint retorna todos os carros associados ao ano fornecido.
      * </p>
      *
-     * @param year o ano dos carros a serem recuperados
-     * @return uma lista de carros encontrados
+     * @param year o ano dos carros a serem recuperados.
+     * @return uma lista de carros encontrados.
      */
     @GetMapping( "/year/{year}" )
     public List<Cars> getByYear ( @PathVariable Integer year ) {
@@ -141,8 +142,8 @@ public class CarsController {
      * Este endpoint retorna todos os carros produzidos depois do ano fornecido.
      * </p>
      *
-     * @param year o ano a partir do qual os carros devem ser recuperados
-     * @return uma lista de carros encontrados
+     * @param year o ano a partir do qual os carros devem ser recuperados.
+     * @return uma lista de carros encontrados.
      */
     @GetMapping( "/year/newer_than/{year}" )
     public List<Cars> getNewerCars ( @PathVariable Integer year ) {
@@ -155,8 +156,8 @@ public class CarsController {
      * Este endpoint retorna todos os carros produzidos antes do ano fornecido.
      * </p>
      *
-     * @param year o ano a partir do qual os carros devem ser recuperados
-     * @return uma lista de carros encontrados
+     * @param year o ano a partir do qual os carros devem ser recuperados.
+     * @return uma lista de carros encontrados.
      */
     @GetMapping( "/year/older_than/{year}" )
     public List<Cars> getOlderCars ( @PathVariable Integer year ) {
@@ -169,8 +170,8 @@ public class CarsController {
      * Este endpoint retorna todos os carros produzidos pela marca fornecida.
      * </p>
      *
-     * @param producedBy a marca que produziu os carros
-     * @return uma lista de carros encontrados
+     * @param producedBy a marca que produziu os carros.
+     * @return uma lista de carros encontrados.
      */
     @GetMapping( "/produced_by" )
     public List<Cars> getProducedBy ( @RequestParam String producedBy ) {
@@ -183,8 +184,8 @@ public class CarsController {
      * Este endpoint retorna todos os carros com o valor exato fornecido.
      * </p>
      *
-     * @param value o valor dos carros a serem recuperados
-     * @return uma lista de carros encontrados
+     * @param value o valor dos carros a serem recuperados.
+     * @return uma lista de carros encontrados.
      */
     @GetMapping( "/value/{value}" )
     public List<Cars> getValue ( @PathVariable Double value ) {
@@ -197,8 +198,8 @@ public class CarsController {
      * Este endpoint retorna todos os carros com valor maior que o valor fornecido.
      * </p>
      *
-     * @param value o valor mínimo dos carros a serem recuperados
-     * @return uma lista de carros encontrados
+     * @param value o valor mínimo dos carros a serem recuperados.
+     * @return uma lista de carros encontrados.
      */
     @GetMapping( "/value/bigger_than/{value}" )
     public List<Cars> getValueBiggerThan ( @PathVariable Double value ) {
@@ -211,8 +212,8 @@ public class CarsController {
      * Este endpoint retorna todos os carros com valor menor que o valor fornecido.
      * </p>
      *
-     * @param value o valor máximo dos carros a serem recuperados
-     * @return uma lista de carros encontrados
+     * @param value o valor máximo dos carros a serem recuperados.
+     * @return uma lista de carros encontrados.
      */
     @GetMapping( "/value/less_than/{value}" )
     public List<Cars> getValueLessThan ( @PathVariable Double value ) {
@@ -225,8 +226,8 @@ public class CarsController {
      * Este endpoint retorna todos os carros com o tipo de motor fornecido.
      * </p>
      *
-     * @param engineType o tipo de motor dos carros a serem recuperados
-     * @return uma lista de carros encontrados
+     * @param engineType o tipo de motor dos carros a serem recuperados.
+     * @return uma lista de carros encontrados.
      */
     @GetMapping( "/engine_type" )
     public List<Cars> getEngineType ( @RequestParam String engineType ) {
@@ -236,11 +237,11 @@ public class CarsController {
     /**
      * Recupera carros com base na velocidade máxima fornecida.
      * <p>
-     * Este endpoint retorna todos os carros com a velocidade máxima fornecida.
+     * Este endpoint retorna todos os carros que têm a velocidade máxima exata fornecida.
      * </p>
      *
-     * @param topSpeed a velocidade máxima dos carros a serem recuperados
-     * @return uma lista de carros encontrados
+     * @param topSpeed a velocidade máxima dos carros a serem recuperados.
+     * @return uma lista de carros encontrados.
      */
     @GetMapping( "/top_speed/{topSpeed}" )
     public List<Cars> getTopSpeed ( @PathVariable Integer topSpeed ) {
@@ -248,13 +249,13 @@ public class CarsController {
     }
 
     /**
-     * Recupera carros com base em uma característica fornecida.
+     * Recupera carros com uma característica específica fornecida.
      * <p>
      * Este endpoint retorna todos os carros que possuem a característica fornecida.
      * </p>
      *
-     * @param feature a característica dos carros a serem recuperados
-     * @return uma lista de carros encontrados
+     * @param feature a característica dos carros a serem recuperados.
+     * @return uma lista de carros encontrados.
      */
     @GetMapping( "/feature" )
     public List<Cars> getFeature ( @RequestParam String feature ) {

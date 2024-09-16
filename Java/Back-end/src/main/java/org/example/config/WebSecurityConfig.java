@@ -12,17 +12,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
- * Configura a segurança do aplicativo, controlando quem pode acessar quais endpoints.
+ * Configuração da segurança do aplicativo, controlando o acesso aos endpoints.
  * <p>
- * Essa configuração inclui regras para autorização de requisições HTTP, desativação de CSRF para certos endpoints
- * e a habilitação de autenticação básica.
+ * Esta configuração inclui regras para autorização de requisições HTTP, desativação de CSRF para certos endpoints
+ * e habilitação da autenticação básica.
  * </p>
  * <p>
  * A anotação {@link EnableMethodSecurity} permite o uso de anotações de segurança em métodos, como {@code @PreAuthorize}.
  * </p>
  */
 @Configuration
-@EnableMethodSecurity( prePostEnabled = true )
+@EnableMethodSecurity
 public class WebSecurityConfig {
 
     /**
@@ -32,7 +32,7 @@ public class WebSecurityConfig {
      * Requer autenticação para outros endpoints, com permissões específicas para operações de administração e acesso a dados.
      * </p>
      *
-     * @param http o objeto {@link HttpSecurity} que define as configurações de segurança HTTP.
+     * @param http o objeto {@link HttpSecurity} usado para definir as configurações de segurança HTTP.
      * @return um {@link SecurityFilterChain} configurado com as regras de segurança.
      * @throws Exception se ocorrer um erro durante a configuração da segurança.
      */
@@ -45,7 +45,7 @@ public class WebSecurityConfig {
                         auth -> auth
                                 .requestMatchers( HttpMethod.POST, "/users/create" ).permitAll()
                                 .requestMatchers( HttpMethod.POST, "/admin/create" )
-                                .permitAll()
+                                .hasRole( UserRole.ADMIN_ROLE.getRole() )
                                 .requestMatchers( HttpMethod.GET, "/cars" )
                                 .hasAnyRole( UserRole.USER_ROLE.getRole(), UserRole.ADMIN_ROLE.getRole() )
                                 .requestMatchers( HttpMethod.GET, "/cars/**" )
@@ -63,7 +63,7 @@ public class WebSecurityConfig {
     }
 
     /**
-     * Define como as senhas serão codificadas.
+     * Define o método de codificação das senhas.
      * <p>
      * Utiliza o algoritmo BCrypt para garantir a segurança das senhas armazenadas.
      * </p>

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Controlador responsável por operações administrativas relacionadas a usuários.
  * <p>
- * Permite a criação de novos usuários com privilégios de administrador.
+ * Este controlador permite a criação de novos usuários com privilégios de administrador.
  * </p>
  */
 @RestController
@@ -28,7 +28,7 @@ public class AdminController {
      * Injeta o serviço {@link CustomUserDetailsService} para lidar com a lógica de criação e gerenciamento de usuários.
      * </p>
      *
-     * @param customUserDetailsService serviço responsável por criar e gerenciar usuários
+     * @param customUserDetailsService serviço responsável por criar e gerenciar usuários.
      */
     public AdminController ( CustomUserDetailsService customUserDetailsService ) {
         this.customUserDetailsService = customUserDetailsService;
@@ -38,12 +38,12 @@ public class AdminController {
     /**
      * Endpoint para criar um novo usuário com privilégios administrativos.
      * <p>
-     * Recebe os dados do novo usuário em formato JSON, os valida e utiliza o serviço {@link CustomUserDetailsService}
+     * Recebe os dados do novo usuário em formato JSON, valida esses dados e utiliza o serviço {@link CustomUserDetailsService}
      * para processar a criação do usuário.
      * </p>
      *
-     * @param userData objeto {@link RegisterForAdminDTO} contendo os detalhes do novo usuário
-     * @return uma {@link ResponseEntity} com uma mensagem de sucesso e status HTTP 200 (OK)
+     * @param userData objeto {@link RegisterForAdminDTO} contendo os detalhes do novo usuário.
+     * @return uma {@link ResponseEntity} com uma mensagem de sucesso e status HTTP 200 (OK).
      */
     @PostMapping( "/create" )
     public ResponseEntity<String> createAdmin ( @RequestBody @Valid RegisterForAdminDTO userData ) {

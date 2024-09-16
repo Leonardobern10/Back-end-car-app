@@ -26,6 +26,13 @@ public class CarsService {
     private final DirectorCar directorCar;
 
 
+    /**
+     * Constrói uma instância do {@code CarsService} com os componentes necessários.
+     *
+     * @param carsRepository o repositório de carros para realizar operações de banco de dados
+     * @param carValidations a classe de validações para carros
+     * @param directorCar    o diretor responsável pela construção de carros
+     */
     @Autowired
     public CarsService ( CarsRepository carsRepository, CarValidations carValidations, DirectorCar directorCar ) {
         this.carsRepository = carsRepository;
@@ -66,7 +73,7 @@ public class CarsService {
         carValidations.validateCarExistence( str );
         return carsRepository.findById( str ).orElseThrow();
     }
-
+    
     /**
      * Recupera uma lista de carros com base no valor fornecido.
      *
