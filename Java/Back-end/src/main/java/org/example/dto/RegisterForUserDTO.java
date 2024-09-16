@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.dto;
 
 /**
  * Data Transfer Object (DTO) para registro de um novo usuário.
@@ -10,5 +10,5 @@ package org.example.model;
  * @param username o nome de usuário do novo usuário
  * @param password a senha do novo usuário
  */
-public record RegisterForUserDTO( String username, String password ) {
+public record RegisterForUserDTO( String username, String email, String password ) {
 }

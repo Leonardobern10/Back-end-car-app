@@ -1,4 +1,6 @@
-package org.example.model;
+package org.example.dto;
+
+import org.example.role.UserRole;
 
 /**
  * Data Transfer Object (DTO) para registro de um novo usuário com um papel administrativo.
@@ -12,5 +14,5 @@ package org.example.model;
  * @param password a senha do novo usuário
  * @param role     o papel do novo usuário na aplicação (por exemplo, ADMIN ou USER)
  */
-public record RegisterForAdminDTO( String username, String password, UserRole role ) {
+public record RegisterForAdminDTO( String username, String password, String email, UserRole role ) {
 }
