@@ -1,12 +1,12 @@
-package org.example.service.BuildCar;
+package org.example.build.BuildCar;
 
 import org.example.model.Cars;
 import org.example.model.DimensionsCar;
 import org.example.model.SpecificationsCar;
-import org.example.service.BuildDimensionsCar.ConcreteBuilderSpecificationsCar;
-import org.example.service.BuildDimensionsCar.DirectorSpecificationsCar;
-import org.example.service.BuildSpecificationsCar.ConcreteBuilderDimensionsCar;
-import org.example.service.BuildSpecificationsCar.DirectorDimensionsCar;
+import org.example.build.BuildDimensionsCar.ConcreteBuilderSpecificationsCar;
+import org.example.build.BuildDimensionsCar.DirectorSpecificationsCar;
+import org.example.build.BuildSpecificationsCar.ConcreteBuilderDimensionsCar;
+import org.example.build.BuildSpecificationsCar.DirectorDimensionsCar;
 
 import java.util.List;
 

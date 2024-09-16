@@ -1,4 +1,4 @@
-package org.example.service.BuildSpecificationsCar;
+package org.example.build.BuildSpecificationsCar;
 
 import org.example.model.DimensionsCar;
 

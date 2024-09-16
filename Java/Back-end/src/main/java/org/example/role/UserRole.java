@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.role;
 
 /**
  * Enumeração que define os papéis de usuário na aplicação.
