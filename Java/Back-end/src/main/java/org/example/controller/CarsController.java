@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Controlador responsável pelo gerenciamento de requisições relacionadas a carros.
@@ -48,7 +49,7 @@ public class CarsController {
      * @throws ResourceNotFoundException se o carro com o ID fornecido não for encontrado.
      */
     @GetMapping( "/{id}" )
-    public ResponseEntity<Cars> getById ( @PathVariable String id ) throws RuntimeException {
+    public ResponseEntity<Optional<Cars>> getById ( @PathVariable String id ) throws RuntimeException {
         return ResponseEntity.ok( carsService.getById( id ) );
     }
 
@@ -116,7 +117,7 @@ public class CarsController {
      * @return um {@link ResponseEntity} contendo o carro encontrado e o status HTTP 200 (OK).
      */
     @GetMapping( "/model" )
-    public Cars getModels ( @RequestParam String model ) {
+    public Optional<Cars> getModels ( @RequestParam String model ) {
         return new ResponseEntity<>( carsService.getByModel( model ), HttpStatus.OK ).getBody();
     }
 
