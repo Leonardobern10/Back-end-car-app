@@ -4,11 +4,23 @@ import org.example.model.Cars;
 import org.example.repository.CarsRepository;
 import org.example.build.BuildCar.ConcreteBuilderCar;
 import org.example.build.BuildCar.DirectorCar;
+import org.example.service.SearchDouble.SearchByBiggerValue;
+import org.example.service.SearchDouble.SearchByLessValue;
+import org.example.service.SearchDouble.SearchByValue;
+import org.example.service.SearchInteger.SearchByNewerYear;
+import org.example.service.SearchInteger.SearchByOlderYear;
+import org.example.service.SearchInteger.SearchByYear;
+import org.example.service.SearchString.*;
+import org.example.service.context.ContextSearchCarsForInteger;
+import org.example.service.context.ContextSearchCarsForString;
+import org.example.service.context.ContextSearchCarsForValue;
+import org.example.service.context.ContextSearchOneCarForString;
 import org.example.validations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Serviço responsável pela lógica de negócios relacionada aos objetos {@link Cars}.
@@ -21,10 +33,26 @@ import java.util.List;
 @Service
 public class CarsService {
 
-    private final CarsRepository carsRepository;
-    private final CarValidations carValidations;
     private final DirectorCar directorCar;
+    private final CarValidations carValidations;
+    private final CarsRepository carsRepository;
 
+    // For String
+    ContextSearchOneCarForString contextByModel;
+    ContextSearchOneCarForString contextById;
+    ContextSearchCarsForString contextByFeature;
+    ContextSearchCarsForString contextByProducedBy;
+    ContextSearchCarsForString contextByEngineType;
+
+    // For Double
+    ContextSearchCarsForValue contextByValue;
+    ContextSearchCarsForValue contextByBiggerValue;
+    ContextSearchCarsForValue contextByLessValue;
+
+    // For Integer
+    ContextSearchCarsForInteger contextByYear;
+    ContextSearchCarsForInteger contextByNewerYear;
+    ContextSearchCarsForInteger contextByOlderYear;
 
     /**
      * Constrói uma instância do {@code CarsService} com os componentes necessários.
@@ -38,6 +66,19 @@ public class CarsService {
         this.carsRepository = carsRepository;
         this.carValidations = carValidations;
         this.directorCar = directorCar;
+
+        this.contextByModel = new ContextSearchOneCarForString( new SearchByModel( carsRepository ) );
+        this.contextById = new ContextSearchOneCarForString( new SearchById( carsRepository, carValidations ) );
+        this.contextByValue = new ContextSearchCarsForValue( new SearchByValue( carsRepository ) );
+        this.contextByBiggerValue = new ContextSearchCarsForValue( new SearchByBiggerValue( carsRepository ) );
+        this.contextByLessValue = new ContextSearchCarsForValue( new SearchByLessValue( carsRepository ) );
+        this.contextByYear = new ContextSearchCarsForInteger( new SearchByYear( carsRepository ) );
+        this.contextByNewerYear = new ContextSearchCarsForInteger( new SearchByNewerYear( carsRepository ) );
+        this.contextByOlderYear = new ContextSearchCarsForInteger( new SearchByOlderYear( carsRepository ) );
+        this.contextByFeature = new ContextSearchCarsForString( new SearchByFeature( carsRepository ) );
+        this.contextByProducedBy = new ContextSearchCarsForString( new SearchByProducedBy( carsRepository ) );
+        this.contextByEngineType = new ContextSearchCarsForString( new SearchByEngineType( carsRepository ) );
+
     }
 
     /**
@@ -57,8 +98,8 @@ public class CarsService {
      * @param model o modelo do carro a ser recuperado
      * @return o carro correspondente ao modelo fornecido
      */
-    public Cars getByModel ( String model ) {
-        return carsRepository.findByModel( model );
+    public Optional<Cars> getByModel ( String model ) {
+        return contextByModel.doSearch( model );
     }
 
     /**
@@ -68,12 +109,10 @@ public class CarsService {
      * @return o carro correspondente ao ID fornecido
      * @throws RuntimeException se o carro com o ID fornecido não for encontrado
      */
-    public Cars getById ( String id ) {
-        String str = FormatInfo.check( id );
-        carValidations.validateCarExistence( str );
-        return carsRepository.findById( str ).orElseThrow();
+    public Optional<Cars> getById ( String id ) {
+        return contextById.doSearch( id );
     }
-    
+
     /**
      * Recupera uma lista de carros com base no valor fornecido.
      *
@@ -82,8 +121,7 @@ public class CarsService {
      * @throws IllegalArgumentException se o valor fornecido for inválido
      */
     public List<Cars> getByValue ( Double value ) {
-        CarValueValidation.validate( value );
-        return carsRepository.findByValue( value );
+        return contextByValue.doSearch( value );
     }
 
     /**
@@ -94,8 +132,7 @@ public class CarsService {
      * @throws IllegalArgumentException se o valor fornecido for inválido
      */
     public List<Cars> getByLessThanValue ( Double value ) {
-        CarValueValidation.validate( value );
-        return carsRepository.findByLessThanValue( value );
+        return contextByLessValue.doSearch( value );
     }
 
     /**
@@ -106,8 +143,7 @@ public class CarsService {
      * @throws IllegalArgumentException se o valor fornecido for inválido
      */
     public List<Cars> getBiggerThanValue ( Double value ) {
-        CarValueValidation.validate( value );
-        return carsRepository.findBiggerThanValue( value );
+        return contextByBiggerValue.doSearch( value );
     }
 
     /**
@@ -118,8 +154,7 @@ public class CarsService {
      * @throws IllegalArgumentException se o ano fornecido for inválido
      */
     public List<Cars> getByYear ( Integer year ) {
-        IntegerValidation.validate( year );
-        return carsRepository.findByYear( year );
+        return contextByYear.doSearch( year );
     }
 
     /**
@@ -130,8 +165,7 @@ public class CarsService {
      * @throws IllegalArgumentException se o ano fornecido for inválido
      */
     public List<Cars> getNewerThanYear ( Integer year ) {
-        IntegerValidation.validate( year );
-        return carsRepository.findNewerThanYear( year );
+        return contextByNewerYear.doSearch( year );
     }
 
     /**
@@ -142,8 +176,7 @@ public class CarsService {
      * @throws IllegalArgumentException se o ano fornecido for inválido
      */
     public List<Cars> getOlderThanYear ( Integer year ) {
-        IntegerValidation.validate( year );
-        return carsRepository.findOlderThanYear( year );
+        return contextByOlderYear.doSearch( year );
     }
 
     /**
@@ -153,8 +186,7 @@ public class CarsService {
      * @return uma lista de carros produzidos pelo fabricante fornecido
      */
     public List<Cars> getProducedBy ( String producedBy ) {
-        String str = FormatInfo.check( producedBy );
-        return carsRepository.findProducedBy( str );
+        return contextByProducedBy.doSearch( producedBy );
     }
 
     /**
@@ -164,8 +196,17 @@ public class CarsService {
      * @return uma lista de carros com o tipo de motor correspondente
      */
     public List<Cars> getByEngineType ( String engineType ) {
-        String str = FormatInfo.check( engineType );
-        return carsRepository.findByEngineType( str );
+        return contextByEngineType.doSearch( engineType );
+    }
+
+    /**
+     * Recupera uma lista de carros com base na característica fornecida.
+     *
+     * @param feature a característica dos carros a serem recuperados
+     * @return uma lista de carros com a característica correspondente
+     */
+    public List<Cars> getByFeature ( String feature ) {
+        return contextByFeature.doSearch( feature );
     }
 
     /**
@@ -179,17 +220,6 @@ public class CarsService {
         IntegerValidation.validate( topSpeed );
         String searchFormat = topSpeed.toString() + " mph";
         return carsRepository.findByTopSpeed( searchFormat );
-    }
-
-    /**
-     * Recupera uma lista de carros com base na característica fornecida.
-     *
-     * @param feature a característica dos carros a serem recuperados
-     * @return uma lista de carros com a característica correspondente
-     */
-    public List<Cars> getByFeature ( String feature ) {
-        String str = FormatInfo.check( feature );
-        return carsRepository.findByFeature( str );
     }
 
     /**
