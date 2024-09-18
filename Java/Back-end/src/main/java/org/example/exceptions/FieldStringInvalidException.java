@@ -10,6 +10,7 @@ package org.example.exceptions;
  * </p>
  */
 public class FieldStringInvalidException extends RuntimeException {
+
     /**
      * Constrói uma nova instância da exceção {@code FieldStringInvalidException} com uma mensagem especificada.
      * <p>

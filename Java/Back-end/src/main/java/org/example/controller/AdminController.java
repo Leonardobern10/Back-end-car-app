@@ -34,7 +34,6 @@ public class AdminController {
         this.customUserDetailsService = customUserDetailsService;
     }
 
-
     /**
      * Endpoint para criar um novo usuário com privilégios administrativos.
      * <p>

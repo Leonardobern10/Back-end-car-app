@@ -7,12 +7,19 @@ import org.example.exceptions.ResourceNotFoundException;
 import org.example.model.Cars;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Repositório para operações CRUD e consultas personalizadas relacionadas a carros.
+ * <p>
+ * Este repositório fornece métodos para consultar carros com base em diversos critérios, como modelo, valor, ano de produção, fabricante, tipo de motor, etc.
+ * </p>
+ */
 @Repository
-public interface CarsRepository extends MongoRepository<Cars, String> {
+public interface CarsRepository extends MongoRepository<Cars, String>, PagingAndSortingRepository<Cars, String> {
 
     /**
      * Verifica se o modelo pesquisado existe e retorna o carro correspondente.

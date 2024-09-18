@@ -10,10 +10,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * Classe responsável pela validação de informações relacionadas a carros.
+ * Classe responsável pela validação das informações relacionadas a carros.
  * <p>
- * Fornece métodos para validar informações antes de salvar ou atualizar um carro,
- * bem como verificar a existência de um carro.
+ * Fornece métodos para validar informações antes de salvar ou atualizar um carro, bem como verificar a existência de um carro.
  * </p>
  */
 @Component
@@ -28,10 +27,9 @@ public class CarValidations {
     /**
      * Valida as informações a serem atualizadas para um carro.
      * <p>
-     * Este método realiza validações nos campos do carro que estão sendo atualizados,
-     * incluindo o modelo, ano de produção, fabricante, URL da imagem, valor do carro,
-     * especificações, recursos e dimensões. Se qualquer uma dessas informações for inválida,
-     * uma exceção é lançada.
+     * Este método realiza validações nos campos do carro que estão sendo atualizados, incluindo o modelo, ano de produção,
+     * fabricante, URL da imagem, valor do carro, especificações, recursos e dimensões. Se qualquer uma dessas informações
+     * for inválida, uma exceção é lançada.
      * </p>
      *
      * @param model             o modelo do carro
@@ -52,19 +50,17 @@ public class CarValidations {
         StringValidation.validate( producedBy, "FIELD IS NOT VALID" + producedBy );
         StringValidation.validate( imageUrl, "FIELD URL IS INVALID" );
         CarValueValidation.validate( carValue );
-        SpecificationsValidate.validate( specificationsCar );
+        ValidateObjectProperties.validate( specificationsCar );
         IsEmptyValidation.validate( feature );
-        DimensionsValidate.validate( dimensionsCar );
+        ValidateObjectProperties.validate( dimensionsCar );
     }
 
     /**
      * Valida as informações para salvar um carro.
      * <p>
-     * Este método realiza validações nos campos do carro que está sendo salvo,
-     * incluindo o ID, modelo, ano de produção, fabricante, URL da imagem, valor do carro,
-     * especificações, recursos e dimensões. Além disso, verifica se o carro já existe
-     * para evitar duplicatas. Se qualquer uma dessas informações for inválida ou se o carro
-     * já existir, uma exceção é lançada.
+     * Este método realiza validações nos campos do carro que está sendo salvo, incluindo o ID, modelo, ano de produção,
+     * fabricante, URL da imagem, valor do carro, especificações, recursos e dimensões. Além disso, verifica se o carro já existe
+     * para evitar duplicatas. Se qualquer uma dessas informações for inválida ou se o carro já existir, uma exceção é lançada.
      * </p>
      *
      * @param car               o objeto {@link Cars} a ser validado
@@ -88,9 +84,9 @@ public class CarValidations {
         StringValidation.validate( producedBy, "FIELD IS NOT VALID" + producedBy );
         StringValidation.validate( imageUrl, "FIELD URL IS INVALID" );
         CarValueValidation.validate( carValue );
-        SpecificationsValidate.validate( specificationsCar );
+        ValidateObjectProperties.validate( specificationsCar );
         IsEmptyValidation.validate( feature );
-        DimensionsValidate.validate( dimensionsCar );
+        ValidateObjectProperties.validate( dimensionsCar );
     }
 
     /**

@@ -7,7 +7,10 @@ import org.example.model.SpecificationsCar;
 import java.util.List;
 
 /**
- * Interface para construir um objeto Carro passo a passo.
+ * Interface para construir um objeto {@link Cars} passo a passo.
+ * <p>
+ * Esta interface define métodos para configurar os diferentes atributos do carro e construir um objeto {@link Cars} com base nesses atributos.
+ * </p>
  */
 public interface BuilderCar {
 

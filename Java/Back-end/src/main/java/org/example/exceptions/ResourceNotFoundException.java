@@ -9,6 +9,7 @@ package org.example.exceptions;
  * </p>
  */
 public class ResourceNotFoundException extends RuntimeException {
+
     /**
      * Constrói uma nova instância da exceção {@code ResourceNotFoundException} com uma mensagem especificada.
      * <p>

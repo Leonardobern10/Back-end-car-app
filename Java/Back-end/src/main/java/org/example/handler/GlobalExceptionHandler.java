@@ -122,4 +122,20 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status( HttpStatus.CONFLICT ).body( exception.getMessage() );
     }
 
+    /**
+     * Manipula exceções do tipo {@link InvalidFieldException}.
+     * <p>
+     * Este método é responsável por capturar exceções do tipo {@code InvalidFieldException}
+     * lançadas na aplicação. Ele retorna uma resposta personalizada com a mensagem de erro
+     * associada à exceção, além de um código de status HTTP 400 (Bad Request).
+     * </p>
+     *
+     * @param ex a exceção {@code InvalidFieldException} que foi lançada
+     * @return uma resposta HTTP contendo a mensagem de erro da exceção e o código de status 400
+     */
+    @ExceptionHandler( InvalidFieldException.class )
+    public ResponseEntity<String> handleValidationException ( InvalidFieldException ex ) {
+        // Retorna uma resposta personalizada com a mensagem de erro
+        return new ResponseEntity<>( ex.getMessage(), HttpStatus.BAD_REQUEST );
+    }
 }

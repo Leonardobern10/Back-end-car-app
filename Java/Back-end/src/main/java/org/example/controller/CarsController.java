@@ -4,6 +4,7 @@ import org.example.exceptions.*;
 import org.example.model.Cars;
 import org.example.service.CarsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,14 +29,18 @@ public class CarsController {
     /**
      * Recupera todos os carros armazenados no banco de dados.
      * <p>
-     * Este endpoint retorna uma lista contendo todos os carros registrados no banco de dados.
+     * Este endpoint retorna uma página contendo todos os carros registrados no banco de dados.
+     * A resposta é paginada, com o número da página e o tamanho da página especificados pelos parâmetros de solicitação.
      * </p>
      *
-     * @return uma lista de {@link Cars} contendo todos os carros registrados.
+     * @param page número da página para a qual os carros devem ser retornados. O valor padrão é 0.
+     * @param size o número de carros por página. O valor padrão é 10.
+     * @return uma {@link Page} de {@link Cars} contendo os carros registrados, paginados conforme os parâmetros fornecidos.
      */
     @GetMapping
-    public List<Cars> getAllCars () {
-        return ResponseEntity.ok( carsService.getAllCars() ).getBody();
+    public Page<Cars> getAllCars ( @RequestParam( defaultValue = "0" ) int page,
+                                   @RequestParam( defaultValue = "10" ) int size ) {
+        return ResponseEntity.ok( carsService.getAllCars( page, size ) ).getBody();
     }
 
     /**
@@ -121,7 +126,6 @@ public class CarsController {
         return new ResponseEntity<>( carsService.getByModel( model ), HttpStatus.OK ).getBody();
     }
 
-
     /**
      * Recupera carros com base no ano fornecido.
      * <p>
@@ -135,7 +139,6 @@ public class CarsController {
     public List<Cars> getByYear ( @PathVariable Integer year ) {
         return new ResponseEntity<>( carsService.getByYear( year ), HttpStatus.OK ).getBody();
     }
-
 
     /**
      * Recupera carros mais novos que o ano fornecido.

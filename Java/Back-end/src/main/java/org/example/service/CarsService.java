@@ -17,6 +17,9 @@ import org.example.service.context.ContextSearchCarsForValue;
 import org.example.service.context.ContextSearchOneCarForString;
 import org.example.validations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -78,18 +81,24 @@ public class CarsService {
         this.contextByFeature = new ContextSearchCarsForString( new SearchByFeature( carsRepository ) );
         this.contextByProducedBy = new ContextSearchCarsForString( new SearchByProducedBy( carsRepository ) );
         this.contextByEngineType = new ContextSearchCarsForString( new SearchByEngineType( carsRepository ) );
-
     }
 
     /**
-     * Recupera todos os carros armazenados no banco de dados.
+     * Recupera todos os carros armazenados no banco de dados com suporte a paginação.
+     * <p>
+     * Este método retorna uma página de carros, permitindo a recuperação de uma parte dos registros
+     * com base no número da página e no tamanho da página fornecidos. A paginação é útil para
+     * melhorar a performance e a experiência do usuário ao lidar com grandes volumes de dados.
+     * </p>
      *
-     * @return uma lista contendo todos os carros registrados no banco de dados.
+     * @param page O número da página a ser recuperada (começando do 0).
+     * @param size O número de registros por página.
+     * @return Uma {@link Page} contendo uma lista de {@link Cars} que representa os carros
+     * registrados no banco de dados para a página solicitada.
      */
-    public List<Cars> getAllCars () {
-        List<Cars> cars = carsRepository.findAll();
-        System.out.println( "Total de registros:" + cars.size() );
-        return cars;
+    public Page<Cars> getAllCars ( int page, int size ) {
+        Pageable pageable = PageRequest.of( page, size );
+        return carsRepository.findAll( pageable );
     }
 
     /**

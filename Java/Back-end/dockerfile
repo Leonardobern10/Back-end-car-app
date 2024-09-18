@@ -1,5 +1,5 @@
 # Use uma imagem base com Java OpenJDK
-FROM openjdk:22-jdk-alpine
+FROM openjdk:21
 
 # Diretório de trabalho no contêiner
 WORKDIR /app
