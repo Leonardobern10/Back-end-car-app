@@ -4,6 +4,7 @@ package org.example.validations;
 import org.example.exceptions.DuplicatedFoundException;
 import org.example.model.Cars;
 import org.example.repository.CarsRepository;
+import org.example.utils.Errors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,10 +15,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class DuplicatedFoundValidation {
 
+    private final Cars car = new Cars();
     @Autowired
     private CarsRepository carsRepository;
-
-    private final Cars car = new Cars();
 
     /**
      * Valida se um carro já existe no repositório com base no seu ID.
@@ -29,7 +29,7 @@ public class DuplicatedFoundValidation {
      */
     public void validate ( Cars car ) {
         if ( carsRepository.existsById( car.getId() ) ) {
-            throw new DuplicatedFoundException( "IT'S NOT POSSIBLE TO SAVE THAT ID" + car.getId() );
+            throw new DuplicatedFoundException( Errors.RESOURCE_NOT_FOUND_ERROR + car.getId() );
         }
     }
 }

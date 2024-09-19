@@ -5,6 +5,7 @@ import org.example.exceptions.FieldIntegerInvalidException;
 import org.example.exceptions.FieldStringInvalidException;
 import org.example.exceptions.ResourceNotFoundException;
 import org.example.model.Cars;
+import org.example.utils.QueryMongo;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -28,7 +29,7 @@ public interface CarsRepository extends MongoRepository<Cars, String>, PagingAnd
      * @return O carro com o modelo correspondente.
      * @throws ResourceNotFoundException Se o modelo não for encontrado.
      */
-    @Query( "{'model': {$eq: ?0}}" )
+    @Query( QueryMongo.FIND_BY_MODEL )
     Cars findByModel ( String model ); // Concluido
 
     /**
@@ -38,7 +39,7 @@ public interface CarsRepository extends MongoRepository<Cars, String>, PagingAnd
      * @return Uma lista de carros com valor menor que o valor fornecido.
      * @throws ResourceNotFoundException Se nenhum carro for encontrado.
      */
-    @Query( "{ 'carValue': { $gt: ?0 } }" )
+    @Query( QueryMongo.FIND_BY_LESS_VALUE )
     List<Cars> findByLessThanValue ( Double value ); // Concluido
 
     /**
@@ -49,7 +50,7 @@ public interface CarsRepository extends MongoRepository<Cars, String>, PagingAnd
      * @throws ResourceNotFoundException   Se nenhum carro for encontrado.
      * @throws FieldDoubleInvalidException Se o valor fornecido for inválido.
      */
-    @Query( "{ 'carValue': { $eq: ?0} }" )
+    @Query( QueryMongo.FIND_BY_VALUE )
     List<Cars> findByValue ( Double value ); // Concluido
 
     /**
@@ -60,7 +61,7 @@ public interface CarsRepository extends MongoRepository<Cars, String>, PagingAnd
      * @throws ResourceNotFoundException   Se nenhum carro for encontrado.
      * @throws FieldDoubleInvalidException Se o valor fornecido for inválido.
      */
-    @Query( "{ 'carValue': { $gt: ?0} }" )
+    @Query( QueryMongo.FIND_BY_BIGGER_VALUE )
     List<Cars> findBiggerThanValue ( Double value ); // Concluido
 
     /**
@@ -71,7 +72,7 @@ public interface CarsRepository extends MongoRepository<Cars, String>, PagingAnd
      * @throws ResourceNotFoundException    Se nenhum carro for encontrado.
      * @throws FieldIntegerInvalidException Se o ano fornecido for inválido.
      */
-    @Query( " { 'yearProduction': { $eq: ?0 } }" )
+    @Query( QueryMongo.FIND_BY_YEAR )
     List<Cars> findByYear ( Integer year ); // Concluido
 
     /**
@@ -82,7 +83,7 @@ public interface CarsRepository extends MongoRepository<Cars, String>, PagingAnd
      * @throws ResourceNotFoundException    Se nenhum carro for encontrado.
      * @throws FieldIntegerInvalidException Se o ano fornecido for inválido.
      */
-    @Query( " { 'yearProduction': { $lt: ?0 } }" )
+    @Query( QueryMongo.FIND_BY_NEWER_YEAR )
     List<Cars> findNewerThanYear ( Integer year ); // Concluido
 
     /**
@@ -93,7 +94,7 @@ public interface CarsRepository extends MongoRepository<Cars, String>, PagingAnd
      * @throws ResourceNotFoundException    Se nenhum carro for encontrado.
      * @throws FieldIntegerInvalidException Se o ano fornecido for inválido.
      */
-    @Query( " { 'yearProduction': { $gt: ?0 } }" )
+    @Query( QueryMongo.FIND_BY_OLDER_YEAR )
     List<Cars> findOlderThanYear ( Integer year ); // Concluido
 
     /**
@@ -104,7 +105,7 @@ public interface CarsRepository extends MongoRepository<Cars, String>, PagingAnd
      * @throws ResourceNotFoundException   Se nenhum carro for encontrado.
      * @throws FieldStringInvalidException Se o nome da fabricante for inválido.
      */
-    @Query( "{'producedBy': {$eq: ?0 } }" )
+    @Query( QueryMongo.FIND_BY_PRODUCEDBY )
     List<Cars> findProducedBy ( String producedBy );
 
     /**
@@ -115,7 +116,7 @@ public interface CarsRepository extends MongoRepository<Cars, String>, PagingAnd
      * @throws ResourceNotFoundException   Se nenhum carro for encontrado.
      * @throws FieldStringInvalidException Se o tipo de motor for inválido.
      */
-    @Query( "{'specifications.engineType':{$eq: ?0}}" )
+    @Query( QueryMongo.FIND_BY_ENGINE_TYPE )
     List<Cars> findByEngineType ( String engineType );
 
     /**
@@ -126,7 +127,7 @@ public interface CarsRepository extends MongoRepository<Cars, String>, PagingAnd
      * @throws ResourceNotFoundException   Se nenhum carro for encontrado.
      * @throws FieldStringInvalidException Se a velocidade fornecida for inválida.
      */
-    @Query( "{'specifications.topSpeed':{$eq: ?0}}" )
+    @Query( QueryMongo.FIND_BY_TOP_SPEED )
     List<Cars> findByTopSpeed ( String topSpeed );
 
     /**
@@ -137,7 +138,7 @@ public interface CarsRepository extends MongoRepository<Cars, String>, PagingAnd
      * @throws ResourceNotFoundException   Se nenhuma feature correspondente for encontrada.
      * @throws FieldStringInvalidException Se a feature fornecida for inválida.
      */
-    @Query( "{'features': {$eq: ?0}}" )
+    @Query( QueryMongo.FIND_BY_FEATURE )
     List<Cars> findByFeature ( String features );
 }
 

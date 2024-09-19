@@ -3,7 +3,6 @@ package org.example.events;
 import org.example.model.User;
 import org.springframework.context.ApplicationEvent;
 
-
 /**
  * Evento que representa o registro de um novo usuário.
  * <p>

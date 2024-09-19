@@ -27,7 +27,6 @@ public class ConcreteBuilderUser implements BuilderUser {
         user.setUsername( username );
     }
 
-
     /**
      * Define o e-mail do usuário.
      *

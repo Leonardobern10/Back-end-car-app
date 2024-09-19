@@ -1,5 +1,7 @@
 package org.example.config;
 
+import org.example.routes.Routes;
+import org.example.utils.HttpInfo;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -27,9 +29,9 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addCorsMappings ( CorsRegistry registry ) {
-        registry.addMapping( "/**" )
-                .allowedOrigins( "*" )
-                .allowedMethods( "GET", "POST", "PUT", "DELETE" )
-                .allowedHeaders( "*" );
+        registry.addMapping( Routes.ALL_ROUTES )
+                .allowedOrigins( HttpInfo.ALLOWED_ORIGINS )
+                .allowedMethods( HttpInfo.HTTP_GET, HttpInfo.HTTP_POST, HttpInfo.HTTP_PUT, HttpInfo.HTTP_DELETE )
+                .allowedHeaders( HttpInfo.ALLOWED_HEADERS );
     }
 }

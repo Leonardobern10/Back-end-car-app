@@ -1,6 +1,7 @@
 package org.example.config;
 
 import org.example.role.UserRole;
+import org.example.routes.Routes;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -43,18 +44,18 @@ public class WebSecurityConfig {
                 )
                 .authorizeHttpRequests(
                         auth -> auth
-                                .requestMatchers( HttpMethod.POST, "/users/create" ).permitAll()
-                                .requestMatchers( HttpMethod.POST, "/admin/create" )
+                                .requestMatchers( HttpMethod.POST, Routes.CREATE_USER_ROUTE ).permitAll()
+                                .requestMatchers( HttpMethod.POST, Routes.CREATE_ADMIN_ROUTE )
                                 .hasRole( UserRole.ADMIN_ROLE.getRole() )
-                                .requestMatchers( HttpMethod.GET, "/cars" )
+                                .requestMatchers( HttpMethod.GET, Routes.CARS_ROUTE )
                                 .hasAnyRole( UserRole.USER_ROLE.getRole(), UserRole.ADMIN_ROLE.getRole() )
-                                .requestMatchers( HttpMethod.GET, "/cars/**" )
+                                .requestMatchers( HttpMethod.GET, Routes.CARS_AND_DEPENDENCIES_ROUTE )
                                 .hasAnyRole( UserRole.USER_ROLE.getRole(), UserRole.ADMIN_ROLE.getRole() )
-                                .requestMatchers( HttpMethod.POST, "/cars" )
+                                .requestMatchers( HttpMethod.POST, Routes.CARS_ROUTE )
                                 .hasRole( UserRole.ADMIN_ROLE.getRole() )
-                                .requestMatchers( HttpMethod.PUT, "/cars/**" )
+                                .requestMatchers( HttpMethod.PUT, Routes.CARS_AND_DEPENDENCIES_ROUTE )
                                 .hasRole( UserRole.ADMIN_ROLE.getRole() )
-                                .requestMatchers( HttpMethod.DELETE, "/cars/**" )
+                                .requestMatchers( HttpMethod.DELETE, Routes.CARS_AND_DEPENDENCIES_ROUTE )
                                 .hasRole( UserRole.ADMIN_ROLE.getRole() )
                                 .anyRequest().authenticated()
                 )

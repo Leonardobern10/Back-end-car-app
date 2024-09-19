@@ -1,6 +1,7 @@
 package org.example.validations;
 
 import org.example.exceptions.FieldDoubleInvalidException;
+import org.example.utils.Errors;
 
 /**
  * Classe de validação para valores inteiros relacionados a carros.
@@ -25,7 +26,7 @@ public class IntegerValidation {
      */
     public static void validate ( Integer carValue ) {
         if ( carValue < 0 ) {
-            throw new FieldDoubleInvalidException( "FIELD CAR_VALUE IS INVALID" );
+            throw new FieldDoubleInvalidException( Errors.FIELD_ERROR + carValue );
         }
     }
 }

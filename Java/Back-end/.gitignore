@@ -40,7 +40,6 @@ build/
 .DS_Store
 
 src/main/resources/
-src/main/resources
 concepts/
 resources/application.properties
-src/main/resources/application.properties
+src/main/java/org/example/utils/EmailInfo.java

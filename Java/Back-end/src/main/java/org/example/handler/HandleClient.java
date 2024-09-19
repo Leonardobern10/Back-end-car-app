@@ -5,6 +5,7 @@ import org.example.build.BuildClient.DirectorUser;
 import org.example.model.User;
 import org.example.role.UserRole;
 import org.example.repository.UserRepository;
+import org.example.utils.Errors;
 import org.example.validations.StringValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -55,15 +56,14 @@ public class HandleClient {
      * @throws IllegalArgumentException se o nome de usuário, e-mail ou a senha não forem válidos
      */
     public User toCallBuilder ( String username, String email, String password, UserRole role ) {
-        StringValidation.validate( username, "FIELD USERNAME IS NOT VALID: " + username );
-        StringValidation.validatePassword( password, "THIS PASSWORD IS INVALID! IT NEEDS: LETTERS, NUMBERS AND SPECIAL CHARACTERS..." );
-        StringValidation.validate( email, "FIELD EMAIL IS NOT VALID" + email );
+        StringValidation.validate( username, password, email );
+        StringValidation.validatePassword( password, Errors.PASSWORD_INVALID_ERROR );
 
         if ( userRepository.findByUsername( username ) != null ) {
             throw new BadCredentialsException( "USERNAME INVALID" );
         }
 
-        StringValidation.validate( role.getRole(), "THIS ROLE IS INVALID: " + role.getRole() );
+        StringValidation.validate( role.getRole() );
 
         ConcreteBuilderUser builderUser = new ConcreteBuilderUser();
         return directorUser.construct( builderUser, username, email, password, role );

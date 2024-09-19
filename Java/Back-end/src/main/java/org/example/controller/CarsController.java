@@ -1,7 +1,9 @@
 package org.example.controller;
 
+import org.example.utils.PageInfo;
 import org.example.exceptions.*;
 import org.example.model.Cars;
+import org.example.routes.Routes;
 import org.example.service.CarsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +22,7 @@ import java.util.Optional;
  * </p>
  */
 @RestController
-@RequestMapping( "/cars" )
+@RequestMapping( Routes.CARS_ROUTE )
 public class CarsController {
 
     @Autowired
@@ -38,8 +40,8 @@ public class CarsController {
      * @return uma {@link Page} de {@link Cars} contendo os carros registrados, paginados conforme os parâmetros fornecidos.
      */
     @GetMapping
-    public Page<Cars> getAllCars ( @RequestParam( defaultValue = "0" ) int page,
-                                   @RequestParam( defaultValue = "10" ) int size ) {
+    public Page<Cars> getAllCars ( @RequestParam( defaultValue = PageInfo.DEFAULT_FIRSTPAGE ) int page,
+                                   @RequestParam( defaultValue = PageInfo.DEFAULT_DATAFORPAGE ) int size ) {
         return ResponseEntity.ok( carsService.getAllCars( page, size ) ).getBody();
     }
 
@@ -53,7 +55,7 @@ public class CarsController {
      * @return um {@link ResponseEntity} contendo o carro encontrado e o status HTTP 200 (OK).
      * @throws ResourceNotFoundException se o carro com o ID fornecido não for encontrado.
      */
-    @GetMapping( "/{id}" )
+    @GetMapping( Routes.ID_ROUTE )
     public ResponseEntity<Optional<Cars>> getById ( @PathVariable String id ) throws RuntimeException {
         return ResponseEntity.ok( carsService.getById( id ) );
     }
@@ -91,7 +93,7 @@ public class CarsController {
      * @throws FieldDoubleInvalidException  se o valor do carro for inválido.
      * @throws DuplicatedFoundException     se um carro duplicado for encontrado.
      */
-    @PutMapping( "/{id}" )
+    @PutMapping( Routes.ID_ROUTE )
     public ResponseEntity<Cars> updatedCar ( @PathVariable String id, @RequestBody Cars cars ) {
         return ResponseEntity.ok( carsService.updateCar( id, cars ) );
     }
@@ -106,7 +108,7 @@ public class CarsController {
      * @return um {@link ResponseEntity} com o status HTTP 200 (OK) após a remoção bem-sucedida.
      * @throws ResourceNotFoundException se o carro com o ID fornecido não for encontrado.
      */
-    @DeleteMapping( "/{id}" )
+    @DeleteMapping( Routes.ID_ROUTE )
     public ResponseEntity<HttpStatus> deleteCar ( @PathVariable String id ) {
         carsService.deleteCar( id );
         return new ResponseEntity<>( HttpStatus.OK );
@@ -121,7 +123,7 @@ public class CarsController {
      * @param model o modelo do carro a ser recuperado.
      * @return um {@link ResponseEntity} contendo o carro encontrado e o status HTTP 200 (OK).
      */
-    @GetMapping( "/model" )
+    @GetMapping( Routes.MODEL_ROUTE )
     public Optional<Cars> getModels ( @RequestParam String model ) {
         return new ResponseEntity<>( carsService.getByModel( model ), HttpStatus.OK ).getBody();
     }
@@ -135,7 +137,7 @@ public class CarsController {
      * @param year o ano dos carros a serem recuperados.
      * @return uma lista de carros encontrados.
      */
-    @GetMapping( "/year/{year}" )
+    @GetMapping( Routes.YEAR_ROUTE )
     public List<Cars> getByYear ( @PathVariable Integer year ) {
         return new ResponseEntity<>( carsService.getByYear( year ), HttpStatus.OK ).getBody();
     }
@@ -149,7 +151,7 @@ public class CarsController {
      * @param year o ano a partir do qual os carros devem ser recuperados.
      * @return uma lista de carros encontrados.
      */
-    @GetMapping( "/year/newer_than/{year}" )
+    @GetMapping( Routes.NEWER_YEAR_ROUTE )
     public List<Cars> getNewerCars ( @PathVariable Integer year ) {
         return new ResponseEntity<>( carsService.getNewerThanYear( year ), HttpStatus.OK ).getBody();
     }
@@ -163,7 +165,7 @@ public class CarsController {
      * @param year o ano a partir do qual os carros devem ser recuperados.
      * @return uma lista de carros encontrados.
      */
-    @GetMapping( "/year/older_than/{year}" )
+    @GetMapping( Routes.OLDER_YEAR_ROUTE )
     public List<Cars> getOlderCars ( @PathVariable Integer year ) {
         return new ResponseEntity<>( carsService.getOlderThanYear( year ), HttpStatus.OK ).getBody();
     }
@@ -177,7 +179,7 @@ public class CarsController {
      * @param producedBy a marca que produziu os carros.
      * @return uma lista de carros encontrados.
      */
-    @GetMapping( "/produced_by" )
+    @GetMapping( Routes.PRODUCEDBY_ROUTE )
     public List<Cars> getProducedBy ( @RequestParam String producedBy ) {
         return new ResponseEntity<>( carsService.getProducedBy( producedBy ), HttpStatus.OK ).getBody();
     }
@@ -191,7 +193,7 @@ public class CarsController {
      * @param value o valor dos carros a serem recuperados.
      * @return uma lista de carros encontrados.
      */
-    @GetMapping( "/value/{value}" )
+    @GetMapping( Routes.VALUE_ROUTE )
     public List<Cars> getValue ( @PathVariable Double value ) {
         return new ResponseEntity<>( carsService.getByValue( value ), HttpStatus.OK ).getBody();
     }
@@ -205,7 +207,7 @@ public class CarsController {
      * @param value o valor mínimo dos carros a serem recuperados.
      * @return uma lista de carros encontrados.
      */
-    @GetMapping( "/value/bigger_than/{value}" )
+    @GetMapping( Routes.BIGGER_VALUE_ROUTE )
     public List<Cars> getValueBiggerThan ( @PathVariable Double value ) {
         return new ResponseEntity<>( carsService.getBiggerThanValue( value ), HttpStatus.OK ).getBody();
     }
@@ -219,7 +221,7 @@ public class CarsController {
      * @param value o valor máximo dos carros a serem recuperados.
      * @return uma lista de carros encontrados.
      */
-    @GetMapping( "/value/less_than/{value}" )
+    @GetMapping( Routes.LESS_VALUE_ROUTE )
     public List<Cars> getValueLessThan ( @PathVariable Double value ) {
         return new ResponseEntity<>( carsService.getByLessThanValue( value ), HttpStatus.OK ).getBody();
     }
@@ -233,7 +235,7 @@ public class CarsController {
      * @param engineType o tipo de motor dos carros a serem recuperados.
      * @return uma lista de carros encontrados.
      */
-    @GetMapping( "/engine_type" )
+    @GetMapping( Routes.ENGYNETYPE_ROUTE )
     public List<Cars> getEngineType ( @RequestParam String engineType ) {
         return new ResponseEntity<>( carsService.getByEngineType( engineType ), HttpStatus.OK ).getBody();
     }
@@ -247,7 +249,7 @@ public class CarsController {
      * @param topSpeed a velocidade máxima dos carros a serem recuperados.
      * @return uma lista de carros encontrados.
      */
-    @GetMapping( "/top_speed/{topSpeed}" )
+    @GetMapping( Routes.TOPSPEED_ROUTE )
     public List<Cars> getTopSpeed ( @PathVariable Integer topSpeed ) {
         return new ResponseEntity<>( carsService.getByTopSpeed( topSpeed ), HttpStatus.OK ).getBody();
     }
@@ -261,9 +263,8 @@ public class CarsController {
      * @param feature a característica dos carros a serem recuperados.
      * @return uma lista de carros encontrados.
      */
-    @GetMapping( "/feature" )
+    @GetMapping( Routes.FEATURE_ROUTE )
     public List<Cars> getFeature ( @RequestParam String feature ) {
         return new ResponseEntity<>( carsService.getByFeature( feature ), HttpStatus.OK ).getBody();
     }
-
 }

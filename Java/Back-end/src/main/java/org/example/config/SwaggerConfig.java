@@ -1,5 +1,6 @@
 package org.example.config;
 
+import org.example.routes.Routes;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -33,7 +34,7 @@ public class SwaggerConfig {
     public Docket api () {
         return new Docket( DocumentationType.SWAGGER_2 )
                 .select()
-                .apis( RequestHandlerSelectors.basePackage( "org.example.controller" ) ) // ajuste o pacote conforme necessário
+                .apis( RequestHandlerSelectors.basePackage( Routes.PATH_CONTROLLER ) ) // ajuste o pacote conforme necessário
                 .paths( PathSelectors.any() )
                 .build();
     }

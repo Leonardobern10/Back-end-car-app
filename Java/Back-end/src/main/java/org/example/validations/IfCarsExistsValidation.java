@@ -2,6 +2,7 @@ package org.example.validations;
 
 import org.example.exceptions.ResourceNotFoundException;
 import org.example.repository.CarsRepository;
+import org.example.utils.Errors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +25,7 @@ public class IfCarsExistsValidation {
      */
     public void validate ( String id ) {
         if ( ! carsRepository.existsById( id ) ) {
-            throw new ResourceNotFoundException( "RESOURCE NOT FOUND FOR ID" + id );
+            throw new ResourceNotFoundException( Errors.RESOURCE_NOT_FOUND_ERROR + id );
         }
     }
 }

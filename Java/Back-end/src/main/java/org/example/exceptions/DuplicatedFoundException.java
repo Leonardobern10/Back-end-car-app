@@ -10,6 +10,7 @@ package org.example.exceptions;
  * </p>
  */
 public class DuplicatedFoundException extends RuntimeException {
+
     /**
      * Constrói uma nova instância da exceção DuplicatedFoundException com uma mensagem especificada.
      * <p>

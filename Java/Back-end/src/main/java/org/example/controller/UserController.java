@@ -2,7 +2,9 @@ package org.example.controller;
 
 import jakarta.validation.Valid;
 import org.example.dto.RegisterForUserDTO;
+import org.example.routes.Routes;
 import org.example.service.CustomUserDetailsService;
+import org.example.utils.Notice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  */
 @RestController
-@RequestMapping( "/users" )
+@RequestMapping( Routes.USERS_ROUTE )
 public class UserController {
 
     private final CustomUserDetailsService customUserDetailsService;
@@ -43,9 +45,9 @@ public class UserController {
      * @param userData objeto {@link RegisterForUserDTO} contendo os dados do novo usuário.
      * @return uma {@link ResponseEntity} com a mensagem "USER CREATED SUCCESSFULLY" e o status HTTP 200 (OK).
      */
-    @PostMapping( "/create" )
+    @PostMapping( Routes.CREATE_ROUTE )
     public ResponseEntity<String> createUser ( @RequestBody @Valid RegisterForUserDTO userData ) {
         customUserDetailsService.createForUser( userData.username(), userData.email(), userData.password() );
-        return ResponseEntity.ok( "USER CREATED SUCCESSFULLY" );
+        return ResponseEntity.ok( Notice.USER_CREATED );
     }
 }

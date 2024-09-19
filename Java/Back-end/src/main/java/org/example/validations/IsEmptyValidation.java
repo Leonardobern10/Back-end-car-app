@@ -1,6 +1,7 @@
 package org.example.validations;
 
 import org.example.exceptions.ResourceNotFoundException;
+import org.example.utils.Errors;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class IsEmptyValidation {
 
     public static void validate ( List<String> list ) {
         if ( list.isEmpty() ) {
-            throw new ResourceNotFoundException( "FIELD features IS NOT VALID" );
+            throw new ResourceNotFoundException( Errors.FIELD_ERROR + list );
         }
     }
 }

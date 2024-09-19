@@ -1,6 +1,7 @@
 package org.example.validations;
 
 import org.example.exceptions.InvalidFieldException;
+import org.example.utils.Errors;
 
 import java.lang.reflect.Field;
 
@@ -31,9 +32,9 @@ public class ValidateObjectProperties {
                 field.setAccessible( true );
                 Object value = field.get( object );
                 StringValidation.validate( value != null ? value.toString() : "",
-                        "FIELD" + field.getName() + " IS NOT VALID" );
+                        Errors.FIELD_ERROR + field.getName() );
             } catch ( IllegalAccessException e ) {
-                throw new InvalidFieldException( "ERRO AO ACESSAR O CAMPO" + field.getName() );
+                throw new InvalidFieldException( Errors.INVALID_ACCESS_ERROR + field.getName() );
             }
         }
     }

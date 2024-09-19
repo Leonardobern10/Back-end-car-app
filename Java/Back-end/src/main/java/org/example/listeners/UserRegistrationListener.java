@@ -1,6 +1,7 @@
 package org.example.listeners;
 
 import org.example.events.UserRegisteredEvent;
+import org.example.utils.EmailInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.mail.SimpleMailMessage;
@@ -31,13 +32,13 @@ public class UserRegistrationListener {
      */
     @EventListener
     public void handleUserRegisteredEvent ( UserRegisteredEvent event ) {
-        String userEmail = event.getUser().getUsername();
+        String userEmail = event.getUser().getEmail();
 
         SimpleMailMessage message = new SimpleMailMessage();
         // Inserir email para recebimento
-        message.setTo( "emai@gmail.com" );
-        message.setSubject( "Novo usuário cadastrado" );
-        message.setText( "Um novo usuário foi cadastrado com o username: " + userEmail );
+        message.setTo( EmailInfo.SET_TO );
+        message.setSubject( EmailInfo.SET_SUBJECT );
+        message.setText( EmailInfo.SET_TEXT + userEmail );
 
         mailSender.send( message );
     }

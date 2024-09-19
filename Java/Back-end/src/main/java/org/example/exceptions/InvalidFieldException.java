@@ -9,6 +9,7 @@ package org.example.exceptions;
  * </p>
  */
 public class InvalidFieldException extends RuntimeException {
+
     /**
      * Construtor da exceção {@code InvalidFieldException}.
      * <p>

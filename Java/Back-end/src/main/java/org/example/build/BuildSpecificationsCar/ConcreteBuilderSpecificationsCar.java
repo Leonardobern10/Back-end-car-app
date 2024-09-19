@@ -9,7 +9,6 @@ import org.example.model.SpecificationsCar;
 public class ConcreteBuilderSpecificationsCar implements BuilderSpecificationsCar {
     SpecificationsCar specificationsCar = null;
 
-
     /**
      * Cria uma nova instância de {@link ConcreteBuilderSpecificationsCar} e inicializa o objeto {@link SpecificationsCar}.
      */
@@ -37,7 +36,6 @@ public class ConcreteBuilderSpecificationsCar implements BuilderSpecificationsCa
         specificationsCar.setEngineCapacity( engineCapacity );
     }
 
-
     /**
      * Define a autonomia do veículo.
      *
@@ -47,7 +45,6 @@ public class ConcreteBuilderSpecificationsCar implements BuilderSpecificationsCa
     public void buildRange ( String range ) {
         specificationsCar.setRange( range );
     }
-
 
     /**
      * Define a aceleração do veículo.

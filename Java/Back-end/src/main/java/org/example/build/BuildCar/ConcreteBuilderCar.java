@@ -75,7 +75,6 @@ public class ConcreteBuilderCar implements BuilderCar {
         car.setCarValue( carValue );
     }
 
-
     /**
      * Define as especificações do carro utilizando {@link ConcreteBuilderSpecificationsCar} e {@link DirectorSpecificationsCar}.
      *

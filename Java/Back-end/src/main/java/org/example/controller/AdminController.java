@@ -2,13 +2,14 @@ package org.example.controller;
 
 import jakarta.validation.Valid;
 import org.example.dto.RegisterForAdminDTO;
+import org.example.routes.Routes;
 import org.example.service.CustomUserDetailsService;
+import org.example.utils.Notice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 
 /**
  * Controlador responsável por operações administrativas relacionadas a usuários.
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  */
 @RestController
-@RequestMapping( "/admin" )
+@RequestMapping( Routes.ADMIN_ROUTE )
 public class AdminController {
 
     private final CustomUserDetailsService customUserDetailsService;
@@ -44,9 +45,9 @@ public class AdminController {
      * @param userData objeto {@link RegisterForAdminDTO} contendo os detalhes do novo usuário.
      * @return uma {@link ResponseEntity} com uma mensagem de sucesso e status HTTP 200 (OK).
      */
-    @PostMapping( "/create" )
+    @PostMapping( Routes.CREATE_ROUTE )
     public ResponseEntity<String> createAdmin ( @RequestBody @Valid RegisterForAdminDTO userData ) {
         customUserDetailsService.createForAdmin( userData.username(), userData.email(), userData.password(), userData.role() );
-        return ResponseEntity.ok( "USER CREATED SUCCESSFULLY" );
+        return ResponseEntity.ok( Notice.USER_CREATED );
     }
 }

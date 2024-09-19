@@ -1,6 +1,7 @@
 package org.example.validations;
 
 import org.example.exceptions.FieldStringInvalidException;
+import org.example.utils.Errors;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
 
@@ -43,7 +44,7 @@ public class StringValidation {
 
     public static void validate ( String... strings ) {
         for ( String string : strings ) {
-            String messageError = String.format( "FIELD IS NOT VALID: %s", string );
+            String messageError = Errors.FIELD_ERROR + string;
             isValid( string, messageError );
         }
     }
