@@ -107,4 +107,4 @@ Este projeto está licenciado sob a [MIT License](https://opensource.org/license
 
 - **Nome**: Leonardo Bernardo
 - **LinkedIn**: [linkedin.com/in/leonardobern10](https://linkedin.com/in/leonardobern10)
-- **Email**: leonardobern10@example.com
+- **Email**: [leonardo.bernardo2658@gmail.com](mailto:leonardo.bernardo2658@gmail.com)
