@@ -16,8 +16,20 @@ public class SearchByYear implements StrategyGetCarsForYear {
     }
 
     @Override
-    public List<Cars> search ( Integer year ) {
+    public List<Cars> searchEquals ( Integer year ) {
         IntegerValidation.validate( year );
         return carsRepository.findByYear( year );
+    }
+
+    @Override
+    public List<Cars> searchNewer ( Integer year ) {
+        IntegerValidation.validate( year );
+        return carsRepository.findNewerThanYear( year );
+    }
+
+    @Override
+    public List<Cars> searchOlder ( Integer year ) {
+        IntegerValidation.validate( year );
+        return carsRepository.findOlderThanYear( year );
     }
 }

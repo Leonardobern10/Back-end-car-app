@@ -27,7 +27,7 @@ public class StringValidation {
      * @throws BadCredentialsException se a senha não atender aos critérios de complexidade definidos
      */
     public static void validatePassword ( String password, String messageError ) {
-        if ( ! Pattern.matches( REGEX, password ) ) {
+        if ( ! (Pattern.matches( REGEX, password ) || password != null) ) {
             throw new BadCredentialsException( messageError );
         }
     }
@@ -40,7 +40,15 @@ public class StringValidation {
      * @param messageError a mensagem de erro a ser lançada em caso de falha na validação
      * @throws FieldStringInvalidException se a String for nula ou vazia
      */
-    public static void validate ( String string, String messageError ) throws FieldStringInvalidException {
+
+    public static void validate ( String... strings ) {
+        for ( String string : strings ) {
+            String messageError = String.format( "FIELD IS NOT VALID: %s", string );
+            isValid( string, messageError );
+        }
+    }
+
+    private static void isValid ( String string, String messageError ) {
         if ( string == null || string.isBlank() ) {
             throw new FieldStringInvalidException( messageError );
         }

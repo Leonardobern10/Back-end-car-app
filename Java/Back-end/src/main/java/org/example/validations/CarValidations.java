@@ -45,14 +45,11 @@ public class CarValidations {
     public void validateUpdatedInformations ( String model, Integer yearProduction, String producedBy, String imageUrl,
                                               Double carValue, SpecificationsCar specificationsCar, List<String> feature,
                                               DimensionsCar dimensionsCar ) throws RuntimeException {
-        StringValidation.validate( model, "FIELD MODEL IS INVALID" );
+        StringValidation.validate( model, producedBy, imageUrl );
         IntegerValidation.validate( yearProduction );
-        StringValidation.validate( producedBy, "FIELD IS NOT VALID" + producedBy );
-        StringValidation.validate( imageUrl, "FIELD URL IS INVALID" );
         CarValueValidation.validate( carValue );
-        ValidateObjectProperties.validate( specificationsCar );
+        ValidateObjectProperties.validate( specificationsCar, dimensionsCar );
         IsEmptyValidation.validate( feature );
-        ValidateObjectProperties.validate( dimensionsCar );
     }
 
     /**
@@ -77,16 +74,12 @@ public class CarValidations {
     public void validateSaveCar ( Cars car, String model, Integer yearProduction, String producedBy, String imageUrl,
                                   Double carValue, SpecificationsCar specificationsCar, List<String> feature,
                                   DimensionsCar dimensionsCar ) throws RuntimeException {
-        StringValidation.validate( car.getId(), "FIELD ID IS INVALID" );
+        StringValidation.validate( car.getId(), model, producedBy, imageUrl );
         duplicatedFoundValidation.validate( car );
-        StringValidation.validate( model, "FIELD MODEL IS INVALID" );
         IntegerValidation.validate( yearProduction );
-        StringValidation.validate( producedBy, "FIELD IS NOT VALID" + producedBy );
-        StringValidation.validate( imageUrl, "FIELD URL IS INVALID" );
         CarValueValidation.validate( carValue );
-        ValidateObjectProperties.validate( specificationsCar );
+        ValidateObjectProperties.validate( specificationsCar, dimensionsCar );
         IsEmptyValidation.validate( feature );
-        ValidateObjectProperties.validate( dimensionsCar );
     }
 
     /**

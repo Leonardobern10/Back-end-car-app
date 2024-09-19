@@ -2,18 +2,13 @@ package org.example.service;
 
 import org.example.model.Cars;
 import org.example.repository.CarsRepository;
-import org.example.build.BuildCar.ConcreteBuilderCar;
 import org.example.build.BuildCar.DirectorCar;
-import org.example.service.SearchDouble.SearchByBiggerValue;
-import org.example.service.SearchDouble.SearchByLessValue;
-import org.example.service.SearchDouble.SearchByValue;
-import org.example.service.SearchInteger.SearchByNewerYear;
-import org.example.service.SearchInteger.SearchByOlderYear;
+import org.example.service.SearchDouble.SearchByDouble;
 import org.example.service.SearchInteger.SearchByYear;
 import org.example.service.SearchString.*;
 import org.example.service.context.ContextSearchCarsForInteger;
 import org.example.service.context.ContextSearchCarsForString;
-import org.example.service.context.ContextSearchCarsForValue;
+import org.example.service.context.ContextSearchCarsForDouble;
 import org.example.service.context.ContextSearchOneCarForString;
 import org.example.validations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,26 +31,17 @@ import java.util.Optional;
 @Service
 public class CarsService {
 
-    private final DirectorCar directorCar;
     private final CarValidations carValidations;
     private final CarsRepository carsRepository;
 
     // For String
-    ContextSearchOneCarForString contextByModel;
-    ContextSearchOneCarForString contextById;
-    ContextSearchCarsForString contextByFeature;
-    ContextSearchCarsForString contextByProducedBy;
-    ContextSearchCarsForString contextByEngineType;
-
+    ContextSearchOneCarForString contextGetOneCarByString;
+    // For String returns List
+    ContextSearchCarsForString contextByString;
     // For Double
-    ContextSearchCarsForValue contextByValue;
-    ContextSearchCarsForValue contextByBiggerValue;
-    ContextSearchCarsForValue contextByLessValue;
-
+    ContextSearchCarsForDouble contextByDouble;
     // For Integer
     ContextSearchCarsForInteger contextByYear;
-    ContextSearchCarsForInteger contextByNewerYear;
-    ContextSearchCarsForInteger contextByOlderYear;
 
     /**
      * Constrói uma instância do {@code CarsService} com os componentes necessários.
@@ -68,19 +54,11 @@ public class CarsService {
     public CarsService ( CarsRepository carsRepository, CarValidations carValidations, DirectorCar directorCar ) {
         this.carsRepository = carsRepository;
         this.carValidations = carValidations;
-        this.directorCar = directorCar;
 
-        this.contextByModel = new ContextSearchOneCarForString( new SearchByModel( carsRepository ) );
-        this.contextById = new ContextSearchOneCarForString( new SearchById( carsRepository, carValidations ) );
-        this.contextByValue = new ContextSearchCarsForValue( new SearchByValue( carsRepository ) );
-        this.contextByBiggerValue = new ContextSearchCarsForValue( new SearchByBiggerValue( carsRepository ) );
-        this.contextByLessValue = new ContextSearchCarsForValue( new SearchByLessValue( carsRepository ) );
+        this.contextGetOneCarByString = new ContextSearchOneCarForString( new SearchOneByString( carsRepository, carValidations ) );
+        this.contextByDouble = new ContextSearchCarsForDouble( new SearchByDouble( carsRepository ) );
         this.contextByYear = new ContextSearchCarsForInteger( new SearchByYear( carsRepository ) );
-        this.contextByNewerYear = new ContextSearchCarsForInteger( new SearchByNewerYear( carsRepository ) );
-        this.contextByOlderYear = new ContextSearchCarsForInteger( new SearchByOlderYear( carsRepository ) );
-        this.contextByFeature = new ContextSearchCarsForString( new SearchByFeature( carsRepository ) );
-        this.contextByProducedBy = new ContextSearchCarsForString( new SearchByProducedBy( carsRepository ) );
-        this.contextByEngineType = new ContextSearchCarsForString( new SearchByEngineType( carsRepository ) );
+        this.contextByString = new ContextSearchCarsForString( new SearchByString( carsRepository ) );
     }
 
     /**
@@ -108,7 +86,7 @@ public class CarsService {
      * @return o carro correspondente ao modelo fornecido
      */
     public Optional<Cars> getByModel ( String model ) {
-        return contextByModel.doSearch( model );
+        return contextGetOneCarByString.doSearchModel( model );
     }
 
     /**
@@ -119,7 +97,7 @@ public class CarsService {
      * @throws RuntimeException se o carro com o ID fornecido não for encontrado
      */
     public Optional<Cars> getById ( String id ) {
-        return contextById.doSearch( id );
+        return contextGetOneCarByString.doSearchId( id );
     }
 
     /**
@@ -130,7 +108,7 @@ public class CarsService {
      * @throws IllegalArgumentException se o valor fornecido for inválido
      */
     public List<Cars> getByValue ( Double value ) {
-        return contextByValue.doSearch( value );
+        return contextByDouble.doSearchEquals( value );
     }
 
     /**
@@ -141,7 +119,7 @@ public class CarsService {
      * @throws IllegalArgumentException se o valor fornecido for inválido
      */
     public List<Cars> getByLessThanValue ( Double value ) {
-        return contextByLessValue.doSearch( value );
+        return contextByDouble.doSearchLess( value );
     }
 
     /**
@@ -152,7 +130,7 @@ public class CarsService {
      * @throws IllegalArgumentException se o valor fornecido for inválido
      */
     public List<Cars> getBiggerThanValue ( Double value ) {
-        return contextByBiggerValue.doSearch( value );
+        return contextByDouble.doSearchBigger( value );
     }
 
     /**
@@ -163,7 +141,7 @@ public class CarsService {
      * @throws IllegalArgumentException se o ano fornecido for inválido
      */
     public List<Cars> getByYear ( Integer year ) {
-        return contextByYear.doSearch( year );
+        return contextByYear.doSearchEquals( year );
     }
 
     /**
@@ -174,7 +152,7 @@ public class CarsService {
      * @throws IllegalArgumentException se o ano fornecido for inválido
      */
     public List<Cars> getNewerThanYear ( Integer year ) {
-        return contextByNewerYear.doSearch( year );
+        return contextByYear.doSearchNewer( year );
     }
 
     /**
@@ -185,7 +163,7 @@ public class CarsService {
      * @throws IllegalArgumentException se o ano fornecido for inválido
      */
     public List<Cars> getOlderThanYear ( Integer year ) {
-        return contextByOlderYear.doSearch( year );
+        return contextByYear.doSearchOlder( year );
     }
 
     /**
@@ -195,7 +173,7 @@ public class CarsService {
      * @return uma lista de carros produzidos pelo fabricante fornecido
      */
     public List<Cars> getProducedBy ( String producedBy ) {
-        return contextByProducedBy.doSearch( producedBy );
+        return contextByString.doSearchByProducedBy( producedBy );
     }
 
     /**
@@ -205,7 +183,7 @@ public class CarsService {
      * @return uma lista de carros com o tipo de motor correspondente
      */
     public List<Cars> getByEngineType ( String engineType ) {
-        return contextByEngineType.doSearch( engineType );
+        return contextByString.doSearchByEngyneType( engineType );
     }
 
     /**
@@ -215,7 +193,7 @@ public class CarsService {
      * @return uma lista de carros com a característica correspondente
      */
     public List<Cars> getByFeature ( String feature ) {
-        return contextByFeature.doSearch( feature );
+        return contextByString.doSearchByFeature( feature );
     }
 
     /**
@@ -226,9 +204,7 @@ public class CarsService {
      * @throws IllegalArgumentException se a velocidade fornecida for inválida
      */
     public List<Cars> getByTopSpeed ( Integer topSpeed ) {
-        IntegerValidation.validate( topSpeed );
-        String searchFormat = topSpeed.toString() + " mph";
-        return carsRepository.findByTopSpeed( searchFormat );
+        return carsRepository.findByTopSpeed( TopSpeedValidation.validate( topSpeed ) );
     }
 
     /**
@@ -239,16 +215,8 @@ public class CarsService {
      * @throws RuntimeException se houver problemas ao validar ou salvar o carro
      */
     public Cars saveCar ( Cars car ) {
-        ConcreteBuilderCar builderCar = new ConcreteBuilderCar();
-        Cars newCar = directorCar.construct( builderCar, car.getModel(), car.getYearProduction(), car.getProducedBy(),
-                car.getImageUrl(), car.getCarValue(), car.getSpecifications(),
-                car.getFeatures(), car.getDimensions() );
-
-        carValidations.validateUpdatedInformations( newCar.getModel(), newCar.getYearProduction(),
-                newCar.getProducedBy(), newCar.getImageUrl(),
-                newCar.getCarValue(), newCar.getSpecifications(),
-                newCar.getFeatures(), newCar.getDimensions() );
-
+        Cars newCar = ConstructCar.construct( car );
+        CarIsValid.validate( car );
         return carsRepository.save( newCar );
     }
 
@@ -275,18 +243,8 @@ public class CarsService {
     public Cars updateCar ( String id, Cars car ) {
         Cars oldCar = carsRepository.findById( id )
                 .orElseThrow( () -> new RuntimeException( "Car with ID " + id + " not found" ) );
-
-        ConcreteBuilderCar builderCar = new ConcreteBuilderCar();
-        Cars updatedCar = directorCar.construct( builderCar, car.getModel(), car.getYearProduction(), car.getProducedBy(),
-                car.getImageUrl(), car.getCarValue(), car.getSpecifications(),
-                car.getFeatures(), car.getDimensions() );
-
-        // Validação após a construção do carro atualizado
-        carValidations.validateUpdatedInformations( updatedCar.getModel(), updatedCar.getYearProduction(),
-                updatedCar.getProducedBy(), updatedCar.getImageUrl(),
-                updatedCar.getCarValue(), updatedCar.getSpecifications(),
-                updatedCar.getFeatures(), updatedCar.getDimensions() );
-
+        Cars updatedCar = ConstructCar.construct( car );
+        CarIsValid.validate( updatedCar );
         return carsRepository.save( updatedCar );
     }
 

@@ -13,7 +13,15 @@ public class ContextSearchCarsForInteger {
         this.strategy = strategy;
     }
 
-    public List<Cars> doSearch ( Integer year ) {
-        return this.strategy.search( year );
+    public List<Cars> doSearchEquals ( Integer year ) {
+        return this.strategy.searchEquals( year );
+    }
+
+    public List<Cars> doSearchNewer ( Integer year ) {
+        return this.strategy.searchNewer( year );
+    }
+
+    public List<Cars> doSearchOlder ( Integer year ) {
+        return this.strategy.searchOlder( year );
     }
 }

@@ -24,7 +24,7 @@ public class ValidateObjectProperties {
      * @throws InvalidFieldException Se ocorrer um erro ao acessar um campo ou se algum campo
      *                               não atender aos critérios de validação.
      */
-    public static void validate ( Object object ) {
+    private static void isValid ( Object object ) {
         Field[] fields = object.getClass().getDeclaredFields();
         for ( Field field : fields ) {
             try {
@@ -35,6 +35,12 @@ public class ValidateObjectProperties {
             } catch ( IllegalAccessException e ) {
                 throw new InvalidFieldException( "ERRO AO ACESSAR O CAMPO" + field.getName() );
             }
+        }
+    }
+
+    public static void validate ( Object... objects ) {
+        for ( Object object : objects ) {
+            isValid( object );
         }
     }
 }

@@ -16,4 +16,17 @@ public class ContextSearchCarsForString {
     public List<Cars> doSearch ( String string ) {
         return this.strategy.search( string );
     }
+
+    public List<Cars> doSearchByEngyneType ( String string ) {
+        return this.strategy.searchByEngineType( string );
+    }
+
+    public List<Cars> doSearchByFeature ( String string ) {
+        return this.strategy.searchByFeature( string );
+    }
+
+    public List<Cars> doSearchByProducedBy ( String string ) {
+        return this.strategy.searchByProducedBy( string );
+    }
+
 }

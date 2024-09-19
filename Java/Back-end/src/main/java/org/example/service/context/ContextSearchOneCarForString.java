@@ -13,7 +13,11 @@ public class ContextSearchOneCarForString {
         this.strategy = strategy;
     }
 
-    public Optional<Cars> doSearch ( String string ) {
-        return this.strategy.search( string );
+    public Optional<Cars> doSearchId ( String string ) {
+        return this.strategy.searchId( string );
+    }
+
+    public Optional<Cars> doSearchModel ( String string ) {
+        return this.strategy.searchModel( string );
     }
 }
